@@ -46,7 +46,7 @@ public class ObjetosBinariosLecturaYEscritura {
             ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
                 try {
                     while (true) {
-                        System.out.println(objectInputStream.readObject());
+                        System.out.println(objectInputStream.readObject().toString());
                     }
                 } catch (Exception e) {
                     System.out.println("Fin del archivo");
