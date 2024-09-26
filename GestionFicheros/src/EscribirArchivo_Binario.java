@@ -2,7 +2,7 @@ import java.io.*;
 
 public class EscribirArchivo_Binario {
 
-    public static void main (String [] args) throws Exception {
+    public static void main (String [] args) {
         File file = new File(".", "Archivo.dat");
         try {
             rellenarArchivo(file);
@@ -10,7 +10,7 @@ public class EscribirArchivo_Binario {
                 int i;
                 FileInputStream fileInputStream = new FileInputStream(file);
                 while ((i = fileInputStream.read()) != -1) {
-                    System.out.print((byte) i);
+                    System.out.print((byte) i + ", ");
                 }
                 fileInputStream.close();
 
