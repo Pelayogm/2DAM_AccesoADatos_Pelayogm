@@ -37,16 +37,17 @@ public class InsertarDatosEnUnFichero {
     public static void leerDatos (File file) {
         try {
             FileInputStream fileInputStream = new FileInputStream(file);
-                DataInputStream dataInputStream = new DataInputStream(fileInputStream);
-                try {
-                    while (true) {
-                        System.out.println("Nombre: " + dataInputStream.readUTF() + " Edad: " + dataInputStream.readInt() + ".");
-                    }
-                } catch (EOFException e) {
-                    System.out.println("Fin del archivo");
+            DataInputStream dataInputStream = new DataInputStream(fileInputStream);
+            try {
+                while (true) {
+                    System.out.println("Nombre: " + dataInputStream.readUTF() + " Edad: " + dataInputStream.readInt() + ".");
                 }
+            } catch (EOFException e) {
+                System.out.println("Fin del archivo");
+            }
         } catch (Exception e) {
             System.out.println("Ha habido un error");
+
         }
     }
 }
