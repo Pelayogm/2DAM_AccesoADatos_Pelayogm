@@ -32,7 +32,7 @@ public class Main {
                     if (i == 32) {
 
                     }
-                    int numero = (char) i;
+                    int numero = 0;
                         listaNumeros.add(numero);
                         contadorNumeros++;
                     }
