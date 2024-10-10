@@ -28,13 +28,14 @@ public class Main {
                 int i;
                 int contadorNumeros = 0;
                 while ((i = bufferedReader.read())!= -1) {
+                    char numeroReader = (char) i;
 
-                    if (i == 32) {
-
-                    }
-                    int numero = 0;
+                    if (Character.isDigit(numeroReader)) {
+                        int numero = Character.getNumericValue(numeroReader);
                         listaNumeros.add(numero);
                         contadorNumeros++;
+                    }
+
                     }
                 bufferedReader.close();
                 fileReader.close();
