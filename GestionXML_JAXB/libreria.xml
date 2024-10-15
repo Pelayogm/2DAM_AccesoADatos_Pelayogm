@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<libreria>
+    <ListaLibros>
+        <Libro>
+            <autor>Paco Paez</autor>
+            <nombre>Charangas de la mar</nombre>
+            <editorial>Sabemos Mas</editorial>
+            <isbn>111A</isbn>
+        </Libro>
+        <Libro>
+            <autor>Rosario Veraz Cruz</autor>
+            <nombre>Cascarillas estadenses</nombre>
+            <editorial>Estudiando</editorial>
+            <isbn>211B</isbn>
+        </Libro>
+        <Libro>
+            <autor>Gustavo Ferraz</autor>
+            <nombre>Almendritas Rocosas</nombre>
+            <editorial>Sabemos Mas</editorial>
+            <isbn>112C</isbn>
+        </Libro>
+        <Libro>
+            <autor>Luis M.L.L</autor>
+            <nombre>Tragedias en las Meanas</nombre>
+            <editorial>Leston Productions</editorial>
+            <isbn>411D</isbn>
+        </Libro>
+    </ListaLibros>
+</libreria>
