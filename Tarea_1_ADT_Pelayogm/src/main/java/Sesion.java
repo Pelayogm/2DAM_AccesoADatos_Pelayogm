@@ -5,6 +5,7 @@ import java.util.Scanner;
 
 public class Sesion {
     private static ArrayList<String> credenciales = new ArrayList<>();
+    public static ArrayList<Entrenador> listEntrenadores = new ArrayList<>();
     private static boolean sesion = false;
 
     public static boolean isSesion() {
@@ -23,7 +24,8 @@ public class Sesion {
         try {
             StringBuilder stringBuilder = new StringBuilder();
             System.out.println("¿Usuario?");
-                stringBuilder.append(scanner.nextLine());
+            String nombreEntrenador = scanner.nextLine();
+                stringBuilder.append(nombreEntrenador);
                 if (stringBuilder.isEmpty()) {
                     System.out.println("No se permiten campos vacíos");
                     IniciarSesion();
@@ -47,27 +49,39 @@ public class Sesion {
                 try {
                     for (int i = 0; i < credenciales.size(); i++) {
                         if (credenciales.get(i).equals(datosIntroducidosUsuario)) {
-                            if (datosIntroducidosUsuario.equals("admin-admin")); {
-                                Admin admin = new Admin(1, true);
+                            if (datosIntroducidosUsuario.equals("admin-admin")) {
+                                Admin admin = new Admin(1);
+                                Funciones.MostrarFunciones(admin);
                                 return admin;
                             } else {
-                                System.out.println("SESION INICIADA");
-                                return Entrenador.crearEntrenador();
+                                Entrenador entrenador;
+                                File file_entrenadores = new File(".", "Entrenadores.dat");
+                                try {
+                                    leerEntrenadoresDat(file_entrenadores);
+                                    for (int is = 0; is < listEntrenadores.size(); is++) {
+                                        if (listEntrenadores.get(is).getNombre().equals(nombreEntrenador)) {
+                                            entrenador = listEntrenadores.get(is);
+                                            System.out.println("Sesion Iniciada");
+                                            Funciones.MostrarFunciones(entrenador);
+                                            return entrenador;
+                                        }
+                                    }
+                                } catch (Exception e) {
+                                    System.out.println("Problema con el archivo DAT");
+                                }
                             }
                         }
                     }
-
-                    try {
                         if (!usuarioExiste) {
+                            System.out.println("DATOS NO ENCONTRADOS EN EL SISTEMA");
                             System.out.println("¿Desea crear una cuenta?");
                             Scanner scanner_2 = new Scanner(System.in);
                             System.out.println("1. Sí quiero crear una cuenta | 2. No deseo crear una cuenta");
-                            int numeroScanner = scanner.nextInt();
+                            int numeroScanner = scanner_2.nextInt();
                             if (numeroScanner == 1) {
                                 CrearCuenta();
                             } else {
                                 System.out.println("Entendido no se creará una cuenta entonces.");
-
                             }
                         }
                     } catch (Exception e) {
@@ -77,10 +91,7 @@ public class Sesion {
                     System.out.println("HA HABIDO UN ERROR EN LA COTEJACION DE DATOS");
                 }
 
-        } catch (Exception e) {
-            System.out.println("No se ha encontrado el archivo");
-        }
-
+        return null;
     }
 
     public static void CrearCuenta () {
@@ -91,12 +102,22 @@ public class Sesion {
         try {
             StringBuilder stringBuilder = new StringBuilder();
             System.out.println("¿Usuario?");
-            stringBuilder.append(scanner.nextLine());
+            String nombreUsuario = scanner.nextLine();
+            stringBuilder.append(nombreUsuario);
             stringBuilder.append("-");
             System.out.println("¿Contraseña?");
             stringBuilder.append(scanner.nextLine());
             String datosIntroducidosUsuario = stringBuilder.toString();
-            scanner.close();
+            System.out.println("A continuacion va a se va a crear una cuenta en el club de Entrenadores Pokemon");
+
+            File file_escribirdatos;
+            try {
+                file_escribirdatos = new File(".", "Entrenadores.dat");
+                Entrenador entrenador = Entrenador.crearEntrenador(nombreUsuario);
+                escribirEntrenadoresDat(file_escribirdatos, entrenador);
+            } catch (Exception e) {
+                System.out.println("Error con el DAT");
+            }
 
             //CREAMOS EL ARCHIVO FILE PARA MANDARSELO AL METODO DE LEER
             file = new File(".", "Credenciales.txt");
@@ -114,7 +135,6 @@ public class Sesion {
                             System.out.println("¿Desea iniciar sesion en la calle Victoria?");
                             System.out.println("1. Si | 2. No");
                             int opcionUser = scanner_2.nextInt();
-                            scanner_2.close();
                             if (opcionUser == 1) {
                                 Sesion.IniciarSesion();
                             } else {
@@ -134,7 +154,6 @@ public class Sesion {
                         System.out.println("¿Desea iniciar sesion en la calle Victoria?");
                         System.out.println("1. Si | 2. No");
                         int opcionUser = scanner_3.nextInt();
-                        scanner_3.close();
                         if (opcionUser == 1) {
                             Sesion.IniciarSesion();
                         } else {
@@ -144,10 +163,8 @@ public class Sesion {
                         System.out.println("Valor fuera de rangos");
                     }
                 }
-
-
             } catch (Exception e) {
-                System.out.println("HA HABIDO UN ERROR EN LA COTEJACION DE DATOS");
+                System.out.println("Error en el crear cuenta al final");
             }
 
         } catch (Exception e) {
@@ -191,6 +208,39 @@ public class Sesion {
         } catch (Exception e) {
             System.out.println("No se ha encontrado el archivo para escribir");
         }
+    }
+
+    private static void escribirEntrenadoresDat (File file, Entrenador entrenador) {
+        FileOutputStream fileOutputStream;
+        try {
+            fileOutputStream = new FileOutputStream(file, true);
+                BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(fileOutputStream);
+                    ObjectOutputStream objectOutputStream = new ObjectOutputStream(bufferedOutputStream);
+                        objectOutputStream.writeObject(entrenador);
+                    objectOutputStream.close();
+                bufferedOutputStream.close();
+            fileOutputStream.close();
+        } catch (Exception e) {
+            System.out.println("Error en la escritura");
+        }
+    }
+
+    private static void leerEntrenadoresDat (File file) {
+        FileInputStream fileInputStream;
+            try {
+                fileInputStream = new FileInputStream(file);
+                    BufferedInputStream bufferedInputStream = new BufferedInputStream(fileInputStream);
+                        ObjectInputStream objectInputStream = new ObjectInputStream(bufferedInputStream);
+                            try {
+                                while (true) {
+                                    listEntrenadores.add((Entrenador) objectInputStream.readObject());
+                                }
+                            } catch (Exception e) {
+
+                            }
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
     }
 
 }

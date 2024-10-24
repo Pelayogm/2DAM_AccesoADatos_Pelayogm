@@ -1,6 +1,5 @@
 public class Admin extends Usuario {
     private int id;
-    private
     private boolean sesionAdmin;
 
     public int getId() {
@@ -19,8 +18,9 @@ public class Admin extends Usuario {
         this.sesionAdmin = sesionAdmin;
     }
 
-    public Admin(int id, boolean sesionAdmin) {
+    public Admin(int id) {
+        setEstadoSesion(true);
+        setUsuario(true);
         this.id = id;
-        this.sesionAdmin = sesionAdmin;
     }
 }

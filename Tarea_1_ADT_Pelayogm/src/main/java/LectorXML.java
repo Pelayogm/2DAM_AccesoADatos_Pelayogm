@@ -1,26 +1,41 @@
-import org.w3c.dom.*;
-import org.xml.sax.SAXException;
+import org.xml.sax.InputSource;
+import org.xml.sax.XMLReader;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import java.io.File;
-import java.io.IOException;
-import java.util.concurrent.ExecutionException;
+import javax.xml.parsers.SAXParser;
+import javax.xml.parsers.SAXParserFactory;
+import java.util.ArrayList;
 
 public class LectorXML {
+    public static ArrayList<String> listPaises = new ArrayList<>();
 
     public static void leerXML () {
-        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+        SAXParserFactory saxParserFactory = SAXParserFactory.newInstance();
+        SAXParser parser;
 
-        DocumentBuilder builder;
             try {
-                builder = factory.newDocumentBuilder();
-                    try {
-                        Document document = builder.parse(new File("paises.xml"));
+                parser = saxParserFactory.newSAXParser();
+                XMLReader xmlReader = parser.getXMLReader();
 
-                    }
+                GestorDeContenidos gestorDeContenidos = new GestorDeContenidos();
+                xmlReader.setContentHandler(gestorDeContenidos);
+                InputSource inputSource = new InputSource("paises.xml");
+                try {
+                    xmlReader.parse(inputSource);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             } catch (Exception e) {
-                System.out.println("Error en la lectura");
+                System.out.println("Error en la preparacion para la lectura");
             }
     }
+
+    public static boolean comprobarNacionalidadConXML (String userNacionalidad) {
+        for (int i = 0; i < listPaises.size(); i++) {
+            if (listPaises.get(i).equals(userNacionalidad)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 }
