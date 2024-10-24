@@ -15,7 +15,7 @@ public class Sesion {
         Sesion.sesion = sesion;
     }
 
-    public static boolean IniciarSesion () {
+    public static Usuario IniciarSesion () {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Sistema de la Calle Victoria");
         File file;
@@ -47,10 +47,13 @@ public class Sesion {
                 try {
                     for (int i = 0; i < credenciales.size(); i++) {
                         if (credenciales.get(i).equals(datosIntroducidosUsuario)) {
-                            System.out.println("SESION INICIADA");
-                            sesion = true;
-                            usuarioExiste = true;
-                            return true;
+                            if (datosIntroducidosUsuario.equals("admin-admin")); {
+                                Admin admin = new Admin(1, true);
+                                return admin;
+                            } else {
+                                System.out.println("SESION INICIADA");
+                                return Entrenador.crearEntrenador();
+                            }
                         }
                     }
 
@@ -64,7 +67,7 @@ public class Sesion {
                                 CrearCuenta();
                             } else {
                                 System.out.println("Entendido no se creará una cuenta entonces.");
-                                return true;
+
                             }
                         }
                     } catch (Exception e) {
@@ -77,7 +80,7 @@ public class Sesion {
         } catch (Exception e) {
             System.out.println("No se ha encontrado el archivo");
         }
-        return false;
+
     }
 
     public static void CrearCuenta () {
@@ -93,6 +96,7 @@ public class Sesion {
             System.out.println("¿Contraseña?");
             stringBuilder.append(scanner.nextLine());
             String datosIntroducidosUsuario = stringBuilder.toString();
+            scanner.close();
 
             //CREAMOS EL ARCHIVO FILE PARA MANDARSELO AL METODO DE LEER
             file = new File(".", "Credenciales.txt");
@@ -105,12 +109,40 @@ public class Sesion {
                     if (credenciales.get(i).equals(datosIntroducidosUsuario)) {
                         usuarioExiste = true;
                         System.out.println("YA EXISTE UNA CUENTA CON ESTOS DATOS");
-                        break;
+                        try {
+                            Scanner scanner_2 = new Scanner(System.in);
+                            System.out.println("¿Desea iniciar sesion en la calle Victoria?");
+                            System.out.println("1. Si | 2. No");
+                            int opcionUser = scanner_2.nextInt();
+                            scanner_2.close();
+                            if (opcionUser == 1) {
+                                Sesion.IniciarSesion();
+                            } else {
+                                System.out.println("Hasta pronto");
+                            }
+                        } catch (Exception e) {
+                            System.out.println("Valor fuera de rangos");
+                        }
+
                     }
                 }
                 if (!usuarioExiste) {
                     escribirFichero(file, datosIntroducidosUsuario);
                     System.out.println("Cuenta creada con éxito");
+                    try {
+                        Scanner scanner_3 = new Scanner(System.in);
+                        System.out.println("¿Desea iniciar sesion en la calle Victoria?");
+                        System.out.println("1. Si | 2. No");
+                        int opcionUser = scanner_3.nextInt();
+                        scanner_3.close();
+                        if (opcionUser == 1) {
+                            Sesion.IniciarSesion();
+                        } else {
+                            System.out.println("Hasta pronto");
+                        }
+                    } catch (Exception e) {
+                        System.out.println("Valor fuera de rangos");
+                    }
                 }
 
 
