@@ -1,3 +1,4 @@
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -65,6 +66,21 @@ public class Funciones {
                         System.out.println("¿Codigo del torneo?");
                             String regionTorneo = scanner.next();
                             char charRegion = regionTorneo.charAt(0);
+
+                            //PENDIENTE CREAR ADMIN TORNEOS
+                        //COMPROBAR QUE YA EXISTA HACER METODOS DESTINADOS
+                        StringBuilder stringBuilder = new StringBuilder();
+                        System.out.println("¿Usuario del administrador de Torneos?");
+                            String nombreAdminTorneos = scanner.next();
+                            stringBuilder.append(nombreAdminTorneos);
+                            stringBuilder.append("-");
+                        System.out.println("¿Contraseña del administrador de Torneos?");
+                            String contrasenaAdminTorneos = scanner.next();
+                            stringBuilder.append(contrasenaAdminTorneos);
+                            String credenciales = stringBuilder.toString();
+
+                        File file = new File(".", "Credenciales.txt");
+                        Credenciales.escribirFichero(file, credenciales);
 
                              Torneo torneo = new Torneo(listTorneos.size() + 1,nombreTorneo, charRegion);
                              listTorneos.add(torneo);

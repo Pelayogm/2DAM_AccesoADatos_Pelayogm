@@ -1,21 +1,28 @@
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.Marshaller;
+import org.w3c.dom.DOMImplementation;
+import org.w3c.dom.Document;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
 import java.io.File;
 
 public class Exportar {
 
     public static void ExportarCarnet () {
-        JAXBContext context;
-        Carnet carnet = new Carnet();
+        DocumentBuilderFactory factory;
             try {
-                context = JAXBContext.newInstance(Carnet.class);
-                Marshaller marshaller = context.createMarshaller();
-                marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
-                marshaller.marshal(carnet, System.out);
-                marshaller.marshal(carnet, new File(".", "Carnet.xml"));
-
+                factory = DocumentBuilderFactory.newInstance();
+                DocumentBuilder builder = factory.newDocumentBuilder();
+                DOMImplementation domImplementation = builder.getDOMImplementation();
+                Document document = domImplementation.createDocument(null, "carnet", null);
+                    try {
+                        document.setXmlVersion("1.0");
+                        File file = new File("");
+                    } catch (Exception e) {
+                        System.out.println("Error con el Document");
+                    }
+                
             } catch (Exception e) {
-                e.printStackTrace();
+                System.out.println("No se ha creado el Document Builder Factory");
             }
     }
 }

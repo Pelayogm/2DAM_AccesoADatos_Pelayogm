@@ -6,6 +6,7 @@ public class Torneo {
     private String nombre;
     private char codRegion;
     private float PuntosVictoria;
+    private AdminTorneos adminTorneos;
     //Boolean para saber si esta activo el torneo
     private boolean torneoCreado;
     private List <Entrenador> participantesDelTorneo = new ArrayList<>();
@@ -63,5 +64,13 @@ public class Torneo {
         this.nombre = nombre;
         this.codRegion = codigo;
         this.torneoCreado = true;
+    }
+
+    public AdminTorneos getAdminTorneos() {
+        return adminTorneos;
+    }
+
+    public void setAdminTorneos(AdminTorneos adminTorneos) {
+        this.adminTorneos = adminTorneos;
     }
 }
