@@ -1,21 +1,29 @@
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Entrenador extends Usuario implements Serializable {
-    private final long id;
-    private final String nombre;
+    private long id;
+    private String nombre;
     private String nacionalidad;
     private boolean sesionIniciada = false;
 
     private final boolean esEntrenador = true;
 
+    //LISTA DE TORNEOS PARA VER SI HAY ALGUNO ACTIVO
+    private static ArrayList <Torneo> torneos = Funciones.getListTorneos();
+
     public boolean isEsEntrenador() {
         return esEntrenador;
+    }
+
+    public Entrenador() {
     }
 
     public Entrenador(long id, String nombre, String nacionalidad) {
         setEstadoSesion(true);
         setUsuario(false);
+        setNombreUsuario(nombre);
         this.id = id;
         this.nombre = nombre;
         this.nacionalidad = nacionalidad;
@@ -33,10 +41,6 @@ public class Entrenador extends Usuario implements Serializable {
         return nacionalidad;
     }
 
-    public void setNacionalidad(String nacionalidad) {
-        this.nacionalidad = nacionalidad;
-    }
-
     public boolean isSesionIniciada() {
         return sesionIniciada;
     }
@@ -47,6 +51,7 @@ public class Entrenador extends Usuario implements Serializable {
 
 
     public static Entrenador crearEntrenador (String nombreUsuario) {
+
         Scanner scanner_entrenador = new Scanner(System.in);
         System.out.println("¿Nombre?");
         System.out.println("Nombre elegido: " + nombreUsuario);
@@ -57,8 +62,15 @@ public class Entrenador extends Usuario implements Serializable {
 
         if (LectorXML.comprobarNacionalidadConXML(nacionalidadEntrenador)) {
             Entrenador entrenador = new Entrenador(2, nombreUsuario, nacionalidadEntrenador);
-            System.out.println("Bienvenido: " + nombreUsuario);
-            return entrenador;
+
+            for (int i = 0; i < torneos.size(); i++) {
+                if (torneos.get(i).isTorneoCreado()) {
+                    System.out.println("Bienvenido: " + nombreUsuario);
+                    System.out.println("Estas apuntado en el torneo " + torneos.get(i).getNombre());
+                    torneos.get(i).getParticipantesDelTorneo().add(entrenador);
+                    return entrenador;
+                }
+            }
 
         } else {
             System.out.println("Datos mal introducidos");

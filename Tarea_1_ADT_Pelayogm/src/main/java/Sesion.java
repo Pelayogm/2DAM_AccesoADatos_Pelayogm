@@ -6,14 +6,16 @@ import java.util.Scanner;
 public class Sesion {
     private static ArrayList<String> credenciales = new ArrayList<>();
     public static ArrayList<Entrenador> listEntrenadores = new ArrayList<>();
-    private static boolean sesion = false;
+    private static ArrayList<Torneo> listTorneos = Funciones.getListTorneos();
 
-    public static boolean isSesion() {
-        return sesion;
-    }
+    private static boolean flag = false;
 
-    public static void setSesion(boolean sesion) {
-        Sesion.sesion = sesion;
+    public static void ComprobacionTorneos () {
+        for (int i = 0; i < listTorneos.size(); i++) {
+            if (listTorneos.get(i).isTorneoCreado()) {
+                flag = true;
+            }
+        }
     }
 
     public static Usuario IniciarSesion () {
@@ -43,7 +45,7 @@ public class Sesion {
             //CREAMOS EL ARCHIVO FILE PARA MANDARSELO AL METODO DE LEER
             file = new File(".", "Credenciales.txt");
             //RELLENAR EL ARRAYLIST CON LOS DATOS QUE HAY EN EL CREDENCIALES.TXT
-            leerFichero(file);
+            Credenciales.leerFichero(file);
 
             //COMPROBAR EL ARRAYLIST DE CREDENCIALES PARA VER SI HAY COINCIDENCIAS
                 try {
@@ -57,7 +59,7 @@ public class Sesion {
                                 Entrenador entrenador;
                                 File file_entrenadores = new File(".", "Entrenadores.dat");
                                 try {
-                                    leerEntrenadoresDat(file_entrenadores);
+                                    GestorArchivosDat.leerEntrenadoresDat(file_entrenadores);
                                     for (int is = 0; is < listEntrenadores.size(); is++) {
                                         if (listEntrenadores.get(is).getNombre().equals(nombreEntrenador)) {
                                             entrenador = listEntrenadores.get(is);
@@ -100,6 +102,7 @@ public class Sesion {
         File file;
         boolean usuarioExiste = false;
         try {
+            //FORMULARIO PARA EL USUARIO
             StringBuilder stringBuilder = new StringBuilder();
             System.out.println("¿Usuario?");
             String nombreUsuario = scanner.nextLine();
@@ -110,19 +113,27 @@ public class Sesion {
             String datosIntroducidosUsuario = stringBuilder.toString();
             System.out.println("A continuacion va a se va a crear una cuenta en el club de Entrenadores Pokemon");
 
+            //SE PREPARA UN ARCHIVO PARA ESCRIBIR EL ENTRENDADOR EN UN ARCHIVO DAT
             File file_escribirdatos;
-            try {
-                file_escribirdatos = new File(".", "Entrenadores.dat");
-                Entrenador entrenador = Entrenador.crearEntrenador(nombreUsuario);
-                escribirEntrenadoresDat(file_escribirdatos, entrenador);
-            } catch (Exception e) {
-                System.out.println("Error con el DAT");
-            }
+            ComprobacionTorneos();
+                if (flag) {
+                    try {
+                        file_escribirdatos = new File(".", "Entrenadores.dat");
+                        //SE LLAMA A CREAR ENTRENADOR
+                        Entrenador entrenador = Entrenador.crearEntrenador(nombreUsuario);
+                        //CON LO QUE RETORNA CREAR ENTRENADOR ESCRIBIMOS EL DAT
+                        GestorArchivosDat.escribirEntrenadoresDat(file_escribirdatos, entrenador);
+                    } catch (Exception e) {
+                        System.out.println("Error con el DAT");
+                    }
+                } else {
+                    System.out.println("No esta disponible este servicio por el momento");
+                }
 
             //CREAMOS EL ARCHIVO FILE PARA MANDARSELO AL METODO DE LEER
             file = new File(".", "Credenciales.txt");
             //RELLENAR EL ARRAYLIST CON LOS DATOS QUE HAY EN EL CREDENCIALES.TXT
-            leerFichero(file);
+            Credenciales.leerFichero(file);
 
             //COMPROBAR EL ARRAYLIST DE CREDENCIALES PARA VER SI HAY COINCIDENCIAS
             try {
@@ -143,11 +154,11 @@ public class Sesion {
                         } catch (Exception e) {
                             System.out.println("Valor fuera de rangos");
                         }
-
                     }
                 }
-                if (!usuarioExiste) {
-                    escribirFichero(file, datosIntroducidosUsuario);
+
+                if (!usuarioExiste && flag) {
+                    Credenciales.escribirFichero(file, datosIntroducidosUsuario);
                     System.out.println("Cuenta creada con éxito");
                     try {
                         Scanner scanner_3 = new Scanner(System.in);
@@ -164,83 +175,19 @@ public class Sesion {
                     }
                 }
             } catch (Exception e) {
-                System.out.println("Error en el crear cuenta al final");
+                System.out.println("No se ha podido completar la creación de la cuenta");
             }
 
         } catch (Exception e) {
             System.out.println("No se ha encontrado el archivo");
         }
-
     }
 
-    private static void leerFichero(File file) {
-        FileReader fileReader;
-        try {
-            fileReader = new FileReader(file);
-            BufferedReader bufferedReader = new BufferedReader(fileReader);
-            try {
-                String linea = bufferedReader.readLine();
-                while (linea != null) {
-                    credenciales.add(linea);
-                    linea = bufferedReader.readLine();
-                }
-                bufferedReader.close();
-                fileReader.close();
-            } catch (Exception e) {
-                System.out.println("Fin del fichero");
-            }
-
-        } catch (Exception e) {
-            System.out.println("No se ha encontrado el archivo para leer");
-        }
+    public static ArrayList<String> getCredenciales() {
+        return credenciales;
     }
 
-    private static void escribirFichero (File file, String datosParaEscribir) {
-        FileWriter fileWriter;
-        try {
-            fileWriter = new FileWriter(file, true);
-            try {
-                fileWriter.write(datosParaEscribir + "\n");
-                fileWriter.close();
-            } catch (IOException e) {
-                System.out.println("No se ha podido escribir");
-            }
-        } catch (Exception e) {
-            System.out.println("No se ha encontrado el archivo para escribir");
-        }
+    public static ArrayList<Entrenador> getListEntrenadores() {
+        return listEntrenadores;
     }
-
-    private static void escribirEntrenadoresDat (File file, Entrenador entrenador) {
-        FileOutputStream fileOutputStream;
-        try {
-            fileOutputStream = new FileOutputStream(file, true);
-                BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(fileOutputStream);
-                    ObjectOutputStream objectOutputStream = new ObjectOutputStream(bufferedOutputStream);
-                        objectOutputStream.writeObject(entrenador);
-                    objectOutputStream.close();
-                bufferedOutputStream.close();
-            fileOutputStream.close();
-        } catch (Exception e) {
-            System.out.println("Error en la escritura");
-        }
-    }
-
-    private static void leerEntrenadoresDat (File file) {
-        FileInputStream fileInputStream;
-            try {
-                fileInputStream = new FileInputStream(file);
-                    BufferedInputStream bufferedInputStream = new BufferedInputStream(fileInputStream);
-                        ObjectInputStream objectInputStream = new ObjectInputStream(bufferedInputStream);
-                            try {
-                                while (true) {
-                                    listEntrenadores.add((Entrenador) objectInputStream.readObject());
-                                }
-                            } catch (Exception e) {
-
-                            }
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }
-    }
-
 }

@@ -2,13 +2,53 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Funciones {
-    private static ArrayList<Torneo> Torneos = new ArrayList<>();
+    private static ArrayList<Torneo> listTorneos = new ArrayList<>();
 
     public static void MostrarFunciones (Usuario usuario) {
+        Scanner scanner = new Scanner(System.in);
+
         if (usuario.isUsuario()) {
-            System.out.println("Hola administrador");
+            System.out.println("Bienvenido Administrador");
+            System.out.println("1. Crear Torneo | 2. Cerrar Sesión");
+            int adminOpcion = scanner.nextInt();
+                while (adminOpcion < 4) {
+                    if (adminOpcion == 1) {
+                        Funciones.CrearTorneo(usuario);
+                    }
+
+                    if (adminOpcion == 2) {
+                        Funciones.CerrarSesion(usuario);
+                        break;
+                    }
+
+                    if (adminOpcion == 3) {
+                        System.out.println("Hola");
+                    }
+                    System.out.println("1. Crear Torneo | 2. Cerrar Sesión");
+                    adminOpcion = scanner.nextInt();
+                }
         } else {
-            System.out.println("Hola entrenador");
+            System.out.println("Hola " + usuario.getNombre());
+            System.out.println("1. Exportar Carnet de Entrenador | 2. Cerrar Sesión");
+            int userOpcion = scanner.nextInt();
+            while (userOpcion < 4) {
+                if (userOpcion == 1) {
+                    Exportar.ExportarCarnet();
+                }
+
+                if (userOpcion == 2) {
+                    Funciones.CerrarSesion(usuario);
+                    break;
+                }
+
+                if (userOpcion == 3) {
+                    System.out.println("Hola");
+
+                }
+                System.out.println("1. Exportar Carnet de Entrenador | 2. Cerrar Sesión");
+                userOpcion = scanner.nextInt();
+            }
+
         }
     }
 
@@ -20,6 +60,14 @@ public class Funciones {
                 int adminOpcion = scanner.nextInt();
                 try {
                     if (adminOpcion == 1) {
+                        System.out.println("¿Nombre del torneo?");
+                            String nombreTorneo = scanner.next();
+                        System.out.println("¿Codigo del torneo?");
+                            String regionTorneo = scanner.next();
+                            char charRegion = regionTorneo.charAt(0);
+
+                             Torneo torneo = new Torneo(listTorneos.size() + 1,nombreTorneo, charRegion);
+                             listTorneos.add(torneo);
 
                     } else if (adminOpcion == 2) {
                         System.out.println("Saliendo...");
@@ -30,6 +78,8 @@ public class Funciones {
                     System.out.println("Solo se admiten numeros");
                 }
 
+        } else {
+            System.out.println("No tienes los suficientes permisos como para acceder aqui");
         }
     }
 
@@ -58,5 +108,7 @@ public class Funciones {
          return false;
        }
 
-
+    public static ArrayList<Torneo> getListTorneos() {
+        return listTorneos;
+    }
 }
