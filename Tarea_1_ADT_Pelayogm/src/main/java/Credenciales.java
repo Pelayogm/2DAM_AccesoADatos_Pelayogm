@@ -2,7 +2,7 @@ import java.io.*;
 import java.util.ArrayList;
 
 public class Credenciales {
-    private static ArrayList <String> credenciales = Sesion.getCredenciales();
+    private static ArrayList<String> credenciales = new ArrayList<>();
 
     public static void leerFichero(File file) {
         FileReader fileReader;
@@ -39,5 +39,14 @@ public class Credenciales {
         } catch (Exception e) {
             System.out.println("No se ha encontrado el archivo para escribir");
         }
+    }
+
+    public static boolean comprobarCredenciales (String credencialesDelUsuario) {
+        for (int i = 0; i < credenciales.size(); i++) {
+            if (credenciales.get(i).equals(credencialesDelUsuario)) {
+                return true;
+            }
+        }
+        return false;
     }
 }

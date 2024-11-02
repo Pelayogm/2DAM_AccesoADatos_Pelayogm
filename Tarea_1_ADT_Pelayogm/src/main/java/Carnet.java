@@ -1,10 +1,11 @@
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
+import java.io.Serializable;
 import java.time.LocalDate;
 
-@XmlRootElement
-public class Carnet {
+
+public class Carnet implements Serializable {
 
     private long idEntrenador;
     private LocalDate fechaExpedicion;
@@ -18,20 +19,18 @@ public class Carnet {
         this.numVictorias = numVictorias;
     }
 
-    public Carnet() {
+    public Carnet(long idEntrenador, LocalDate fechaExpedicion) {
+        this.idEntrenador = idEntrenador;
+        this.fechaExpedicion = fechaExpedicion;
     }
 
-    @XmlElement(name = "id")
     public long getIdEntrenador() {
         return idEntrenador;
     }
 
-    @XmlElement(name = "fechaexp")
     public LocalDate getFechaExpedicion() {
         return fechaExpedicion;
     }
-
-    @XmlElementWrapper(name = "entrenador")
 
     public float getPuntos() {
         return puntos;

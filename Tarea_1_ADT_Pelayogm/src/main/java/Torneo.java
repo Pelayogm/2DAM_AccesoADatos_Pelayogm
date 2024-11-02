@@ -1,7 +1,8 @@
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Torneo {
+public class Torneo implements Serializable {
     private int id;
     private String nombre;
     private char codRegion;

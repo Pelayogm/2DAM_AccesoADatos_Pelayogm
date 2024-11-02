@@ -4,11 +4,12 @@ import java.util.Scanner;
 
 public class Funciones {
     private static ArrayList<Torneo> listTorneos = new ArrayList<>();
+    private static ArrayList<Entrenador> listEntrenadores = Sesion.getListEntrenadores();
 
     public static void MostrarFunciones (Usuario usuario) {
         Scanner scanner = new Scanner(System.in);
 
-        if (usuario.isUsuario()) {
+        if (usuario instanceof Admin) {
             System.out.println("Bienvenido Administrador");
             System.out.println("1. Crear Torneo | 2. Cerrar Sesión");
             int adminOpcion = scanner.nextInt();
@@ -28,28 +29,33 @@ public class Funciones {
                     System.out.println("1. Crear Torneo | 2. Cerrar Sesión");
                     adminOpcion = scanner.nextInt();
                 }
-        } else {
+        } else if (usuario instanceof Entrenador) {
             System.out.println("Hola " + usuario.getNombre());
+            usuario.setEstadoSesion(true);
+            Entrenador entrenador = (Entrenador) usuario;
             System.out.println("1. Exportar Carnet de Entrenador | 2. Cerrar Sesión");
+            System.out.println("Número de torneos: " + entrenador.getTorneosDelEntrenador().size());
             int userOpcion = scanner.nextInt();
             while (userOpcion < 4) {
                 if (userOpcion == 1) {
-                    Exportar.ExportarCarnet();
+                    Exportar.ExportarCarnet(entrenador);
                 }
 
                 if (userOpcion == 2) {
-                    Funciones.CerrarSesion(usuario);
+                    Funciones.CerrarSesion(entrenador);
                     break;
                 }
 
                 if (userOpcion == 3) {
                     System.out.println("Hola");
-
                 }
+
                 System.out.println("1. Exportar Carnet de Entrenador | 2. Cerrar Sesión");
                 userOpcion = scanner.nextInt();
             }
 
+        } else {
+            System.out.println("No se reconoce el tipo de usuario");
         }
     }
 
@@ -67,8 +73,6 @@ public class Funciones {
                             String regionTorneo = scanner.next();
                             char charRegion = regionTorneo.charAt(0);
 
-                            //PENDIENTE CREAR ADMIN TORNEOS
-                        //COMPROBAR QUE YA EXISTA HACER METODOS DESTINADOS
                         StringBuilder stringBuilder = new StringBuilder();
                         System.out.println("¿Usuario del administrador de Torneos?");
                             String nombreAdminTorneos = scanner.next();
@@ -80,8 +84,9 @@ public class Funciones {
                             String credenciales = stringBuilder.toString();
 
                         File file = new File(".", "Credenciales.txt");
-                        Credenciales.escribirFichero(file, credenciales);
-
+                        if (!Credenciales.comprobarCredenciales(credenciales)) {
+                            Credenciales.escribirFichero(file, credenciales);
+                        }
                              Torneo torneo = new Torneo(listTorneos.size() + 1,nombreTorneo, charRegion);
                              listTorneos.add(torneo);
 
@@ -108,6 +113,7 @@ public class Funciones {
                     int opcionUsuario = scanner.nextInt();
 
                     if (opcionUsuario == 1) {
+                        usuario.setEstadoSesion(false);
                         Sesion.IniciarSesion();
                    } else {
                         return false;
