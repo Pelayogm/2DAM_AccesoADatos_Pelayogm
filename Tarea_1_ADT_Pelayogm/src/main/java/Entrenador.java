@@ -14,7 +14,7 @@ public class Entrenador extends Usuario implements Serializable {
     private static ArrayList <Torneo> torneos = Funciones.getListTorneos();
 
     //ARRAYLIST DE LOS TORNEOS EN LOS QUE ESTA O ESTUVO PRESENTE
-    private static ArrayList<Torneo> torneosDelEntrenador = new ArrayList<>();
+    private ArrayList<Torneo> torneosDelEntrenador = new ArrayList<>();
 
     public ArrayList<Torneo> getTorneosDelEntrenador() {
         return torneosDelEntrenador;
@@ -74,7 +74,7 @@ public class Entrenador extends Usuario implements Serializable {
                 //SI HAY UNO CREADO
                 if (torneos.get(i).isTorneoCreado()) {
                     //SE AÑADE A LISTA DE TORNEOS QUE TIENE EL ENTRENADOR EL TORNEO QUE SE ENCUENTRE ACTIVO
-                    torneosDelEntrenador.add(torneos.get(i));
+                    entrenador.torneosDelEntrenador.add(torneos.get(i));
                     //PROCEDIMIENTO DE ENTRADA AL CREAR LA CUENTA
                     System.out.println("Bienvenido: " + nombreUsuario);
                     System.out.println("Estas apuntado en el torneo " + torneos.get(i).getNombre());

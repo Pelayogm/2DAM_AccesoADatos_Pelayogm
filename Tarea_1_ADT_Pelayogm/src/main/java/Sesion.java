@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 
 public class Sesion {
-        public static ArrayList<Entrenador> listEntrenadores = new ArrayList<>();
+    public static ArrayList<Entrenador> listEntrenadores = new ArrayList<>();
     private static ArrayList<Torneo> listTorneos = Funciones.getListTorneos();
 
     //BOOLEANO PARA COMPROBAR QUE SE HAN COMPROBADO LOS TORNEOS

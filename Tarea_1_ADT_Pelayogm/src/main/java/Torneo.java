@@ -10,13 +10,13 @@ public class Torneo implements Serializable {
     private AdminTorneos adminTorneos;
     //Boolean para saber si esta activo el torneo
     private boolean torneoCreado;
-    private List <Entrenador> participantesDelTorneo = new ArrayList<>();
+    private ArrayList <Entrenador> participantesDelTorneo = new ArrayList<>();
 
-    public List<Entrenador> getParticipantesDelTorneo() {
+    public ArrayList<Entrenador> getParticipantesDelTorneo() {
         return participantesDelTorneo;
     }
 
-    public void setParticipantesDelTorneo(List<Entrenador> participantesDelTorneo) {
+    public void setParticipantesDelTorneo(ArrayList<Entrenador> participantesDelTorneo) {
         this.participantesDelTorneo = participantesDelTorneo;
     }
 

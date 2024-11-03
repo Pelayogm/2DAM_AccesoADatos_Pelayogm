@@ -6,11 +6,18 @@ public class GestorArchivosDat {
 
     public static void escribirEntrenadoresDat (File file, Entrenador entrenador) {
         FileOutputStream fileOutputStream;
+        if (file != null && file.length() != 0){
+            leerEntrenadoresDat(file);
+        }
+        listEntrenadores.add(entrenador);
         try {
-            fileOutputStream = new FileOutputStream(file, true);
+            fileOutputStream = new FileOutputStream(file);
             BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(fileOutputStream);
             ObjectOutputStream objectOutputStream = new ObjectOutputStream(bufferedOutputStream);
-            objectOutputStream.writeObject(entrenador);
+                for (int i = 0; i < listEntrenadores.size(); i++) {
+                    objectOutputStream.writeObject(listEntrenadores.get(i));
+                }
+
             objectOutputStream.close();
             bufferedOutputStream.close();
             fileOutputStream.close();
