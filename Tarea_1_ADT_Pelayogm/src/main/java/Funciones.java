@@ -83,12 +83,28 @@ public class Funciones {
                             stringBuilder.append(contrasenaAdminTorneos);
                             String credenciales = stringBuilder.toString();
 
+                        //SE CREAN 2 FILE UNO PARA CREDENCIALES Y OTRO PARA COMPROBAR
                         File file = new File(".", "Credenciales.txt");
-                        if (!Credenciales.comprobarCredenciales(credenciales)) {
-                            Credenciales.escribirFichero(file, credenciales);
-                        }
-                             Torneo torneo = new Torneo(listTorneos.size() + 1,nombreTorneo, charRegion);
-                             listTorneos.add(torneo);
+                        File file_dat = new File(".", "Entrenadores.dat");
+
+                        //SI EL USUARIO QUE SE DA NO ES UN ENTRENADOR, SE SABE POR EL BOOLEANO isEntrenador QUE TIENE LA CLASE ENTRENADOR
+                        //if (!GestorArchivosDat.comprobarEntrenadorDat(file_dat, nombreAdminTorneos)) {
+                            //SI NO ESTA EN EL FICHERO SE ESCRIBE Y SE CREA EL TORNEO Y SE AÑADE A LA LISTA
+                            if (!Credenciales.comprobarCredenciales(credenciales)) {
+                                Credenciales.escribirFichero(file, credenciales);
+                                Torneo torneo = new Torneo(listTorneos.size() + 1,nombreTorneo, charRegion);
+                                System.out.println("Torneo creado");
+                                listTorneos.add(torneo);
+                            } else {
+                                //SI YA ESTA EN LA LISTA DE CREDENCIALES SE CREA EL TORNEO Y SE AÑADE A LA LISTA
+                                Torneo torneo = new Torneo(listTorneos.size() + 1,nombreTorneo, charRegion);
+                                System.out.println("Torneo creado");
+                                listTorneos.add(torneo);
+                            }
+                        //} else {
+                            //SI EL USUARIO ES ENTRENADOR DEVUELVE EL SIGUIENTE MENSAJE
+                            //System.out.println("El usuario introducido es un Entrenador, vuelve a intentarlo con otro usuario");
+                        //}
 
                     } else if (adminOpcion == 2) {
                         System.out.println("Saliendo...");

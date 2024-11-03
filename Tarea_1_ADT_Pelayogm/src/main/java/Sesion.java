@@ -7,8 +7,10 @@ public class Sesion {
         public static ArrayList<Entrenador> listEntrenadores = new ArrayList<>();
     private static ArrayList<Torneo> listTorneos = Funciones.getListTorneos();
 
+    //BOOLEANO PARA COMPROBAR QUE SE HAN COMPROBADO LOS TORNEOS
     private static boolean flag = false;
 
+    //SI EXISTE AL MENOS UN TORNEO FLAG ES TRUE
     public static void ComprobacionTorneos () {
         for (int i = 0; i < listTorneos.size(); i++) {
             if (listTorneos.get(i).isTorneoCreado()) {
@@ -47,12 +49,15 @@ public class Sesion {
 
             //COMPROBAR EL ARRAYLIST DE CREDENCIALES PARA VER SI HAY COINCIDENCIAS
             try {
+                //SE USA EL METODO DE COMRPOBAR CREDENCIALES SI EXISTEN LAS CREDENCIALES
                 if (Credenciales.comprobarCredenciales(datosIntroducidosUsuario)) {
+                    //SI LAS CREDENCIALES SON ADMIN-ADMIN SE PASA YA AL USER ADMIN
                     if (datosIntroducidosUsuario.equals("admin-admin")) {
                         Admin admin = new Admin(1);
                         Funciones.MostrarFunciones(admin);
                         return admin;
                     } else {
+                        //SI ES ENTRENADOR SE LEE ENTRENADORES.DAT
                         Entrenador entrenador;
                         File archivo_Entrenadores = new File(".", "Entrenadores.dat");
                             try {
@@ -143,7 +148,7 @@ public class Sesion {
                     System.out.println("El usuario y contraseña introducido ya existe");
                     System.out.println("¿Desea iniciar sesión? - 1. Si | 2. No");
                     try {
-                        int opcionUsuario = scanner.nextInt();
+                        int opcionUsuario = scanner_2.nextInt();
                         switch (opcionUsuario) {
                             case 1 -> {
                                 Sesion.IniciarSesion();

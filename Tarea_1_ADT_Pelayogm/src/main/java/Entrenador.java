@@ -12,6 +12,8 @@ public class Entrenador extends Usuario implements Serializable {
 
     //LISTA DE TORNEOS PARA VER SI HAY ALGUNO ACTIVO
     private static ArrayList <Torneo> torneos = Funciones.getListTorneos();
+
+    //ARRAYLIST DE LOS TORNEOS EN LOS QUE ESTA O ESTUVO PRESENTE
     private static ArrayList<Torneo> torneosDelEntrenador = new ArrayList<>();
 
     public ArrayList<Torneo> getTorneosDelEntrenador() {
@@ -65,7 +67,7 @@ public class Entrenador extends Usuario implements Serializable {
         //SI LA NACIONALIDAD QUE ESTA EN PAISES.XML ESTA BIEN
         if (LectorXML.comprobarNacionalidadConXML(nacionalidadEntrenador)) {
             //SE CREA EL OBJETO ENTRENADOR
-            Entrenador entrenador = new Entrenador(2, nombreUsuario, nacionalidadEntrenador);
+            Entrenador entrenador = new Entrenador(3, nombreUsuario, nacionalidadEntrenador);
 
             //SE RECORRE LA LISTA DE TORNEOS EXISTENTES EN LA SESION
             for (int i = 0; i < torneos.size(); i++) {

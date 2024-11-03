@@ -36,4 +36,16 @@ public class GestorArchivosDat {
             throw new RuntimeException(e);
         }
     }
+
+    public static boolean comprobarEntrenadorDat (File file, String nombre) {
+        leerEntrenadoresDat(file);
+        for (int i = 0; i < listEntrenadores.size(); i++) {
+            if (listEntrenadores.get(i).getNombre().equals(nombre)) {
+                if (listEntrenadores.get(i).isEsEntrenador()) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
 }

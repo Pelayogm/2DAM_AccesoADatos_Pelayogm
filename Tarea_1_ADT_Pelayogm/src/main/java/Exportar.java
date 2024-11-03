@@ -56,7 +56,6 @@ public class Exportar {
                                 elementTorneos.appendChild(elementTorneo);
                             }
 
-
                         Source source = new DOMSource(document);
                             String nombreFichero = entrenador.getNombre();
                         Result result = new StreamResult(new java.io.File(nombreFichero + ".xml"));
