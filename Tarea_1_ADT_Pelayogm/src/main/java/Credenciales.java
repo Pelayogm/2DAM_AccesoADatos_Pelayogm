@@ -26,12 +26,13 @@ public class Credenciales {
         }
     }
 
-    public static void escribirFichero (File file, String datosParaEscribir) {
+    public static void escribirFichero (File file, String datosParaEscribir, String rolUsuario) {
         FileWriter fileWriter;
         try {
             fileWriter = new FileWriter(file, true);
             try {
                 fileWriter.write(datosParaEscribir + "\n");
+                fileWriter.write(rolUsuario + "\n");
                 fileWriter.close();
             } catch (IOException e) {
                 System.out.println("No se ha podido escribir");
@@ -48,5 +49,9 @@ public class Credenciales {
             }
         }
         return false;
+    }
+
+    public static ArrayList<String> getCredenciales() {
+        return credenciales;
     }
 }

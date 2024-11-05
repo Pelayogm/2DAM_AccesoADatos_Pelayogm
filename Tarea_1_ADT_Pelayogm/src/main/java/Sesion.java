@@ -4,8 +4,9 @@ import java.util.Scanner;
 
 
 public class Sesion {
-    public static ArrayList<Entrenador> listEntrenadores = new ArrayList<>();
+    public static ArrayList<Usuario> listEntrenadores = new ArrayList<>();
     private static ArrayList<Torneo> listTorneos = Funciones.getListTorneos();
+    private static ArrayList<String> listCredenciales = Credenciales.getCredenciales();
 
     //BOOLEANO PARA COMPROBAR QUE SE HAN COMPROBADO LOS TORNEOS
     private static boolean flag = false;
@@ -44,35 +45,45 @@ public class Sesion {
 
             //CREAMOS EL ARCHIVO FILE PARA MANDARSELO AL METODO DE LEER
             file = new File(".", "Credenciales.txt");
+
             //RELLENAR EL ARRAYLIST CON LOS DATOS QUE HAY EN EL CREDENCIALES.TXT
             Credenciales.leerFichero(file);
 
             //COMPROBAR EL ARRAYLIST DE CREDENCIALES PARA VER SI HAY COINCIDENCIAS
             try {
-                //SE USA EL METODO DE COMRPOBAR CREDENCIALES SI EXISTEN LAS CREDENCIALES
                 if (Credenciales.comprobarCredenciales(datosIntroducidosUsuario)) {
-                    //SI LAS CREDENCIALES SON ADMIN-ADMIN SE PASA YA AL USER ADMIN
-                    if (datosIntroducidosUsuario.equals("admin-admin")) {
-                        Admin admin = new Admin(1);
-                        Funciones.MostrarFunciones(admin);
-                        return admin;
-                    } else {
-                        //SI ES ENTRENADOR SE LEE ENTRENADORES.DAT
-                        Entrenador entrenador;
-                        File archivo_Entrenadores = new File(".", "Entrenadores.dat");
-                            try {
-                                GestorArchivosDat.leerEntrenadoresDat(archivo_Entrenadores);
-                                for (int i = 0; i < listEntrenadores.size(); i++) {
-                                    if (listEntrenadores.get(i).getNombre().equals(nombreEntrenador)) {
-                                        entrenador = listEntrenadores.get(i);
-                                        System.out.println("Sesión Iniciada");
-                                        Funciones.MostrarFunciones(entrenador);
-                                        return entrenador;
-                                    }
-                                }
-                            } catch (Exception e) {
-                                System.out.println("No se ha encontrado el entrenador en el archivo de Entrenadores");
-                            }
+                    for (int i = 0; i < listCredenciales.size(); i++) {
+                        if (datosIntroducidosUsuario.equals(listCredenciales.get(i)) && listCredenciales.get(i + 1).equals("Administrador")) {
+                            Admin admin = new Admin(1);
+                            Funciones.MostrarFunciones(admin);
+                            return admin;
+                        }
+
+                        if (datosIntroducidosUsuario.equals(listCredenciales.get(i)) && listCredenciales.get(i + 1).equals("AdministradorTorneos")) {
+                            AdminTorneos adminTorneos = new AdminTorneos();
+                            Funciones.MostrarFunciones(adminTorneos);
+                            return adminTorneos;
+                        }
+
+                        if (datosIntroducidosUsuario.equals(listCredenciales.get(i)) && listCredenciales.get(i + 1).equals("Entrenador")); {
+                          Entrenador entrenador;
+                          File datos_dat = new File(".", "Usuarios.dat");
+                          try {
+                              GestorArchivosDat.leerEntrenadoresDat(datos_dat);
+                              for (int x = 0; i < listEntrenadores.size(); x++) {
+                                  if (listEntrenadores.get(x).getNombre().equals(nombreEntrenador)) {
+                                      entrenador = (Entrenador) listEntrenadores.get(x);
+                                      System.out.println("Sesion iniciada");
+                                      Funciones.MostrarFunciones(entrenador);
+                                      return entrenador;
+                                  }
+                              }
+                          } catch (Exception e) {
+
+                          }
+                        }
+
+
                     }
                 } else {
                     System.out.println("No se han encontrado sus credenciales");
@@ -123,7 +134,7 @@ public class Sesion {
             ComprobacionTorneos();
             if (flag) {
                 try {
-                    file_escribirdatos = new File(".", "Entrenadores.dat");
+                    file_escribirdatos = new File(".", "Usuarios.dat");
                     //SE LLAMA A CREAR ENTRENADOR
                     Entrenador entrenador = Entrenador.crearEntrenador(nombreUsuario);
                     //CON LO QUE RETORNA CREAR ENTRENADOR ESCRIBIMOS EL DAT
@@ -166,7 +177,8 @@ public class Sesion {
                     //SI LA LISTA DE TORNEOS TIENE DATOS
                     if (flag) {
                         //SE AÑADE AL ARCHIVO DE CREDENCIALES LOS DATOS DEL USUARIO
-                        Credenciales.escribirFichero(file, datosIntroducidosUsuario);
+                        String rolUsuario = "Entrenador";
+                        Credenciales.escribirFichero(file, datosIntroducidosUsuario, rolUsuario);
                         System.out.println("Cuenta creada con éxito");
                     }
                 }
@@ -178,7 +190,7 @@ public class Sesion {
         }
     }
 
-    public static ArrayList<Entrenador> getListEntrenadores() {
+    public static ArrayList<Usuario> getListEntrenadores() {
         return listEntrenadores;
     }
 }

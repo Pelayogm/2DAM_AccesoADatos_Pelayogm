@@ -1,5 +1,8 @@
 admin-admin
-HYUNDAI-HYUNDAI
-jose-jose
+Administrador
 aniceto-aniceto
+AdministradorTorneos
 jorge-jorge
+Entrenador
+antonioc-antonio
+Entrenador

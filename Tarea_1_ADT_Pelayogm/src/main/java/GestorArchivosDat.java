@@ -2,14 +2,14 @@ import java.io.*;
 import java.util.ArrayList;
 
 public class GestorArchivosDat {
-    public static ArrayList <Entrenador> listEntrenadores = Sesion.getListEntrenadores();
+    public static ArrayList <Usuario> listEntrenadores = Sesion.getListEntrenadores();
 
-    public static void escribirEntrenadoresDat (File file, Entrenador entrenador) {
+    public static void escribirEntrenadoresDat (File file, Usuario usuario) {
         FileOutputStream fileOutputStream;
         if (file != null && file.length() != 0){
             leerEntrenadoresDat(file);
         }
-        listEntrenadores.add(entrenador);
+        listEntrenadores.add(usuario);
         try {
             fileOutputStream = new FileOutputStream(file);
             BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(fileOutputStream);
@@ -34,7 +34,7 @@ public class GestorArchivosDat {
             ObjectInputStream objectInputStream = new ObjectInputStream(bufferedInputStream);
             try {
                 while (true) {
-                    listEntrenadores.add((Entrenador) objectInputStream.readObject());
+                    listEntrenadores.add((Usuario) objectInputStream.readObject());
                 }
             } catch (Exception e) {
 
@@ -48,8 +48,11 @@ public class GestorArchivosDat {
         leerEntrenadoresDat(file);
         for (int i = 0; i < listEntrenadores.size(); i++) {
             if (listEntrenadores.get(i).getNombre().equals(nombre)) {
-                if (listEntrenadores.get(i).isEsEntrenador()) {
-                    return true;
+                if (!listEntrenadores.get(i).isUsuario()) {
+                    Entrenador entrenador = (Entrenador) listEntrenadores.get(i);
+                    if (entrenador.isEsEntrenador()) {
+                        return true;
+                    }
                 }
             }
         }

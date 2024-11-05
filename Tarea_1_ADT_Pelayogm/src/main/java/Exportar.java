@@ -50,7 +50,7 @@ public class Exportar {
                                 //ETIQUETA TORNEO POR CADA TORNEO DE LA LISTA QUE TIENE EL OBJETO ENTRENADOR
                                 Element elementTorneo = document.createElement("torneo");
                                 CrearElementoXML("nombre", entrenador.getTorneosDelEntrenador().get(i).getNombre(), document, elementTorneo);
-                                CrearElementoXML("nombre", Character.toString(entrenador.getTorneosDelEntrenador().get(i).getCodRegion()), document, elementTorneo);
+                                CrearElementoXML("region", Character.toString(entrenador.getTorneosDelEntrenador().get(i).getCodRegion()), document, elementTorneo);
 
                                 //APPEND A CADA ELEMENTO AL PADRE, LA ETIQUETA TORNEOS
                                 elementTorneos.appendChild(elementTorneo);

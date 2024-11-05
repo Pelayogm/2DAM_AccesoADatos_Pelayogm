@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 public class Funciones {
     private static ArrayList<Torneo> listTorneos = new ArrayList<>();
-    private static ArrayList<Entrenador> listEntrenadores = Sesion.getListEntrenadores();
+    private static ArrayList<Usuario> listUsuarios = Sesion.getListEntrenadores();
 
     public static void MostrarFunciones (Usuario usuario) {
         Scanner scanner = new Scanner(System.in);
@@ -54,6 +54,17 @@ public class Funciones {
                 userOpcion = scanner.nextInt();
             }
 
+        } else if (usuario instanceof AdminTorneos) {
+            System.out.println("Hola Administrador de Torneos");
+            System.out.println("1. Cerrar Sesión");
+            int userOpcion = scanner.nextInt();
+            while (userOpcion < 2) {
+                if (userOpcion == 1) {
+                    Funciones.CerrarSesion(usuario);
+                    break;
+                }
+            }
+
         } else {
             System.out.println("No se reconoce el tipo de usuario");
         }
@@ -85,22 +96,31 @@ public class Funciones {
 
                         //SE CREAN 2 FILE UNO PARA CREDENCIALES Y OTRO PARA COMPROBAR
                         File file = new File(".", "Credenciales.txt");
-                        File file_dat = new File(".", "Entrenadores.dat");
+                        File file_dat = new File(".", "Usuarios.dat");
 
                         //SI EL USUARIO QUE SE DA NO ES UN ENTRENADOR, SE SABE POR EL BOOLEANO isEntrenador QUE TIENE LA CLASE ENTRENADOR
                         //if (!GestorArchivosDat.comprobarEntrenadorDat(file_dat, nombreAdminTorneos)) {
                             //SI NO ESTA EN EL FICHERO SE ESCRIBE Y SE CREA EL TORNEO Y SE AÑADE A LA LISTA
-                            if (!Credenciales.comprobarCredenciales(credenciales)) {
-                                Credenciales.escribirFichero(file, credenciales);
-                                Torneo torneo = new Torneo(listTorneos.size() + 1,nombreTorneo, charRegion);
-                                System.out.println("Torneo creado");
-                                listTorneos.add(torneo);
-                            } else {
-                                //SI YA ESTA EN LA LISTA DE CREDENCIALES SE CREA EL TORNEO Y SE AÑADE A LA LISTA
-                                Torneo torneo = new Torneo(listTorneos.size() + 1,nombreTorneo, charRegion);
-                                System.out.println("Torneo creado");
-                                listTorneos.add(torneo);
-                            }
+                        //if (file_dat != null && file.length() != 0) {
+                                //if (!GestorArchivosDat.comprobarEntrenadorDat(file_dat, nombreAdminTorneos)) {
+                                    if (!Credenciales.comprobarCredenciales(credenciales)) {
+                                        AdminTorneos adminTorneos = new AdminTorneos(contrasenaAdminTorneos, nombreAdminTorneos);
+                                        GestorArchivosDat.escribirEntrenadoresDat(file_dat, adminTorneos);
+                                        String rolUsuario = "AdministradorTorneos";
+                                        Credenciales.escribirFichero(file, credenciales, rolUsuario);
+                                        Torneo torneo = new Torneo(listTorneos.size() + 1,nombreTorneo, charRegion);
+                                        System.out.println("Torneo creado");
+                                        listTorneos.add(torneo);
+                                    } else {
+                                        //SI YA ESTA EN LA LISTA DE CREDENCIALES SE CREA EL TORNEO Y SE AÑADE A LA LISTA
+                                        Torneo torneo = new Torneo(listTorneos.size() + 1,nombreTorneo, charRegion);
+                                        System.out.println("Torneo creado");
+                                        listTorneos.add(torneo);
+                                    }
+                                //} else {
+                                   // System.out.println("El usuario introducido es un entrenador");
+                                //}
+                            //}
                         //} else {
                             //SI EL USUARIO ES ENTRENADOR DEVUELVE EL SIGUIENTE MENSAJE
                             //System.out.println("El usuario introducido es un Entrenador, vuelve a intentarlo con otro usuario");

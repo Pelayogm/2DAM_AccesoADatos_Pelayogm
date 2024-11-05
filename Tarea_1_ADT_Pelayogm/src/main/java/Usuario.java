@@ -1,4 +1,6 @@
-public abstract class Usuario {
+import java.io.Serializable;
+
+public abstract class Usuario implements Serializable {
     private boolean usuario;
     private boolean estadoSesion;
     private String nombreUsuario;
