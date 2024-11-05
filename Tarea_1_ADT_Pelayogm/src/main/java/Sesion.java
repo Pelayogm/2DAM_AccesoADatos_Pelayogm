@@ -130,7 +130,9 @@ public class Sesion {
             System.out.println("A continuacion va a se va a crear una cuenta en el club de Entrenadores Pokemon");
 
             //SE PREPARA UN ARCHIVO PARA ESCRIBIR EL ENTRENDADOR EN UN ARCHIVO DAT
+            File file_torneos = new File(".", "Torneos.dat");
             File file_escribirdatos;
+            GestorArchivosDat.cargarTorneo(file_torneos);
             ComprobacionTorneos();
             if (flag) {
                 try {

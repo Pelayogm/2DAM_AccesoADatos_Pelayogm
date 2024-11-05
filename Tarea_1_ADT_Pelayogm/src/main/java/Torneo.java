@@ -1,6 +1,5 @@
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.List;
 
 public class Torneo implements Serializable {
     private int id;
@@ -65,6 +64,7 @@ public class Torneo implements Serializable {
         this.nombre = nombre;
         this.codRegion = codigo;
         this.torneoCreado = true;
+        this.PuntosVictoria = 100;
     }
 
     public AdminTorneos getAdminTorneos() {

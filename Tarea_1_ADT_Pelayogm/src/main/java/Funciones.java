@@ -75,55 +75,63 @@ public class Funciones {
             Scanner scanner = new Scanner(System.in);
             System.out.println("¿Desea crear un nuevo Torneo?");
             System.out.println("1. Sí | 2. No");
-                int adminOpcion = scanner.nextInt();
+            int adminOpcion = scanner.nextInt();
+            File file_torneos = new File(".", "Torneos.dat");
+            try {
+                if (!file_torneos.exists()) {
+                    file_torneos.createNewFile();
+                }
+
                 try {
                     if (adminOpcion == 1) {
                         System.out.println("¿Nombre del torneo?");
-                            String nombreTorneo = scanner.next();
+                        String nombreTorneo = scanner.next();
                         System.out.println("¿Codigo del torneo?");
-                            String regionTorneo = scanner.next();
-                            char charRegion = regionTorneo.charAt(0);
+                        String regionTorneo = scanner.next();
+                        char charRegion = regionTorneo.charAt(0);
 
                         StringBuilder stringBuilder = new StringBuilder();
                         System.out.println("¿Usuario del administrador de Torneos?");
-                            String nombreAdminTorneos = scanner.next();
-                            stringBuilder.append(nombreAdminTorneos);
-                            stringBuilder.append("-");
+                        String nombreAdminTorneos = scanner.next();
+                        stringBuilder.append(nombreAdminTorneos);
+                        stringBuilder.append("-");
                         System.out.println("¿Contraseña del administrador de Torneos?");
-                            String contrasenaAdminTorneos = scanner.next();
-                            stringBuilder.append(contrasenaAdminTorneos);
-                            String credenciales = stringBuilder.toString();
+                        String contrasenaAdminTorneos = scanner.next();
+                        stringBuilder.append(contrasenaAdminTorneos);
+                        String credenciales = stringBuilder.toString();
 
                         //SE CREAN 2 FILE UNO PARA CREDENCIALES Y OTRO PARA COMPROBAR
                         File file = new File(".", "Credenciales.txt");
                         File file_dat = new File(".", "Usuarios.dat");
 
-                        //SI EL USUARIO QUE SE DA NO ES UN ENTRENADOR, SE SABE POR EL BOOLEANO isEntrenador QUE TIENE LA CLASE ENTRENADOR
                         //if (!GestorArchivosDat.comprobarEntrenadorDat(file_dat, nombreAdminTorneos)) {
-                            //SI NO ESTA EN EL FICHERO SE ESCRIBE Y SE CREA EL TORNEO Y SE AÑADE A LA LISTA
                         //if (file_dat != null && file.length() != 0) {
-                                //if (!GestorArchivosDat.comprobarEntrenadorDat(file_dat, nombreAdminTorneos)) {
-                                    if (!Credenciales.comprobarCredenciales(credenciales)) {
-                                        AdminTorneos adminTorneos = new AdminTorneos(contrasenaAdminTorneos, nombreAdminTorneos);
-                                        GestorArchivosDat.escribirEntrenadoresDat(file_dat, adminTorneos);
-                                        String rolUsuario = "AdministradorTorneos";
-                                        Credenciales.escribirFichero(file, credenciales, rolUsuario);
-                                        Torneo torneo = new Torneo(listTorneos.size() + 1,nombreTorneo, charRegion);
-                                        System.out.println("Torneo creado");
-                                        listTorneos.add(torneo);
-                                    } else {
-                                        //SI YA ESTA EN LA LISTA DE CREDENCIALES SE CREA EL TORNEO Y SE AÑADE A LA LISTA
-                                        Torneo torneo = new Torneo(listTorneos.size() + 1,nombreTorneo, charRegion);
-                                        System.out.println("Torneo creado");
-                                        listTorneos.add(torneo);
-                                    }
-                                //} else {
-                                   // System.out.println("El usuario introducido es un entrenador");
-                                //}
-                            //}
+                        //if (!GestorArchivosDat.comprobarEntrenadorDat(file_dat, nombreAdminTorneos)) {
+                        if (!Credenciales.comprobarCredenciales(credenciales)) {
+                            AdminTorneos adminTorneos = new AdminTorneos(contrasenaAdminTorneos, nombreAdminTorneos);
+                            GestorArchivosDat.escribirEntrenadoresDat(file_dat, adminTorneos);
+                            String rolUsuario = "AdministradorTorneos";
+                            Credenciales.escribirFichero(file, credenciales, rolUsuario);
+                            Torneo torneo = new Torneo(listTorneos.size() + 1, nombreTorneo, charRegion);
+                            torneo.setAdminTorneos(adminTorneos);
+                            GestorArchivosDat.exportarTorneo(file_torneos, torneo);
+                            System.out.println("Torneo creado");
+                            listTorneos.add(torneo);
+                        } else {
+                            //SI YA ESTA EN LA LISTA DE CREDENCIALES SE CREA EL TORNEO Y SE AÑADE A LA LISTA
+                            Torneo torneo = new Torneo(listTorneos.size() + 1, nombreTorneo, charRegion);
+                            AdminTorneos adminTorneos = new AdminTorneos(contrasenaAdminTorneos, nombreAdminTorneos);
+                            torneo.setAdminTorneos(adminTorneos);
+                            GestorArchivosDat.exportarTorneo(file_torneos, torneo);
+                            System.out.println("Torneo creado");
+                            listTorneos.add(torneo);
+                        }
                         //} else {
-                            //SI EL USUARIO ES ENTRENADOR DEVUELVE EL SIGUIENTE MENSAJE
-                            //System.out.println("El usuario introducido es un Entrenador, vuelve a intentarlo con otro usuario");
+                        // System.out.println("El usuario introducido es un entrenador");
+                        //}
+                        //}
+                        //} else {
+                        //System.out.println("El usuario introducido es un Entrenador, vuelve a intentarlo con otro usuario");
                         //}
 
                     } else if (adminOpcion == 2) {
@@ -135,6 +143,9 @@ public class Funciones {
                     System.out.println("Solo se admiten numeros");
                 }
 
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         } else {
             System.out.println("No tienes los suficientes permisos como para acceder aqui");
         }
