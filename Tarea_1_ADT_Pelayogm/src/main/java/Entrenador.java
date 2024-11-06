@@ -55,7 +55,7 @@ public class Entrenador extends Usuario implements Serializable {
         return nacionalidad;
     }
 
-    public static Entrenador crearEntrenador (String nombreUsuario) {
+    public static Entrenador crearEntrenador (String nombreUsuario, long id) {
         Scanner scanner_entrenador = new Scanner(System.in);
         System.out.println("¿Nombre?");
         System.out.println("Nombre elegido: " + nombreUsuario);
@@ -67,7 +67,7 @@ public class Entrenador extends Usuario implements Serializable {
         //SI LA NACIONALIDAD QUE ESTA EN PAISES.XML ESTA BIEN
         if (LectorXML.comprobarNacionalidadConXML(nacionalidadEntrenador)) {
             //SE CREA EL OBJETO ENTRENADOR
-            Entrenador entrenador = new Entrenador(3, nombreUsuario, nacionalidadEntrenador);
+            Entrenador entrenador = new Entrenador(id, nombreUsuario, nacionalidadEntrenador);
 
             //SE RECORRE LA LISTA DE TORNEOS EXISTENTES EN LA SESION
             for (int i = 0; i < torneos.size(); i++) {

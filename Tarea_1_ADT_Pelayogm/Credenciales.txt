@@ -1,12 +1,9 @@
 admin-admin
 Administrador
+1
 aniceto-aniceto
 AdministradorTorneos
+1
 jorge-jorge
 Entrenador
-antonioc-antonio
-Entrenador
-jacinto-jacinto
-Entrenador
-tomas-tomas
-Entrenador
+3

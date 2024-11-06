@@ -1,6 +1,7 @@
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.concurrent.ExecutionException;
 
 
 public class Sesion {
@@ -137,8 +138,14 @@ public class Sesion {
             if (flag) {
                 try {
                     file_escribirdatos = new File(".", "Usuarios.dat");
+                    try {
+                        GestorArchivosDat.leerEntrenadoresDat(file_escribirdatos);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    long idUsuario = listEntrenadores.size();
                     //SE LLAMA A CREAR ENTRENADOR
-                    Entrenador entrenador = Entrenador.crearEntrenador(nombreUsuario);
+                    Entrenador entrenador = Entrenador.crearEntrenador(nombreUsuario, idUsuario);
                     //CON LO QUE RETORNA CREAR ENTRENADOR ESCRIBIMOS EL DAT
                     GestorArchivosDat.escribirEntrenadoresDat(file_escribirdatos, entrenador);
                 } catch (Exception e) {
@@ -180,7 +187,9 @@ public class Sesion {
                     if (flag) {
                         //SE AÑADE AL ARCHIVO DE CREDENCIALES LOS DATOS DEL USUARIO
                         String rolUsuario = "Entrenador";
-                        Credenciales.escribirFichero(file, datosIntroducidosUsuario, rolUsuario);
+                        int idUsuario = listEntrenadores.size();
+                        String idUsuarioString = Integer.toString(idUsuario);
+                        Credenciales.escribirFichero(file, datosIntroducidosUsuario, rolUsuario, idUsuarioString);
                         System.out.println("Cuenta creada con éxito");
                     }
                 }

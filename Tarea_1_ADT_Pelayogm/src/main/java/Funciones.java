@@ -108,10 +108,15 @@ public class Funciones {
                         //if (file_dat != null && file.length() != 0) {
                         //if (!GestorArchivosDat.comprobarEntrenadorDat(file_dat, nombreAdminTorneos)) {
                         if (!Credenciales.comprobarCredenciales(credenciales)) {
-                            AdminTorneos adminTorneos = new AdminTorneos(contrasenaAdminTorneos, nombreAdminTorneos);
+                            int idUsuario = listUsuarios.size();
+                            idUsuario++;
+                            long idUsuarioLong = idUsuario;
+                            AdminTorneos adminTorneos = new AdminTorneos(contrasenaAdminTorneos, nombreAdminTorneos, idUsuarioLong);
                             GestorArchivosDat.escribirEntrenadoresDat(file_dat, adminTorneos);
                             String rolUsuario = "AdministradorTorneos";
-                            Credenciales.escribirFichero(file, credenciales, rolUsuario);
+
+                            String idUsuarioString = Integer.toString(idUsuario);
+                            Credenciales.escribirFichero(file, credenciales, rolUsuario, idUsuarioString);
                             Torneo torneo = new Torneo(listTorneos.size() + 1, nombreTorneo, charRegion);
                             torneo.setAdminTorneos(adminTorneos);
                             GestorArchivosDat.exportarTorneo(file_torneos, torneo);
