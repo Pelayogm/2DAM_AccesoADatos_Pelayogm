@@ -3,7 +3,10 @@ Administrador
 1
 aniceto-aniceto
 AdministradorTorneos
-1
+2
+tomas-tomas
+Entrenador
+2
 jorge-jorge
 Entrenador
 3

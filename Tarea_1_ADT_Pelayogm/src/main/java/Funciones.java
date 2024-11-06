@@ -104,18 +104,19 @@ public class Funciones {
                         File file = new File(".", "Credenciales.txt");
                         File file_dat = new File(".", "Usuarios.dat");
 
+                        File fileCredenciales = new File(".", "Credenciales.txt");
+                        Credenciales.leerFichero(fileCredenciales);
+
                         //if (!GestorArchivosDat.comprobarEntrenadorDat(file_dat, nombreAdminTorneos)) {
                         //if (file_dat != null && file.length() != 0) {
                         //if (!GestorArchivosDat.comprobarEntrenadorDat(file_dat, nombreAdminTorneos)) {
                         if (!Credenciales.comprobarCredenciales(credenciales)) {
-                            int idUsuario = listUsuarios.size();
-                            idUsuario++;
-                            long idUsuarioLong = idUsuario;
-                            AdminTorneos adminTorneos = new AdminTorneos(contrasenaAdminTorneos, nombreAdminTorneos, idUsuarioLong);
+                            long idUsuario = Credenciales.getContadorLineas() / 3;
+                            AdminTorneos adminTorneos = new AdminTorneos(contrasenaAdminTorneos, nombreAdminTorneos, idUsuario);
                             GestorArchivosDat.escribirEntrenadoresDat(file_dat, adminTorneos);
                             String rolUsuario = "AdministradorTorneos";
 
-                            String idUsuarioString = Integer.toString(idUsuario);
+                            String idUsuarioString = Long.toString(idUsuario);
                             Credenciales.escribirFichero(file, credenciales, rolUsuario, idUsuarioString);
                             Torneo torneo = new Torneo(listTorneos.size() + 1, nombreTorneo, charRegion);
                             torneo.setAdminTorneos(adminTorneos);

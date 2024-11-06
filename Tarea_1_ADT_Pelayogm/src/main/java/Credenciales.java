@@ -3,6 +3,7 @@ import java.util.ArrayList;
 
 public class Credenciales {
     private static ArrayList<String> credenciales = new ArrayList<>();
+    private static int contadorLineas = 0;
 
     public static void leerFichero(File file) {
         FileReader fileReader;
@@ -12,6 +13,7 @@ public class Credenciales {
             try {
                 String linea = bufferedReader.readLine();
                 while (linea != null) {
+                    contadorLineas++;
                     credenciales.add(linea);
                     linea = bufferedReader.readLine();
                 }
@@ -55,4 +57,9 @@ public class Credenciales {
     public static ArrayList<String> getCredenciales() {
         return credenciales;
     }
+
+    public static int getContadorLineas() {
+        return contadorLineas;
+    }
 }
+

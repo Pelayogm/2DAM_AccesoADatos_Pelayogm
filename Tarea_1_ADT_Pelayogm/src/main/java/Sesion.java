@@ -130,20 +130,20 @@ public class Sesion {
             String datosIntroducidosUsuario = stringBuilder.toString();
             System.out.println("A continuacion va a se va a crear una cuenta en el club de Entrenadores Pokemon");
 
-            //SE PREPARA UN ARCHIVO PARA ESCRIBIR EL ENTRENDADOR EN UN ARCHIVO DAT
+            //SE PREPARA UN ARCHIVO PARA ESCRIBIR EL ENTRENDADOR EN UN ARCHIVO DAT Y UNO PARA LEER LOS TORNEOS
             File file_torneos = new File(".", "Torneos.dat");
             File file_escribirdatos;
             GestorArchivosDat.cargarTorneo(file_torneos);
             ComprobacionTorneos();
+
+            //CREAMOS EL ARCHIVO FILE PARA MANDARSELO AL METODO DE LEER
+            file = new File(".", "Credenciales.txt");
+            Credenciales.leerFichero(file);
+
             if (flag) {
                 try {
                     file_escribirdatos = new File(".", "Usuarios.dat");
-                    try {
-                        GestorArchivosDat.leerEntrenadoresDat(file_escribirdatos);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                    long idUsuario = listEntrenadores.size();
+                    long idUsuario = Credenciales.getContadorLineas() / 3;
                     //SE LLAMA A CREAR ENTRENADOR
                     Entrenador entrenador = Entrenador.crearEntrenador(nombreUsuario, idUsuario);
                     //CON LO QUE RETORNA CREAR ENTRENADOR ESCRIBIMOS EL DAT
@@ -155,11 +155,6 @@ public class Sesion {
                 System.out.println("No esta disponible este servicio por el momento");
                 System.out.println("Informese de si existe algún torneo para registrarse");
             }
-
-            //CREAMOS EL ARCHIVO FILE PARA MANDARSELO AL METODO DE LEER
-            file = new File(".", "Credenciales.txt");
-            //RELLENAR EL ARRAYLIST CON LOS DATOS QUE HAY EN EL CREDENCIALES.TXT
-            Credenciales.leerFichero(file);
 
             //COMPROBAR EL ARRAYLIST DE CREDENCIALES PARA VER SI HAY COINCIDENCIAS
             try {
@@ -187,8 +182,8 @@ public class Sesion {
                     if (flag) {
                         //SE AÑADE AL ARCHIVO DE CREDENCIALES LOS DATOS DEL USUARIO
                         String rolUsuario = "Entrenador";
-                        int idUsuario = listEntrenadores.size();
-                        String idUsuarioString = Integer.toString(idUsuario);
+                        long idUsuario = Credenciales.getContadorLineas() / 3;
+                        String idUsuarioString = Long.toString(idUsuario);
                         Credenciales.escribirFichero(file, datosIntroducidosUsuario, rolUsuario, idUsuarioString);
                         System.out.println("Cuenta creada con éxito");
                     }
