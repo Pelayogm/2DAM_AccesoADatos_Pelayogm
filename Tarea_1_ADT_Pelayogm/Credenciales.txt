@@ -4,9 +4,9 @@ Administrador
 aniceto-aniceto
 AdministradorTorneos
 2
-tomas-tomas
+jorge-jorge
 Entrenador
 2
-jorge-jorge
+tomas-tomas
 Entrenador
 3

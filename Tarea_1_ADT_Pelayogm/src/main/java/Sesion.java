@@ -139,13 +139,14 @@ public class Sesion {
             //CREAMOS EL ARCHIVO FILE PARA MANDARSELO AL METODO DE LEER
             file = new File(".", "Credenciales.txt");
             Credenciales.leerFichero(file);
+            Entrenador entrenador = new Entrenador();
 
             if (flag) {
                 try {
                     file_escribirdatos = new File(".", "Usuarios.dat");
                     long idUsuario = Credenciales.getContadorLineas() / 3;
                     //SE LLAMA A CREAR ENTRENADOR
-                    Entrenador entrenador = Entrenador.crearEntrenador(nombreUsuario, idUsuario);
+                    entrenador = Entrenador.crearEntrenador(nombreUsuario, idUsuario);
                     //CON LO QUE RETORNA CREAR ENTRENADOR ESCRIBIMOS EL DAT
                     GestorArchivosDat.escribirEntrenadoresDat(file_escribirdatos, entrenador);
                 } catch (Exception e) {
@@ -186,6 +187,7 @@ public class Sesion {
                         String idUsuarioString = Long.toString(idUsuario);
                         Credenciales.escribirFichero(file, datosIntroducidosUsuario, rolUsuario, idUsuarioString);
                         System.out.println("Cuenta creada con éxito");
+                        Funciones.MostrarFunciones(entrenador);
                     }
                 }
             } catch (Exception e) {
