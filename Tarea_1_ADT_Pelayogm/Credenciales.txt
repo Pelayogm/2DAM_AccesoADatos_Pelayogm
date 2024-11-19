@@ -6,7 +6,10 @@ AdministradorTorneos
 2
 jorge-jorge
 Entrenador
-2
+9
+paco-paco
+Entrenador
+16
 tomas-tomas
 Entrenador
-3
+4

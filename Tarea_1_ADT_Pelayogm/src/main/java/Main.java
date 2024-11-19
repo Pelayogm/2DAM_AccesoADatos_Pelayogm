@@ -1,7 +1,6 @@
 import java.util.Scanner;
 
-public class
-Main {
+public class Main {
     public static void main (String [] args) {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Bienvenido al sistema de Entrenadores Pokemon");
@@ -19,5 +18,3 @@ Main {
         }
     }
 }
-//ARREGLAR EXPORTAR TORNEO
-//SPLIT METODO
