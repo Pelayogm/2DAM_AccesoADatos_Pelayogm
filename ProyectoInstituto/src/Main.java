@@ -18,6 +18,7 @@ public class Main {
         AlumnoDTO alumnoDTO = new AlumnoDTO("37", "Jorge", "Ruiz de Garcia Paez", 19, 'C');
         try {
             alumnoServicio.crearAlumno(alumnoDTO);
+            alumnoServicio.obtenerAlumnoPorId("37");
         } catch (Exception e) {
             e.printStackTrace();
         }
