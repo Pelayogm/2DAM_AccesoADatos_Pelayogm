@@ -1,5 +1,3 @@
 admin admin Administrador 1
 aniceto aniceto AdministradorTorneos 2
 jorge jorge Entrenador 3
-paco paco Entrenador 5
-tomas tomas Entrenador 4

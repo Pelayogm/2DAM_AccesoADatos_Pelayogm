@@ -1,6 +1,5 @@
 package proyectoPokemonADT;
 
-import proyectoPokemonADT.*;
 import proyectoPokemonADT.Administradores.Admin;
 import proyectoPokemonADT.Administradores.AdminTorneos;
 import proyectoPokemonADT.Credenciales.Credenciales;
@@ -31,49 +30,44 @@ public class Sesion {
         System.out.println("Sistema de la Calle Victoria");
         File file;
         try {
-            StringBuilder stringBuilder = new StringBuilder();
             System.out.println("¿Usuario?");
             String nombreEntrenador = scanner.nextLine();
-                stringBuilder.append(nombreEntrenador);
-                if (stringBuilder.isEmpty()) {
+                if (nombreEntrenador.isEmpty()) {
                     System.out.println("No se permiten campos vacíos");
                     IniciarSesion();
                 }
-                stringBuilder.append("-");
             System.out.println("¿Contraseña?");
                 String contrasena = scanner.nextLine();
                 if (contrasena.isEmpty()) {
                     System.out.println("No se permiten campos vacíos");
                     IniciarSesion();
                 }
-                stringBuilder.append(contrasena);
-            String datosIntroducidosUsuario = stringBuilder.toString();
 
             //CREAMOS EL ARCHIVO FILE PARA MANDARSELO AL METODO DE LEER
-            file = new File("proyectoPokemonADT/ArchivosDelPrograma/Credenciales.txt", "Credenciales.txt");
+            file = new File("src/main/java/proyectoPokemonADT/ArchivosDelPrograma", "Credenciales.txt");
 
             //RELLENAR EL ARRAYLIST CON LOS DATOS QUE HAY EN EL CREDENCIALES.TXT
             Credenciales.leerFichero(file);
 
             //COMPROBAR EL ARRAYLIST DE CREDENCIALES PARA VER SI HAY COINCIDENCIAS
             try {
-                if (Credenciales.comprobarCredenciales(datosIntroducidosUsuario)) {
+                if (Credenciales.comprobarCredenciales(nombreEntrenador, contrasena)) {
                     for (int i = 0; i < listCredenciales.size(); i++) {
-                        if (datosIntroducidosUsuario.equals(listCredenciales.get(i)) && listCredenciales.get(i + 1).equals("Administrador")) {
+                        if (nombreEntrenador.equals(listCredenciales.get(i)) && contrasena.equals(listCredenciales.get(i + 1)) && listCredenciales.get(i + 2).equals("Administrador")) {
                             Admin admin = new Admin(1);
                             Funciones.MostrarFunciones(admin);
                             return admin;
                         }
 
-                        if (datosIntroducidosUsuario.equals(listCredenciales.get(i)) && listCredenciales.get(i + 1).equals("AdministradorTorneos")) {
+                        if (nombreEntrenador.equals(listCredenciales.get(i)) && contrasena.equals(listCredenciales.get(i + 1)) && listCredenciales.get(i + 2).equals("AdministradorTorneos")) {
                             AdminTorneos adminTorneos = new AdminTorneos();
                             Funciones.MostrarFunciones(adminTorneos);
                             return adminTorneos;
                         }
 
-                        if (datosIntroducidosUsuario.equals(listCredenciales.get(i)) && listCredenciales.get(i + 1).equals("Entrenador")); {
+                        if (nombreEntrenador.equals(listCredenciales.get(i)) && contrasena.equals(listCredenciales.get(i + 1)) && listCredenciales.get(i + 2).equals("Entrenador")) {
                           Entrenador entrenador;
-                          File datos_dat = new File(".", "Usuarios.dat");
+                          File datos_dat = new File("src/main/java/proyectoPokemonADT/ArchivosDelPrograma", "Usuarios.dat");
                           try {
                               GestorArchivosDat.leerEntrenadoresDat(datos_dat);
                               for (int x = 0; i < listEntrenadores.size(); x++) {
@@ -105,13 +99,11 @@ public class Sesion {
                         }
                     } catch (Exception e) {
                         System.out.println("Valor introducido no valido");
-
                     }
                 }
             } catch (Exception e) {
                 System.out.println("Error en la busqueda de datos");
             }
-
                 } catch (Exception e) {
                     System.out.println("HA HABIDO UN ERROR EN LA COTEJACION DE DATOS");
                 }
@@ -125,33 +117,30 @@ public class Sesion {
         File file;
         try {
             //FORMULARIO PARA EL USUARIO
-            StringBuilder stringBuilder = new StringBuilder();
             System.out.println("¿Usuario?");
             String nombreUsuario = scanner.nextLine();
-            stringBuilder.append(nombreUsuario);
-            stringBuilder.append("-");
             System.out.println("¿Contraseña?");
-            stringBuilder.append(scanner.nextLine());
-            String datosIntroducidosUsuario = stringBuilder.toString();
+            String constrasenaUsuario = scanner.nextLine();
             System.out.println("A continuacion va a se va a crear una cuenta en el club de Entrenadores Pokemon");
 
             //SE PREPARA UN ARCHIVO PARA ESCRIBIR EL ENTRENDADOR EN UN ARCHIVO DAT Y UNO PARA LEER LOS TORNEOS
-            File file_torneos = new File(".", "Torneos.dat");
+            File file_torneos = new File("src/main/java/proyectoPokemonADT/ArchivosDelPrograma", "Torneos.dat");
             File file_escribirdatos;
             GestorArchivosDat.cargarTorneo(file_torneos);
             ComprobacionTorneos();
 
             //CREAMOS EL ARCHIVO FILE PARA MANDARSELO AL METODO DE LEER
-            file = new File(".", "Credenciales.txt");
+            file = new File("src/main/java/proyectoPokemonADT/ArchivosDelPrograma", "Credenciales.txt");
             Credenciales.leerFichero(file);
             Entrenador entrenador = new Entrenador();
 
             if (flag) {
                 try {
-                    file_escribirdatos = new File(".", "Usuarios.dat");
-                    long idUsuario = Credenciales.getContadorLineas() / 3;
+                    file_escribirdatos = new File("src/main/java/proyectoPokemonADT/ArchivosDelPrograma", "Usuarios.dat");
+                    int ultimoId = Integer.parseInt(listCredenciales.getLast());
+                    long idUsuario = ultimoId + 1;
                     //SE LLAMA A CREAR ENTRENADOR
-                    entrenador = Entrenador.crearEntrenador(nombreUsuario, idUsuario);
+                    entrenador = Entrenador.crearEntrenador(constrasenaUsuario, idUsuario);
                     //CON LO QUE RETORNA CREAR ENTRENADOR ESCRIBIMOS EL DAT
                     GestorArchivosDat.escribirEntrenadoresDat(file_escribirdatos, entrenador);
                 } catch (Exception e) {
@@ -164,7 +153,7 @@ public class Sesion {
 
             //COMPROBAR EL ARRAYLIST DE CREDENCIALES PARA VER SI HAY COINCIDENCIAS
             try {
-                if (Credenciales.comprobarCredenciales(datosIntroducidosUsuario)) {
+                if (Credenciales.comprobarCredenciales(nombreUsuario, constrasenaUsuario)) {
                     Scanner scanner_2 = new Scanner(System.in);
                     System.out.println("El usuario y contraseña introducido ya existe");
                     System.out.println("¿Desea iniciar sesión? - 1. Si | 2. No");
@@ -188,9 +177,10 @@ public class Sesion {
                     if (flag) {
                         //SE AÑADE AL ARCHIVO DE CREDENCIALES LOS DATOS DEL USUARIO
                         String rolUsuario = "Entrenador";
-                        long idUsuario = Credenciales.getContadorLineas() / 3;
+                        int ultimoId = Integer.parseInt(listCredenciales.getLast());
+                        long idUsuario = ultimoId + 1;
                         String idUsuarioString = Long.toString(idUsuario);
-                        Credenciales.escribirFichero(file, datosIntroducidosUsuario, rolUsuario, idUsuarioString);
+                        Credenciales.escribirFichero(file, nombreUsuario, constrasenaUsuario, rolUsuario, idUsuarioString);
                         System.out.println("Cuenta creada con éxito");
                         Funciones.MostrarFunciones(entrenador);
                     }

@@ -20,7 +20,7 @@ public class LectorXML {
 
                 GestorDeContenidos gestorDeContenidos = new GestorDeContenidos();
                 xmlReader.setContentHandler(gestorDeContenidos);
-                InputSource inputSource = new InputSource("paises.xml");
+                InputSource inputSource = new InputSource("src/main/java/proyectoPokemonADT/ArchivosDelPrograma/paises.xml");
                 try {
                     xmlReader.parse(inputSource);
                 } catch (Exception e) {

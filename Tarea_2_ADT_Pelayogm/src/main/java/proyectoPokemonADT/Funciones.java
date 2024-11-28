@@ -8,6 +8,7 @@ import java.util.Scanner;
 
 public class Funciones {
     private static ArrayList<Torneo> listTorneos = new ArrayList<>();
+    private static ArrayList<String> credenciales = Credenciales.getCredenciales();
     private static ArrayList<Usuario> listUsuarios = Sesion.getListEntrenadores();
 
     public static void MostrarFunciones (Usuario usuario) {
@@ -80,7 +81,7 @@ public class Funciones {
             System.out.println("¿Desea crear un nuevo Torneo?");
             System.out.println("1. Sí | 2. No");
             int adminOpcion = scanner.nextInt();
-            File file_torneos = new File(".", "Torneos.dat");
+            File file_torneos = new File("src/main/java/proyectoPokemonADT/ArchivosDelPrograma", "Torneos.dat");
             try {
                 if (!file_torneos.exists()) {
                     file_torneos.createNewFile();
@@ -94,34 +95,30 @@ public class Funciones {
                         String regionTorneo = scanner.next();
                         char charRegion = regionTorneo.charAt(0);
 
-                        StringBuilder stringBuilder = new StringBuilder();
                         System.out.println("¿Usuario del administrador de Torneos?");
                         String nombreAdminTorneos = scanner.next();
-                        stringBuilder.append(nombreAdminTorneos);
-                        stringBuilder.append("-");
                         System.out.println("¿Contraseña del administrador de Torneos?");
                         String contrasenaAdminTorneos = scanner.next();
-                        stringBuilder.append(contrasenaAdminTorneos);
-                        String credenciales = stringBuilder.toString();
 
                         //SE CREAN 2 FILE UNO PARA CREDENCIALES Y OTRO PARA COMPROBAR
-                        File file = new File(".", "proyectoPokemonADT.Credenciales.Credenciales.txt");
-                        File file_dat = new File(".", "Usuarios.dat");
+                        File file = new File("src/main/java/proyectoPokemonADT/ArchivosDelPrograma", "Credenciales.txt");
+                        File file_dat = new File("src/main/java/proyectoPokemonADT/ArchivosDelPrograma", "Usuarios.dat");
 
-                        File fileCredenciales = new File(".", "proyectoPokemonADT.Credenciales.Credenciales.txt");
+                        File fileCredenciales = new File("src/main/java/proyectoPokemonADT/ArchivosDelPrograma", "Credenciales.txt");
                         Credenciales.leerFichero(fileCredenciales);
 
                         //if (!GestorArchivosDat.comprobarEntrenadorDat(file_dat, nombreAdminTorneos)) {
                         //if (file_dat != null && file.length() != 0) {
                         //if (!GestorArchivosDat.comprobarEntrenadorDat(file_dat, nombreAdminTorneos)) {
-                        if (!Credenciales.comprobarCredenciales(credenciales)) {
-                            long idUsuario = Credenciales.getContadorLineas() / 3;
+                        if (!Credenciales.comprobarCredenciales(nombreAdminTorneos, contrasenaAdminTorneos)) {
+                            int ultimoId = Integer.parseInt(credenciales.getLast());
+                            long idUsuario = ultimoId + 1;
                             AdminTorneos adminTorneos = new AdminTorneos(contrasenaAdminTorneos, nombreAdminTorneos, idUsuario);
                             GestorArchivosDat.escribirEntrenadoresDat(file_dat, adminTorneos);
                             String rolUsuario = "AdministradorTorneos";
 
                             String idUsuarioString = Long.toString(idUsuario);
-                            Credenciales.escribirFichero(file, credenciales, rolUsuario, idUsuarioString);
+                            Credenciales.escribirFichero(file, nombreAdminTorneos, contrasenaAdminTorneos, rolUsuario, idUsuarioString);
                             Torneo torneo = new Torneo(listTorneos.size() + 1, nombreTorneo, charRegion);
                             torneo.setAdminTorneos(adminTorneos);
                             GestorArchivosDat.exportarTorneo(file_torneos, torneo);

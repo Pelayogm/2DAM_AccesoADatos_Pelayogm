@@ -6,7 +6,6 @@ import java.util.Arrays;
 
 public class Credenciales {
     private static ArrayList<String> credenciales = new ArrayList<>();
-    private static int contadorLineas = 0;
 
     public static void leerFichero(File file) {
         FileReader fileReader;
@@ -16,7 +15,6 @@ public class Credenciales {
             try {
                 String linea = bufferedReader.readLine();
                 while (linea != null) {
-                    contadorLineas++;
                     String [] lineaActual = linea.split(" ");
                     credenciales.addAll(Arrays.asList(lineaActual));
                     linea = bufferedReader.readLine();
@@ -32,12 +30,13 @@ public class Credenciales {
         }
     }
 
-    public static void escribirFichero (File file, String datosParaEscribir, String rolUsuario, String idUsuario) {
+    public static void escribirFichero (File file, String usuario, String constrasena, String rolUsuario, String idUsuario) {
         FileWriter fileWriter;
         try {
             fileWriter = new FileWriter(file, true);
             try {
-                fileWriter.write(datosParaEscribir + " ");
+                fileWriter.write(usuario + " ");
+                fileWriter.write(constrasena + " ");
                 fileWriter.write(rolUsuario + " ");
                 fileWriter.write(idUsuario + "\n");
                 fileWriter.close();
@@ -49,9 +48,9 @@ public class Credenciales {
         }
     }
 
-    public static boolean comprobarCredenciales (String credencialesDelUsuario) {
-        for (int i = 0; i < credenciales.size(); i++) {
-            if (credenciales.get(i).equals(credencialesDelUsuario)) {
+    public static boolean comprobarCredenciales (String usuario, String contrasena) {
+        for (int i = 0; i < credenciales.size(); i+=4) {
+            if (credenciales.get(i).equals(usuario) && credenciales.get(i + 1).equals(contrasena)) {
                 return true;
             }
         }
@@ -60,10 +59,6 @@ public class Credenciales {
 
     public static ArrayList<String> getCredenciales() {
         return credenciales;
-    }
-
-    public static int getContadorLineas() {
-        return contadorLineas;
     }
 }
 
