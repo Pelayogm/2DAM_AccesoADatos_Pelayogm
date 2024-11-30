@@ -160,13 +160,8 @@ public class Sesion {
                     try {
                         int opcionUsuario = scanner_2.nextInt();
                         switch (opcionUsuario) {
-                            case 1 -> {
-                                Sesion.IniciarSesion();
-                            }
-
-                            case 2 -> {
-                                System.out.println("Adios");
-                            }
+                            case 1 -> Sesion.IniciarSesion();
+                            case 2 -> System.out.println("Adios");
                         }
                     } catch (Exception e) {
                         System.out.println("Valor no válido");
@@ -176,13 +171,17 @@ public class Sesion {
                     //SI LA LISTA DE TORNEOS TIENE DATOS
                     if (flag) {
                         //SE AÑADE AL ARCHIVO DE CREDENCIALES LOS DATOS DEL USUARIO
-                        String rolUsuario = "Entrenador";
-                        int ultimoId = Integer.parseInt(listCredenciales.get(listCredenciales.size() - 1));
-                        long idUsuario = ultimoId + 1;
-                        String idUsuarioString = Long.toString(idUsuario);
-                        Credenciales.escribirFichero(file, nombreUsuario, constrasenaUsuario, rolUsuario, idUsuarioString);
-                        System.out.println("Cuenta creada con éxito");
-                        Funciones.MostrarFunciones(entrenador);
+                        if (entrenador != null) {
+                            String rolUsuario = "Entrenador";
+                            int ultimoId = Integer.parseInt(listCredenciales.get(listCredenciales.size() - 1));
+                            long idUsuario = ultimoId + 1;
+                            String idUsuarioString = Long.toString(idUsuario);
+                            Credenciales.escribirFichero(file, nombreUsuario, constrasenaUsuario, rolUsuario, idUsuarioString);
+                            System.out.println("Cuenta creada con éxito");
+                            Funciones.MostrarFunciones(entrenador);
+                        } else {
+                            Sesion.CrearCuenta();
+                        }
                     }
                 }
             } catch (Exception e) {
