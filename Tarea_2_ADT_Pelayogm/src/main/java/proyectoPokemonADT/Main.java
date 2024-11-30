@@ -30,3 +30,9 @@ public class Main {
 
 //REFACTORIZAR ENTRENADOR A ENTRENADORDTO
 //TAREA 2
+
+//REVISAR
+//Estructura base de datos
+
+//DUDAS
+//El uso de los DTOs
