@@ -111,7 +111,7 @@ public class Funciones {
                         //if (file_dat != null && file.length() != 0) {
                         //if (!GestorArchivosDat.comprobarEntrenadorDat(file_dat, nombreAdminTorneos)) {
                         if (!Credenciales.comprobarCredenciales(nombreAdminTorneos, contrasenaAdminTorneos)) {
-                            int ultimoId = Integer.parseInt(credenciales.getLast());
+                            int ultimoId = Integer.parseInt(credenciales.get(credenciales.size() - 1));
                             long idUsuario = ultimoId + 1;
                             AdminTorneos adminTorneos = new AdminTorneos(contrasenaAdminTorneos, nombreAdminTorneos, idUsuario);
                             GestorArchivosDat.escribirEntrenadoresDat(file_dat, adminTorneos);

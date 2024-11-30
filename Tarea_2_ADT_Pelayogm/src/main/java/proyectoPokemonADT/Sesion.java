@@ -70,7 +70,7 @@ public class Sesion {
                           File datos_dat = new File("src/main/java/proyectoPokemonADT/ArchivosDelPrograma", "Usuarios.dat");
                           try {
                               GestorArchivosDat.leerEntrenadoresDat(datos_dat);
-                              for (int x = 0; i < listEntrenadores.size(); x++) {
+                              for (int x = 0; x < listEntrenadores.size(); x++) {
                                   if (listEntrenadores.get(x).getNombre().equals(nombreEntrenador)) {
                                       entrenador = (Entrenador) listEntrenadores.get(x);
                                       System.out.println("Sesion iniciada");
@@ -137,7 +137,7 @@ public class Sesion {
             if (flag) {
                 try {
                     file_escribirdatos = new File("src/main/java/proyectoPokemonADT/ArchivosDelPrograma", "Usuarios.dat");
-                    int ultimoId = Integer.parseInt(listCredenciales.getLast());
+                    int ultimoId = Integer.parseInt(listCredenciales.get(listCredenciales.size() - 1));
                     long idUsuario = ultimoId + 1;
                     //SE LLAMA A CREAR ENTRENADOR
                     entrenador = Entrenador.crearEntrenador(constrasenaUsuario, idUsuario);
@@ -177,7 +177,7 @@ public class Sesion {
                     if (flag) {
                         //SE AÑADE AL ARCHIVO DE CREDENCIALES LOS DATOS DEL USUARIO
                         String rolUsuario = "Entrenador";
-                        int ultimoId = Integer.parseInt(listCredenciales.getLast());
+                        int ultimoId = Integer.parseInt(listCredenciales.get(listCredenciales.size() - 1));
                         long idUsuario = ultimoId + 1;
                         String idUsuarioString = Long.toString(idUsuario);
                         Credenciales.escribirFichero(file, nombreUsuario, constrasenaUsuario, rolUsuario, idUsuarioString);
