@@ -1,4 +1,4 @@
-package Servicios;
+package proyectoPokemonADT.Servicios;
 
 public class EntrenadoresServicio {
 }
