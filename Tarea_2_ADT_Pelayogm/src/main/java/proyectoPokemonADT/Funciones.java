@@ -114,7 +114,6 @@ public class Funciones {
                             int ultimoId = Integer.parseInt(credenciales.get(credenciales.size() - 1));
                             long idUsuario = ultimoId + 1;
                             AdminTorneos adminTorneos = new AdminTorneos(contrasenaAdminTorneos, nombreAdminTorneos, idUsuario);
-                            GestorArchivosDat.escribirEntrenadoresDat(file_dat, adminTorneos);
                             String rolUsuario = "AdministradorTorneos";
 
                             String idUsuarioString = Long.toString(idUsuario);

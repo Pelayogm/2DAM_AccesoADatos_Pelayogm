@@ -4,3 +4,4 @@ jorge jorge Entrenador 3
 tomas tomas Entrenador 4
 lucas lucas Entrenador 5
 rover rover Entrenador 6
+luciano luciano AdministradorTorneos 7
