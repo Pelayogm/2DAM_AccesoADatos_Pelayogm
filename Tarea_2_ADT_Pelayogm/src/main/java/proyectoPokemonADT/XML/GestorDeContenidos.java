@@ -1,13 +1,32 @@
 package proyectoPokemonADT.XML;
 
+import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
 public class GestorDeContenidos extends DefaultHandler {
+    private boolean esNombre = false;
+
+    @Override
+    public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
+        if (qName.equalsIgnoreCase("nombre")) {
+            esNombre = true;
+        }
+    }
+
     @Override
     public void characters(char[] ch, int start, int length) throws SAXException {
-        String caracteres = new String(ch,start,length);
-        LectorXML.listPaises.add(caracteres);
-        System.out.print(caracteres);
+        if (esNombre) {
+            String nombre = new String(ch, start, length).trim();
+            LectorXML.listPaises.add(nombre);
+            System.out.println(nombre);
+        }
+    }
+
+    @Override
+    public void endElement(String uri, String localName, String qName) throws SAXException {
+        if (qName.equalsIgnoreCase("nombre")) {
+            esNombre = false;
+        }
     }
 }

@@ -79,7 +79,7 @@ public class Sesion {
                                   }
                               }
                           } catch (Exception e) {
-
+                              System.out.println("Problemas aqui");
                           }
                         }
 
