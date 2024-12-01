@@ -1,0 +1,61 @@
+package proyectoPokemonADT.Servicios;
+
+import proyectoPokemonADT.Carnet;
+import proyectoPokemonADT.DAO.CombateDAOImplementacion;
+import proyectoPokemonADT.DTO.CombateDTO;
+import proyectoPokemonADT.Entidades.CombateEntidad;
+
+import javax.sql.DataSource;
+import java.sql.Date;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+
+public class CombateServicio {
+
+    private static CombateServicio instancia;
+    private static CombateDAOImplementacion combateDAOImplementacion;
+    private static DataSource dataSource;
+
+    private CombateServicio(DataSource dataSource) {
+        combateDAOImplementacion = CombateDAOImplementacion.getInstancia(dataSource);
+    }
+
+    public static CombateServicio getInstancia (DataSource dataSource) {
+        if (instancia == null) {
+            instancia = new CombateServicio(dataSource);
+        }
+        return instancia;
+    }
+
+    public void crearCombate (CombateDTO combate) {
+        Date fechaCombate = Date.valueOf(combate.getFecha());
+        CombateEntidad combateEntidad = new CombateEntidad((int) combate.getId(), fechaCombate, combate.getIdTorneo());
+        combateDAOImplementacion.crearCombate(combateEntidad);
+    }
+
+    public CombateDTO obtenerCombatePorId (int id) {
+        return null;
+    }
+
+    public List<CombateDTO> obtenerTodosLosCombates() {
+        return null;
+    }
+
+    public List<CombateDTO> obtenerTodosLosCombatesDelTorneo (int id) {
+        List<CombateEntidad> listaDeCombateEntidad = combateDAOImplementacion.obtenerTodosLosCombatesDeUnTorneo(id);
+        List<CombateDTO> listaDeCombateDto = new ArrayList<>();
+
+        for (int i = 0; i < listaDeCombateEntidad.size(); i++) {
+            CombateEntidad combateEntidadActual = listaDeCombateEntidad.get(i);
+            LocalDate fechaCombate = combateEntidadActual.getFechaCombate().toLocalDate();
+            long idCombate = combateEntidadActual.getIdCombate();
+            int idTorneo = combateEntidadActual.getIdTorneo();
+
+            CombateDTO combateDTO = new CombateDTO(fechaCombate, idCombate, idTorneo);
+            listaDeCombateDto.add(combateDTO);
+        }
+        return listaDeCombateDto;
+    }
+
+}

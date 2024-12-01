@@ -23,13 +23,19 @@ public class Main {
 
 //ORDENAR SESION - CREAR CUENTA - PRIMERO COMPROBAR USUARIO Y LUEGO CREAR CUENTA
 
-//ELIMINAR ENTRENADORES.DAT
+//ELIMINAR ENTRENADORES.DAT (Dejar de usarlo al empezar a usar la BD)
 //DESLIAR EL CODIGO
-//SOLO PONER EL NOMBRE DEL PAIS AL CREAR NUEVO USUARIO
 //CONVERTIR COSAS A SINGLETON (EJ CLASE EXPORTAR)
 //ESTRUCTURAR EN PAQUETES
 
 //REFACTORIZAR ENTRENADOR A ENTRENADORDTO
+
 //TAREA 2
+//TorneoDTO lleva una ListaDeCombates que se tiene que hacer en torneoServices
+//Los IDs de los usuarios (Admin - AdminsTorneos) que se hace con ellos, en la BD no se guardan
+//Que se hace Entrenador o EntrenadorDTO
+//Que hago con las tablasTorneos CombateTorneo
 
 //ESTRUCTURA DAO (COMPLETADA)
+//TorneoDTO tiene listaDeParticipantes
+//Corregir script de la BD

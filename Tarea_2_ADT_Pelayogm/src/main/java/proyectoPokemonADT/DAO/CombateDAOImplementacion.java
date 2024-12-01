@@ -62,6 +62,30 @@ public class CombateDAOImplementacion implements CombateDAO {
     }
 
     @Override
+    public List<CombateEntidad> obtenerTodosLosCombatesDeUnTorneo(int id) {
+        List<CombateEntidad> listaDeCombates = new ArrayList<>();
+        String sql = "SELECT * FROM COMBATE WHERE COMBATE.idTorneo = ?";
+        try {
+            Connection connection = dataSource.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, id);
+            ResultSet resultSet = preparedStatement.executeQuery(sql);
+
+            while (resultSet.next()) {
+                int idCombate = resultSet.getInt(1);
+                Date fechaCombate = resultSet.getDate(2);
+                int idTorneo = resultSet.getInt(3);
+
+                CombateEntidad combateEntidad = new CombateEntidad(idCombate, fechaCombate, idTorneo);
+                listaDeCombates.add(combateEntidad);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return listaDeCombates;
+    }
+
+    @Override
     public CombateEntidad obtenerCombatePorId(int id) {
         String sql = "SELECT * FROM COMBATE WHERE idCombate = ?";
         try {
@@ -84,7 +108,7 @@ public class CombateDAOImplementacion implements CombateDAO {
     }
 
     @Override
-    public void actualiarCombate(CombateEntidad combate) {
+    public void actualizarCombate(CombateEntidad combate) {
         String sql = "UPDATE CARNET SET fechaCombate = ?, idTorneo = ?, WHERE idCombate = ? ";
         try {
             Connection connection = dataSource.getConnection();

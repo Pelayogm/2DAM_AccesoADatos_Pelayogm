@@ -3,7 +3,6 @@ package proyectoPokemonADT.Servicios;
 import proyectoPokemonADT.DAO.EntrenadorDAOImplementacion;
 import proyectoPokemonADT.DTO.EntrenadorDTO;
 import proyectoPokemonADT.Entidades.EntrenadorEntidad;
-import proyectoPokemonADT.Entrenador;
 
 import javax.sql.DataSource;
 import java.util.ArrayList;
@@ -67,11 +66,11 @@ public class EntrenadoresServicio {
         return entrenadorDTO;
     }
 
-    private EntrenadorEntidad mapearDtoAEntidad (EntrenadorDTO entrenador) {
+    public EntrenadorEntidad mapearDtoAEntidad (EntrenadorDTO entrenador) {
         return new EntrenadorEntidad(entrenador.getId(), entrenador.getNombre(), entrenador.getNacionalidad());
     }
 
-    private EntrenadorDTO mapearEntidadADto (EntrenadorEntidad entrenador) {
+    public EntrenadorDTO mapearEntidadADto (EntrenadorEntidad entrenador) {
         return new EntrenadorDTO(entrenador.getIdEntrenador(), entrenador.getNombreEntrenador(), entrenador.getNacionalidadEntrenador());
     }
 }

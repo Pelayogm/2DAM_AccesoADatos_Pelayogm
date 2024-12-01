@@ -7,7 +7,9 @@ import java.util.List;
 public interface CombateDAO {
     void crearCombate (CombateEntidad combate);
     List<CombateEntidad> obtenerTodosLosCombates();
+    List<CombateEntidad> obtenerTodosLosCombatesDeUnTorneo(int idTorneo);
     CombateEntidad obtenerCombatePorId(int id);
-    void actualiarCombate (CombateEntidad combate);
+    void actualizarCombate(CombateEntidad combate);
     void eliminarCombate (int id);
+
 }
