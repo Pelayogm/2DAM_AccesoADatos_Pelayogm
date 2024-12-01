@@ -73,7 +73,7 @@ public class TorneoDAOImplementacion implements TorneoDAO {
         try {
             Connection connection = dataSource.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setInt(id);
+            preparedStatement.setInt(1,id);
             ResultSet resultSet = preparedStatement.executeQuery(sql);
 
             while (resultSet.next()) {
