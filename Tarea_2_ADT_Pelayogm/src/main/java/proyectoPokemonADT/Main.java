@@ -21,21 +21,24 @@ public class Main {
     }
 }
 
-//ORDENAR SESION - CREAR CUENTA - PRIMERO COMPROBAR USUARIO Y LUEGO CREAR CUENTA
-
+//ERRORES / REVISAR
+//_____________________________________________
+//ORDENAR CLASE SESION - CREAR CUENTA - (PRIMERO COMPROBAR USUARIO Y LUEGO CREAR CUENTA)
 //ELIMINAR ENTRENADORES.DAT (Dejar de usarlo al empezar a usar la BD)
-//DESLIAR EL CODIGO
-//CONVERTIR COSAS A SINGLETON (EJ CLASE EXPORTAR)
-//ESTRUCTURAR EN PAQUETES
-
-//REFACTORIZAR ENTRENADOR A ENTRENADORDTO
+//DESLIAR EL CODIGO / Comentar el codigo
+//ESTRUCTURAR EN PAQUETES (SEMI-COMPLETADO)
+//REFACTORIZAR ENTRENADOR A ENTRENADORDTO (se puede hacer herencia y admitir un objeto Entrenador y EntrenadorDTO)
+//Corregir script de la BD
+//TorneoDTO tiene listaDeParticipantes
 
 //TAREA 2
-//TorneoDTO lleva una ListaDeCombates que se tiene que hacer en torneoServices
-//Los IDs de los usuarios (Admin - AdminsTorneos) que se hace con ellos, en la BD no se guardan
-//Que se hace Entrenador o EntrenadorDTO
-//Que hago con las tablasTorneos CombateTorneo
-
+//TorneoDTO lleva una ListaDeCombates que se tiene que hacer en torneoServices (COMPLETADA)
 //ESTRUCTURA DAO (COMPLETADA)
-//TorneoDTO tiene listaDeParticipantes
-//Corregir script de la BD
+//DUDAS
+//_____________________________________________________________________________________
+//setDouble sirve para Decimal en la BD?
+//Los IDs de los usuarios (Admin - AdminsTorneos) que se hace con ellos, en la BD no se guardan?
+//Que se hace Entrenador o EntrenadorDTO?
+//Que hago con las tablasTorneos CombateTorneo?
+//Exportar torneo como se hace?
+

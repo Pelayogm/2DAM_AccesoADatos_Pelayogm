@@ -38,7 +38,7 @@ public class Funciones {
             System.out.println("Hola " + usuario.getNombre());
             usuario.setEstadoSesion(true);
             Entrenador entrenador = (Entrenador) usuario;
-            System.out.println("1. Exportar Carnet de DTO.Entrenador | 2. Cerrar Sesión");
+            System.out.println("1. Exportar Carnet de Entrenador | 2. Cerrar Sesión");
             System.out.println("Número de torneos: " + entrenador.getTorneosDelEntrenador().size());
             int userOpcion = scanner.nextInt();
             while (userOpcion < 4) {
@@ -55,7 +55,7 @@ public class Funciones {
                     System.out.println("Hola");
                 }
 
-                System.out.println("1. Exportar Carnet de DTO.Entrenador | 2. Cerrar Sesión");
+                System.out.println("1. Exportar Carnet de Entrenador | 2. Cerrar Sesión");
                 userOpcion = scanner.nextInt();
             }
 
@@ -100,16 +100,12 @@ public class Funciones {
                         System.out.println("¿Contraseña del administrador de Torneos?");
                         String contrasenaAdminTorneos = scanner.next();
 
-                        //SE CREAN 2 FILE UNO PARA CREDENCIALES Y OTRO PARA COMPROBAR
+                        //SE CREAN UN FILE UNO PARA CREDENCIALES
                         File file = new File("src/main/java/proyectoPokemonADT/ArchivosDelPrograma", "Credenciales.txt");
-                        File file_dat = new File("src/main/java/proyectoPokemonADT/ArchivosDelPrograma", "Usuarios.dat");
 
                         File fileCredenciales = new File("src/main/java/proyectoPokemonADT/ArchivosDelPrograma", "Credenciales.txt");
                         Credenciales.leerFichero(fileCredenciales);
 
-                        //if (!GestorArchivosDat.comprobarEntrenadorDat(file_dat, nombreAdminTorneos)) {
-                        //if (file_dat != null && file.length() != 0) {
-                        //if (!GestorArchivosDat.comprobarEntrenadorDat(file_dat, nombreAdminTorneos)) {
                         if (!Credenciales.comprobarCredenciales(nombreAdminTorneos, contrasenaAdminTorneos)) {
                             int ultimoId = Integer.parseInt(credenciales.get(credenciales.size() - 1));
                             long idUsuario = ultimoId + 1;
@@ -132,13 +128,6 @@ public class Funciones {
                             System.out.println("Torneo creado");
                             listTorneos.add(torneo);
                         }
-                        //} else {
-                        // System.out.println("El usuario introducido es un entrenador");
-                        //}
-                        //}
-                        //} else {
-                        //System.out.println("El usuario introducido es un DTO.Entrenador, vuelve a intentarlo con otro usuario");
-                        //}
 
                     } else if (adminOpcion == 2) {
                         System.out.println("Saliendo...");
