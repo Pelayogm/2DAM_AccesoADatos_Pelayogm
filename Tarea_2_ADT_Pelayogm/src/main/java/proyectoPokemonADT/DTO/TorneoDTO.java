@@ -9,6 +9,7 @@ public class TorneoDTO {
     private final char codRegion;
     private final float PuntosVictoria;
     private final List<CombateDTO> combatesDelTorneo;
+    //private final idAdminTorneos;
 
     public TorneoDTO(int id, String nombre, char codRegion, float puntosVictoria, List<CombateDTO> combatesDelTorneo) {
         this.id = id;
