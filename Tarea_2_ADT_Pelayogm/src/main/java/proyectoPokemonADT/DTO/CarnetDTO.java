@@ -1,20 +1,19 @@
 package proyectoPokemonADT.DTO;
 
 import java.time.LocalDate;
-import java.util.Date;
 
 public class CarnetDTO {
 
     private final long idEntrenador;
     private final LocalDate fechaExpedicionCarnet;
     private final float puntosCarnet;
-    private final int numeroCarnet;
+    private final int numeroVictorias;
 
-    public CarnetDTO(long idEntrenador, LocalDate fechaExpedicionCarnet, float puntosCarnet, int numeroCarnet) {
+    public CarnetDTO(long idEntrenador, LocalDate fechaExpedicionCarnet, float puntosCarnet, int numeroVictorias) {
         this.idEntrenador = idEntrenador;
         this.fechaExpedicionCarnet = fechaExpedicionCarnet;
         this.puntosCarnet = puntosCarnet;
-        this.numeroCarnet = numeroCarnet;
+        this.numeroVictorias = numeroVictorias;
     }
 
     public long getIdEntrenador() {
@@ -29,7 +28,7 @@ public class CarnetDTO {
         return puntosCarnet;
     }
 
-    public int getNumeroCarnet() {
-        return numeroCarnet;
+    public int getNumeroVictorias() {
+        return numeroVictorias;
     }
 }

@@ -35,11 +35,26 @@ public class CombateServicio {
     }
 
     public CombateDTO obtenerCombatePorId (int id) {
-        return null;
+        CombateEntidad combateEntidad = combateDAOImplementacion.obtenerCombatePorId(id);
+        LocalDate fechaCombate = combateEntidad.getFechaCombate().toLocalDate();
+        long idCombate = combateEntidad.getIdCombate();
+        return new CombateDTO(fechaCombate, idCombate, combateEntidad.getIdTorneo());
     }
 
     public List<CombateDTO> obtenerTodosLosCombates() {
-        return null;
+        List<CombateEntidad> listaDeCombateEntidad = combateDAOImplementacion.obtenerTodosLosCombates();
+        List<CombateDTO> listaDeCombateDto = new ArrayList<>();
+
+        for (int i = 0; i < listaDeCombateEntidad.size(); i++) {
+            CombateEntidad combateEntidadActual = listaDeCombateEntidad.get(i);
+            LocalDate fechaCombate = combateEntidadActual.getFechaCombate().toLocalDate();
+            long idCombate = combateEntidadActual.getIdCombate();
+            int idTorneo = combateEntidadActual.getIdTorneo();
+
+            CombateDTO combateDTO = new CombateDTO(fechaCombate, idCombate, idTorneo);
+            listaDeCombateDto.add(combateDTO);
+        }
+        return listaDeCombateDto;
     }
 
     public List<CombateDTO> obtenerTodosLosCombatesDelTorneo (int id) {

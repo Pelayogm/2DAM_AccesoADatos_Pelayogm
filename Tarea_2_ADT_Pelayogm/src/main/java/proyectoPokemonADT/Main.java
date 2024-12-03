@@ -27,18 +27,21 @@ public class Main {
 //ELIMINAR ENTRENADORES.DAT (Dejar de usarlo al empezar a usar la BD)
 //DESLIAR EL CODIGO / Comentar el codigo
 //ESTRUCTURAR EN PAQUETES (SEMI-COMPLETADO)
-//REFACTORIZAR ENTRENADOR A ENTRENADORDTO (se puede hacer herencia y admitir un objeto Entrenador y EntrenadorDTO)
+//REFACTORIZAR ENTRENADOR A ENTRENADORDTO (IDEA: se puede hacer herencia y admitir un objeto Entrenador y EntrenadorDTO)
 //Corregir script de la BD
 //TorneoDTO tiene listaDeParticipantes
 
 //TAREA 2
 //TorneoDTO lleva una ListaDeCombates que se tiene que hacer en torneoServices (COMPLETADA)
 //ESTRUCTURA DAO (COMPLETADA)
+//ESTRUCTURA ENTIDAD (COMPLETADA)
+//ESTRUCTURA SERVICES (A MEDIAS)
 //DUDAS
 //_____________________________________________________________________________________
 //setDouble sirve para Decimal en la BD?
 //Los IDs de los usuarios (Admin - AdminsTorneos) que se hace con ellos, en la BD no se guardan?
 //Que se hace Entrenador o EntrenadorDTO?
 //Que hago con las tablasTorneos CombateTorneo?
-//Exportar torneo como se hace?
+//Exportar torneo como se hace? Como guardo al adminDeTorneos con su ID?
+//Como hago la lista de participantes?
 

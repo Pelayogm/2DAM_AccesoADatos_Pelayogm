@@ -6,6 +6,7 @@ import proyectoPokemonADT.DTO.TorneoDTO;
 import proyectoPokemonADT.Entidades.TorneoEntidad;
 
 import javax.sql.DataSource;
+import java.util.ArrayList;
 import java.util.List;
 
 public class TorneosServicio {
@@ -42,7 +43,20 @@ public class TorneosServicio {
     }
 
     public List<TorneoDTO> obtenerTodosLosTorneos () {
-        return null;
+        List<TorneoEntidad> listaDeTorneoEntidad = torneoDAOImplementacion.obtenerTodosLosTorneos();
+        List<TorneoDTO> listaDeTorneoDTO = new ArrayList<>();
+
+        for (int i = 0; i < listaDeTorneoEntidad.size(); i++) {
+            TorneoEntidad torneoEntidad = listaDeTorneoEntidad.get(i);
+            List<CombateDTO> combatesTorneo = combateServicio.obtenerTodosLosCombatesDelTorneo(torneoEntidad.getIdTorneo());
+            int idTorneo = torneoEntidad.getIdTorneo();
+            char codigoTorneo = torneoEntidad.getCodigoTorneo().charAt(0);
+            float puntosTorneo = (float) torneoEntidad.getPuntosVictoriaTorneo();
+
+            TorneoDTO torneoDTO = new TorneoDTO(idTorneo, torneoEntidad.getNombreTorneo(), codigoTorneo, puntosTorneo, combatesTorneo);
+            listaDeTorneoDTO.add(torneoDTO);
+        }
+        return listaDeTorneoDTO;
     }
 
     public TorneoDTO actualizarTorneo (int id, TorneoDTO torneo) {
