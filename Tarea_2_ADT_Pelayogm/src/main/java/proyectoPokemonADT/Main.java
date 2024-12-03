@@ -28,16 +28,19 @@ public class Main {
 //DESLIAR EL CODIGO / Comentar el codigo
 //ESTRUCTURAR EN PAQUETES (SEMI-COMPLETADO)
 //Corregir script de la BD
-//TorneoDTO tiene listaDeParticipantes
 
 //TAREA 2
 //TorneoDTO lleva una ListaDeCombates que se tiene que hacer en torneoServices (COMPLETADA)
 //ESTRUCTURA DAO (COMPLETADA)
 //Coger datos del torneo en la base de datos
+
 //DUDAS
 //_____________________________________________________________________________________
 //Que hago con las tablasTorneos CombateTorneo?
+//Crear un campo para el idAdminTorneos en la tabla Torneo?
 
-//El entrenador lleva una lista de torneos
-//Se puede usar el que queramos Entrenador o EntrenadorDTO
+//El entrenador lleva una lista de torneos.
+//TorneoDTO tiene listaDeParticipantes
+//Se puede usar el que queramos Entrenador o EntrenadorDTO.
 //El torneo se exporta en .txt y se sale por pantalla y se guarda el id del torneo Creado con el adminDeTorneos.
+//En un torneo un entrenador solo puede combatir 2 veces y en un torneo hay 3 combates.

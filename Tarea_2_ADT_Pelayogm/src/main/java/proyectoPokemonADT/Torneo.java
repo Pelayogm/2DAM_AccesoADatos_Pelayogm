@@ -55,9 +55,9 @@ public class Torneo implements Serializable {
         this.torneoCreado = torneoCreado;
     }
 
-    public Torneo(String nombre, int id, char codRegion, float puntosVictoria) {
-        this.nombre = nombre;
+    public Torneo(int id, String nombre, char codRegion, float puntosVictoria) {
         this.id = id;
+        this.nombre = nombre;
         this.codRegion = codRegion;
         PuntosVictoria = puntosVictoria;
         torneoCreado = true;

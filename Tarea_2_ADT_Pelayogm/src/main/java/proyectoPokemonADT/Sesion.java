@@ -6,7 +6,6 @@ import proyectoPokemonADT.ArchivosDelPrograma.ConexionBaseDeDatos;
 import proyectoPokemonADT.Credenciales.Credenciales;
 import proyectoPokemonADT.DTO.CarnetDTO;
 import proyectoPokemonADT.DTO.EntrenadorDTO;
-import proyectoPokemonADT.Entidades.EntrenadorEntidad;
 import proyectoPokemonADT.Servicios.EntrenadoresServicio;
 
 import javax.sql.DataSource;
@@ -18,7 +17,6 @@ public class Sesion {
     private static final ConexionBaseDeDatos conexionBaseDeDatos = ConexionBaseDeDatos.getInstancia();
     private static final DataSource dataSource = conexionBaseDeDatos.configurarDataSource();
     private static EntrenadoresServicio entrenadoresServicio = EntrenadoresServicio.getInstancia(dataSource);
-
 
     public static ArrayList<Usuario> listEntrenadores = new ArrayList<>();
     private static ArrayList<Torneo> listTorneos = Funciones.getListTorneos();
@@ -127,10 +125,8 @@ public class Sesion {
             System.out.println("¿Contraseña?");
             String constrasenaUsuario = scanner.nextLine();
             System.out.println("A continuacion va a se va a crear una cuenta en el club de Entrenadores Pokemon");
-
             //SE PREPARA UN ARCHIVO PARA ESCRIBIR EL ENTRENDADOR EN UN ARCHIVO DAT Y UNO PARA LEER LOS TORNEOS
             File file_torneos = new File("src/main/java/proyectoPokemonADT/ArchivosDelPrograma", "Torneos.dat");
-            File file_escribirdatos;
             GestorArchivosDat.cargarTorneo(file_torneos);
             ComprobacionTorneos();
 
@@ -178,17 +174,13 @@ public class Sesion {
                     //SI LA LISTA DE TORNEOS TIENE DATOS
                     if (flag) {
                         //SE AÑADE AL ARCHIVO DE CREDENCIALES LOS DATOS DEL USUARIO
-                        if (entrenador != null) {
-                            String rolUsuario = "Entrenador";
-                            int ultimoId = Integer.parseInt(listCredenciales.get(listCredenciales.size() - 1));
-                            long idUsuario = ultimoId + 1;
-                            String idUsuarioString = Long.toString(idUsuario);
-                            Credenciales.escribirFichero(file, nombreUsuario, constrasenaUsuario, rolUsuario, idUsuarioString);
-                            System.out.println("Cuenta creada con éxito");
-                            Funciones.MostrarFunciones(entrenador);
-                        } else {
-                            Sesion.CrearCuenta();
-                        }
+                        String rolUsuario = "Entrenador";
+                        int ultimoId = Integer.parseInt(listCredenciales.get(listCredenciales.size() - 1));
+                        long idUsuario = ultimoId + 1;
+                        String idUsuarioString = Long.toString(idUsuario);
+                        Credenciales.escribirFichero(file, nombreUsuario, constrasenaUsuario, rolUsuario, idUsuarioString);
+                        System.out.println("Cuenta creada con éxito");
+                        Funciones.MostrarFunciones(entrenador);
                     }
                 }
             } catch (Exception e) {

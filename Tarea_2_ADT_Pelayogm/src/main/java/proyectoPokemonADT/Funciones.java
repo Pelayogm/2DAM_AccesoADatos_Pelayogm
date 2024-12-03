@@ -1,13 +1,20 @@
 package proyectoPokemonADT;
+import proyectoPokemonADT.ArchivosDelPrograma.ConexionBaseDeDatos;
 import proyectoPokemonADT.Credenciales.Credenciales;
 import proyectoPokemonADT.Administradores.*;
-import proyectoPokemonADT.DTO.EntrenadorDTO;
+import proyectoPokemonADT.Servicios.EntrenadoresServicio;
+import proyectoPokemonADT.Servicios.TorneosServicio;
 
+import javax.sql.DataSource;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Funciones {
+    private static final ConexionBaseDeDatos conexionBaseDeDatos = ConexionBaseDeDatos.getInstancia();
+    private static final DataSource dataSource = conexionBaseDeDatos.configurarDataSource();
+    private static TorneosServicio torneosServicio = TorneosServicio.getInstancia(dataSource);
+
     private static ArrayList<Torneo> listTorneos = new ArrayList<>();
     private static ArrayList<String> credenciales = Credenciales.getCredenciales();
 
@@ -122,6 +129,8 @@ public class Funciones {
                             //SI YA ESTA EN LA LISTA DE CREDENCIALES SE CREA EL TORNEO Y SE AÑADE A LA LISTA
                             Torneo torneo = new Torneo(listTorneos.size() + 1, nombreTorneo, charRegion);
                             AdminTorneos adminTorneos = new AdminTorneos(contrasenaAdminTorneos, nombreAdminTorneos);
+
+
                             torneo.setAdminTorneos(adminTorneos);
                             GestorArchivosDat.exportarTorneo(file_torneos, torneo);
                             System.out.println("Torneo creado");

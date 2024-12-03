@@ -3,7 +3,6 @@ aniceto aniceto AdministradorTorneos 2
 jorge jorge Entrenador 3
 moris moris Entrenador 4
 tomas tomas Entrenador 5
-hugo hugo Entrenador 6
-alfred alfred Entrenador 7
-gus gus Entrenador 8
-gonza gonza Entrenador 9
+gus gus Entrenador 6
+alfonso alfonso Entrenador 7
+carlos carlos Entrenador 8

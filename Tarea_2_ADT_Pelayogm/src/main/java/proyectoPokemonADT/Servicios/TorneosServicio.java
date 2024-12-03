@@ -4,6 +4,7 @@ import proyectoPokemonADT.DAO.TorneoDAOImplementacion;
 import proyectoPokemonADT.DTO.CombateDTO;
 import proyectoPokemonADT.DTO.TorneoDTO;
 import proyectoPokemonADT.Entidades.TorneoEntidad;
+import proyectoPokemonADT.Torneo;
 
 import javax.sql.DataSource;
 import java.util.ArrayList;
@@ -68,6 +69,14 @@ public class TorneosServicio {
     }
 
     public TorneoDTO mapearEntidadADto (TorneoEntidad torneo) {
+        return null;
+    }
+
+    public TorneoDTO mapearTorneoDTOaTorneo (Torneo torneo) {
+        return null;
+    }
+
+    public Torneo mapearTorneoDtoATorneo (TorneoDTO torneo) {
         return null;
     }
 }
