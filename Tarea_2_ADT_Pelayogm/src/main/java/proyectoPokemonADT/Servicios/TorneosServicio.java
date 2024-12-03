@@ -1,5 +1,6 @@
 package proyectoPokemonADT.Servicios;
 
+import proyectoPokemonADT.DAO.TorneoAdminDAOImplementacion;
 import proyectoPokemonADT.DAO.TorneoDAOImplementacion;
 import proyectoPokemonADT.DTO.CombateDTO;
 import proyectoPokemonADT.DTO.TorneoDTO;
@@ -14,12 +15,14 @@ public class TorneosServicio {
 
     private static TorneosServicio instancia;
     private static TorneoDAOImplementacion torneoDAOImplementacion;
+    private static TorneoAdminDAOImplementacion torneoAdminDAOImplementacion;
     private static CombateServicio combateServicio;
     private static DataSource dataSource;
 
     private TorneosServicio (DataSource dataSource) {
         torneoDAOImplementacion = TorneoDAOImplementacion.getInstancia(dataSource);
         combateServicio = CombateServicio.getInstancia(dataSource);
+        torneoAdminDAOImplementacion = TorneoAdminDAOImplementacion.getInstancia(dataSource);
     }
 
     public static TorneosServicio getInstancia (DataSource dataSource) {
@@ -40,7 +43,8 @@ public class TorneosServicio {
         List<CombateDTO> combatesDelTorneo = combateServicio.obtenerTodosLosCombatesDelTorneo(id);
         char codigoTorneo = torneoEntidad.getCodigoTorneo().charAt(0);
         float puntosTorneo = (float) torneoEntidad.getPuntosVictoriaTorneo();
-        return new TorneoDTO(torneoEntidad.getIdTorneo(), torneoEntidad.getNombreTorneo(), codigoTorneo, puntosTorneo, combatesDelTorneo);
+        int idAdminTorneo = torneoAdminDAOImplementacion.obtenerAdminTorneoPorId(id);
+        return new TorneoDTO(torneoEntidad.getIdTorneo(), torneoEntidad.getNombreTorneo(), codigoTorneo, puntosTorneo, combatesDelTorneo, idAdminTorneo);
     }
 
     public List<TorneoDTO> obtenerTodosLosTorneos () {
@@ -53,8 +57,9 @@ public class TorneosServicio {
             int idTorneo = torneoEntidad.getIdTorneo();
             char codigoTorneo = torneoEntidad.getCodigoTorneo().charAt(0);
             float puntosTorneo = (float) torneoEntidad.getPuntosVictoriaTorneo();
+            int idAdminTorneo = torneoAdminDAOImplementacion.obtenerAdminTorneoPorId(idTorneo);
 
-            TorneoDTO torneoDTO = new TorneoDTO(idTorneo, torneoEntidad.getNombreTorneo(), codigoTorneo, puntosTorneo, combatesTorneo);
+            TorneoDTO torneoDTO = new TorneoDTO(idTorneo, torneoEntidad.getNombreTorneo(), codigoTorneo, puntosTorneo, combatesTorneo, idAdminTorneo);
             listaDeTorneoDTO.add(torneoDTO);
         }
         return listaDeTorneoDTO;
@@ -65,11 +70,16 @@ public class TorneosServicio {
     }
 
     public TorneoEntidad mapearDtoAEntidad (TorneoDTO torneo) {
-        return null;
+        String idTorneo = String.valueOf(torneo.getCodRegion());
+        return new TorneoEntidad(torneo.getId(), torneo.getNombre(),idTorneo, torneo.getPuntosVictoria());
     }
 
     public TorneoDTO mapearEntidadADto (TorneoEntidad torneo) {
-        return null;
+        char codigoTorneo = torneo.getCodigoTorneo().charAt(0);
+        float puntosTorneo = (float) torneo.getPuntosVictoriaTorneo();
+        List<CombateDTO> combatesTorneo = combateServicio.obtenerTodosLosCombatesDelTorneo(torneo.getIdTorneo());
+        int idAdminTorneo = torneoAdminDAOImplementacion.obtenerAdminTorneoPorId(torneo.getIdTorneo());
+        return new TorneoDTO(torneo.getIdTorneo(), torneo.getNombreTorneo(), codigoTorneo, puntosTorneo, combatesTorneo, idAdminTorneo);
     }
 
     public TorneoDTO mapearTorneoDTOaTorneo (Torneo torneo) {

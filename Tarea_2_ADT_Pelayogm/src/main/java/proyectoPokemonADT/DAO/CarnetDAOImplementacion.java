@@ -83,7 +83,7 @@ public class CarnetDAOImplementacion implements CarnetDAO {
                 int idCarnet = resultSet.getInt(1);
                 Date fechaCarnet = resultSet.getDate(2);
                 double puntosCarnet = resultSet.getDouble(3);
-                int victoriasCarnet = resultSet.getInt(3);
+                int victoriasCarnet = resultSet.getInt(4);
 
                 return new CarnetEntidad(idCarnet, fechaCarnet, puntosCarnet, victoriasCarnet);
             }

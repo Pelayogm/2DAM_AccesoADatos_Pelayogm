@@ -9,14 +9,15 @@ public class TorneoDTO {
     private final char codRegion;
     private final float PuntosVictoria;
     private final List<CombateDTO> combatesDelTorneo;
-    //private final idAdminTorneos;
+    private final int idAdminTorneos;
 
-    public TorneoDTO(int id, String nombre, char codRegion, float puntosVictoria, List<CombateDTO> combatesDelTorneo) {
+    public TorneoDTO(int id, String nombre, char codRegion, float puntosVictoria, List<CombateDTO> combatesDelTorneo, int idAdminTorneos) {
         this.id = id;
         this.nombre = nombre;
         this.codRegion = codRegion;
         PuntosVictoria = puntosVictoria;
         this.combatesDelTorneo = combatesDelTorneo;
+        this.idAdminTorneos = idAdminTorneos;
     }
 
     public int getId() {
@@ -37,5 +38,9 @@ public class TorneoDTO {
 
     public List<CombateDTO> getCombatesDelTorneo() {
         return combatesDelTorneo;
+    }
+
+    public int getIdAdminTorneos() {
+        return idAdminTorneos;
     }
 }
