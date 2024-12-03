@@ -14,14 +14,14 @@ public class ConexionBaseDeDatos {
     private ConexionBaseDeDatos () {
     }
 
-    private static ConexionBaseDeDatos getInstancia () {
+    public static ConexionBaseDeDatos getInstancia () {
         if (instancia == null ) {
             instancia = new ConexionBaseDeDatos();
         }
         return instancia;
     }
 
-    private static DataSource configurarDataSource() {
+    public DataSource configurarDataSource() {
         File file = new File("src/main/java/proyectoPokemonADT/ArchivosDelPrograma", "DBProperties.txt");
 
         Properties properties = new Properties();

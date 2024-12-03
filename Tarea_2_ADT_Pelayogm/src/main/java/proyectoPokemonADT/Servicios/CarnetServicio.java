@@ -1,5 +1,6 @@
 package proyectoPokemonADT.Servicios;
 
+import proyectoPokemonADT.Carnet;
 import proyectoPokemonADT.DAO.CarnetDAOImplementacion;
 import proyectoPokemonADT.DTO.CarnetDTO;
 import proyectoPokemonADT.Entidades.CarnetEntidad;
@@ -97,6 +98,10 @@ public class CarnetServicio {
         long idEntrenador = carnet.getIdCarnet();
 
         return new CarnetDTO(idEntrenador, fechaCarnet, puntosCarnet, carnet.getVictoriasCarnet());
+    }
+
+    public Carnet mapearCarnetDtoACarnet (CarnetDTO carnet) {
+        return new Carnet(carnet.getIdEntrenador(), carnet.getFechaExpedicionCarnet(), carnet.getPuntosCarnet(), carnet.getNumeroVictorias());
     }
 
 }

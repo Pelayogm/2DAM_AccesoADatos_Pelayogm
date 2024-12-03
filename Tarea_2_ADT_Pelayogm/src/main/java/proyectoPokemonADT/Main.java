@@ -16,7 +16,7 @@ public class Main {
                 case 3 -> System.out.println("ADIOS");
             }
         } catch (Exception e) {
-            System.out.println("Solo numeros");
+            System.out.println("Solo números");
         }
     }
 }
@@ -24,24 +24,20 @@ public class Main {
 //ERRORES / REVISAR
 //_____________________________________________
 //ORDENAR CLASE SESION - CREAR CUENTA - (PRIMERO COMPROBAR USUARIO Y LUEGO CREAR CUENTA)
-//ELIMINAR ENTRENADORES.DAT (Dejar de usarlo al empezar a usar la BD)
+//ELIMINAR ENTRENADORES.DAT (COMPLETADO)
 //DESLIAR EL CODIGO / Comentar el codigo
 //ESTRUCTURAR EN PAQUETES (SEMI-COMPLETADO)
-//REFACTORIZAR ENTRENADOR A ENTRENADORDTO (IDEA: se puede hacer herencia y admitir un objeto Entrenador y EntrenadorDTO)
 //Corregir script de la BD
 //TorneoDTO tiene listaDeParticipantes
 
 //TAREA 2
 //TorneoDTO lleva una ListaDeCombates que se tiene que hacer en torneoServices (COMPLETADA)
 //ESTRUCTURA DAO (COMPLETADA)
-//ESTRUCTURA ENTIDAD (COMPLETADA)
-//ESTRUCTURA SERVICES (A MEDIAS)
+//Coger datos del torneo en la base de datos
 //DUDAS
 //_____________________________________________________________________________________
-//setDouble sirve para Decimal en la BD?
-//Los IDs de los usuarios (Admin - AdminsTorneos) que se hace con ellos, en la BD no se guardan?
-//Que se hace Entrenador o EntrenadorDTO?
 //Que hago con las tablasTorneos CombateTorneo?
-//Exportar torneo como se hace? Como guardo al adminDeTorneos con su ID?
-//Como hago la lista de participantes?
 
+//El entrenador lleva una lista de torneos
+//Se puede usar el que queramos Entrenador o EntrenadorDTO
+//El torneo se exporta en .txt y se sale por pantalla y se guarda el id del torneo Creado con el adminDeTorneos.

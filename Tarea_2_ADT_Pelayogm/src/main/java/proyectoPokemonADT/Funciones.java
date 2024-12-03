@@ -1,6 +1,7 @@
 package proyectoPokemonADT;
 import proyectoPokemonADT.Credenciales.Credenciales;
 import proyectoPokemonADT.Administradores.*;
+import proyectoPokemonADT.DTO.EntrenadorDTO;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -9,7 +10,6 @@ import java.util.Scanner;
 public class Funciones {
     private static ArrayList<Torneo> listTorneos = new ArrayList<>();
     private static ArrayList<String> credenciales = Credenciales.getCredenciales();
-    private static ArrayList<Usuario> listUsuarios = Sesion.getListEntrenadores();
 
     public static void MostrarFunciones (Usuario usuario) {
         Scanner scanner = new Scanner(System.in);
@@ -39,7 +39,6 @@ public class Funciones {
             usuario.setEstadoSesion(true);
             Entrenador entrenador = (Entrenador) usuario;
             System.out.println("1. Exportar Carnet de Entrenador | 2. Cerrar Sesión");
-            System.out.println("Número de torneos: " + entrenador.getTorneosDelEntrenador().size());
             int userOpcion = scanner.nextInt();
             while (userOpcion < 4) {
                 if (userOpcion == 1) {

@@ -72,12 +72,12 @@ public class CarnetDAOImplementacion implements CarnetDAO {
 
     @Override
     public CarnetEntidad obtenerCarnetPorId(int id) {
-        String sql = "SELECT * FROM CARNET WHERE idCarnet = ?";
+        String sql = "SELECT * FROM CARNET WHERE CARNET.idEntrenadorCarnet = ?";
         try {
             Connection connection = dataSource.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setInt(1, id);
-            ResultSet resultSet = preparedStatement.executeQuery(sql);
+            ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
                 int idCarnet = resultSet.getInt(1);

@@ -2,13 +2,24 @@ package proyectoPokemonADT;
 
 import proyectoPokemonADT.Administradores.Admin;
 import proyectoPokemonADT.Administradores.AdminTorneos;
+import proyectoPokemonADT.ArchivosDelPrograma.ConexionBaseDeDatos;
 import proyectoPokemonADT.Credenciales.Credenciales;
+import proyectoPokemonADT.DTO.CarnetDTO;
+import proyectoPokemonADT.DTO.EntrenadorDTO;
+import proyectoPokemonADT.Entidades.EntrenadorEntidad;
+import proyectoPokemonADT.Servicios.EntrenadoresServicio;
 
+import javax.sql.DataSource;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Sesion {
+    private static final ConexionBaseDeDatos conexionBaseDeDatos = ConexionBaseDeDatos.getInstancia();
+    private static final DataSource dataSource = conexionBaseDeDatos.configurarDataSource();
+    private static EntrenadoresServicio entrenadoresServicio = EntrenadoresServicio.getInstancia(dataSource);
+
+
     public static ArrayList<Usuario> listEntrenadores = new ArrayList<>();
     private static ArrayList<Torneo> listTorneos = Funciones.getListTorneos();
     private static ArrayList<String> listCredenciales = Credenciales.getCredenciales();
@@ -66,18 +77,12 @@ public class Sesion {
                         }
 
                         if (nombreEntrenador.equals(listCredenciales.get(i)) && contrasena.equals(listCredenciales.get(i + 1)) && listCredenciales.get(i + 2).equals("Entrenador")) {
-                          Entrenador entrenador;
-                          File datos_dat = new File("src/main/java/proyectoPokemonADT/ArchivosDelPrograma", "Usuarios.dat");
                           try {
-                              GestorArchivosDat.leerEntrenadoresDat(datos_dat);
-                              for (int x = 0; x < listEntrenadores.size(); x++) {
-                                  if (listEntrenadores.get(x).getNombre().equals(nombreEntrenador)) {
-                                      entrenador = (Entrenador) listEntrenadores.get(x);
-                                      System.out.println("Sesion iniciada");
-                                      Funciones.MostrarFunciones(entrenador);
-                                      return entrenador;
-                                  }
-                              }
+                              int idUsuario = Integer.parseInt(listCredenciales.get(i + 3));
+                              EntrenadorDTO entrenadorDTO = entrenadoresServicio.obtenerEntrenadorPorId(idUsuario);
+                              Entrenador entrenador = entrenadoresServicio.mapearEntrenadorDtoAEntrenador(entrenadorDTO, entrenadorDTO.getCarnet());
+                              Funciones.MostrarFunciones(entrenador);
+                              return entrenador;
                           } catch (Exception e) {
                               System.out.println("Problemas aqui");
                           }
@@ -136,13 +141,15 @@ public class Sesion {
 
             if (flag) {
                 try {
-                    file_escribirdatos = new File("src/main/java/proyectoPokemonADT/ArchivosDelPrograma", "Usuarios.dat");
                     int ultimoId = Integer.parseInt(listCredenciales.get(listCredenciales.size() - 1));
                     long idUsuario = ultimoId + 1;
                     //SE LLAMA A CREAR ENTRENADOR
-                    entrenador = Entrenador.crearEntrenador(constrasenaUsuario, idUsuario);
-                    //CON LO QUE RETORNA CREAR ENTRENADOR ESCRIBIMOS EL DAT
-                    GestorArchivosDat.escribirEntrenadoresDat(file_escribirdatos, entrenador);
+                    entrenador = Entrenador.crearEntrenador(nombreUsuario, idUsuario);
+                    //CREAMOS EL CARNET DTO
+                    assert entrenador != null;
+                    CarnetDTO carnet = new CarnetDTO(idUsuario, entrenador.getCarnet().getFechaExpedicion(), entrenador.getCarnet().getPuntos(),entrenador.getCarnet().getNumVictorias());
+                    EntrenadorDTO entrenadorDto = entrenadoresServicio.mapearEntrenadorAEntrenadorDto(entrenador, carnet);
+                    entrenadoresServicio.crearEntrenador(entrenadorDto);
                 } catch (Exception e) {
                     System.out.println("Error con el DAT");
                 }

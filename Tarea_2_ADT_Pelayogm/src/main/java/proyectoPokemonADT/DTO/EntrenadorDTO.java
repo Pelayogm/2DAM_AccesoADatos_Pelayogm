@@ -1,15 +1,22 @@
 package proyectoPokemonADT.DTO;
 
-public class EntrenadorDTO {
+import proyectoPokemonADT.Usuario;
+
+public class EntrenadorDTO extends Usuario {
 
     private final int id;
     private final String nombre;
     private final String nacionalidad;
+    private final CarnetDTO carnet;
 
-    public EntrenadorDTO(int id, String nombre, String nacionalidad) {
+    public EntrenadorDTO(int id, String nombre, String nacionalidad, CarnetDTO carnet) {
+        setEstadoSesion(true);
+        setUsuario(false);
+        setNombreUsuario(nombre);
         this.id = id;
         this.nombre = nombre;
         this.nacionalidad = nacionalidad;
+        this.carnet = carnet;
     }
 
     public int getId() {
@@ -22,5 +29,9 @@ public class EntrenadorDTO {
 
     public String getNacionalidad() {
         return nacionalidad;
+    }
+
+    public CarnetDTO getCarnet() {
+        return carnet;
     }
 }

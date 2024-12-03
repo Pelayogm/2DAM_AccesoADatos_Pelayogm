@@ -33,6 +33,16 @@ public class Entrenador extends Usuario implements Serializable {
         this.carnet = new Carnet(id, fechaActual);
     }
 
+    public Entrenador(long id, String nombre, String nacionalidad, Carnet carnet) {
+        setEstadoSesion(true);
+        setUsuario(false);
+        setNombreUsuario(nombre);
+        this.id = id;
+        this.nombre = nombre;
+        this.nacionalidad = nacionalidad;
+        this.carnet = carnet;
+    }
+
     public static Entrenador crearEntrenador (String nombreUsuario, long id) {
         Scanner scanner_entrenador = new Scanner(System.in);
         System.out.println("¿Nombre?");
