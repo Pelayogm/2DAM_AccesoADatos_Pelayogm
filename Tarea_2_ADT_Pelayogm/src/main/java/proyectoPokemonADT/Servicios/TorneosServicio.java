@@ -35,6 +35,10 @@ public class TorneosServicio {
     public void crearTorneo (TorneoDTO torneo) {
         String codigoTorneo = String.valueOf(torneo.getCodRegion());
         TorneoEntidad torneoEntidad = new TorneoEntidad(torneo.getId(), torneo.getNombre(), codigoTorneo, torneo.getPuntosVictoria());
+        for (int i = 0; i < torneo.getCombatesDelTorneo().size(); i++) {
+            CombateDTO combate = torneo.getCombatesDelTorneo().get(i);
+            combateServicio.crearCombate(combate);
+        }
         torneoDAOImplementacion.crearTorneo(torneoEntidad);
     }
 
@@ -82,11 +86,9 @@ public class TorneosServicio {
         return new TorneoDTO(torneo.getIdTorneo(), torneo.getNombreTorneo(), codigoTorneo, puntosTorneo, combatesTorneo, idAdminTorneo);
     }
 
-    public TorneoDTO mapearTorneoDTOaTorneo (Torneo torneo) {
-        return null;
-    }
-
-    public Torneo mapearTorneoDtoATorneo (TorneoDTO torneo) {
-        return null;
+    public TorneoDTO mapearTorneoDTOaTorneo (Torneo torneo, long idAdminTorneo) {
+        int idAdminTorneos = (int) idAdminTorneo;
+        List<CombateDTO> combateDTO = new ArrayList<>();
+        return new TorneoDTO(torneo.getId(), torneo.getNombre(), torneo.getCodRegion(), torneo.getPuntosVictoria(), combateDTO, idAdminTorneos);
     }
 }

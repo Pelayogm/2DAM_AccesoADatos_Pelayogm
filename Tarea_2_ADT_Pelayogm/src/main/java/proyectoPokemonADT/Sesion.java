@@ -85,11 +85,11 @@ public class Sesion {
                               System.out.println("Problemas aqui");
                           }
                         }
-
-
                     }
+
                 } else {
                     System.out.println("No se han encontrado sus credenciales");
+
                     try {
                         System.out.println("¿Desea crear una cuenta?");
                         Scanner scanner_2 = new Scanner(System.in);

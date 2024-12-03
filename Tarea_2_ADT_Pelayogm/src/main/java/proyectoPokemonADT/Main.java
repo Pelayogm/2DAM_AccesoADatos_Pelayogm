@@ -36,11 +36,9 @@ public class Main {
 
 //DUDAS
 //_____________________________________________________________________________________
-//Que hago con las tablasTorneos CombateTorneo?
-//Crear un campo para el idAdminTorneos en la tabla Torneo?
+//Como creo los combates del torneo, al crear el torneo?
 
 //El entrenador lleva una lista de torneos.
 //TorneoDTO tiene listaDeParticipantes
-//Se puede usar el que queramos Entrenador o EntrenadorDTO.
 //El torneo se exporta en .txt y se sale por pantalla y se guarda el id del torneo Creado con el adminDeTorneos.
 //En un torneo un entrenador solo puede combatir 2 veces y en un torneo hay 3 combates.

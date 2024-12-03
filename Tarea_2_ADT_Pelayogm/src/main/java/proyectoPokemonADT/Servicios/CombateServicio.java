@@ -2,8 +2,10 @@ package proyectoPokemonADT.Servicios;
 
 import proyectoPokemonADT.Carnet;
 import proyectoPokemonADT.DAO.CombateDAOImplementacion;
+import proyectoPokemonADT.DAO.CombateEntrenadorDAOImplementacion;
 import proyectoPokemonADT.DTO.CombateDTO;
 import proyectoPokemonADT.Entidades.CombateEntidad;
+import proyectoPokemonADT.Entidades.CombateEntrenadorEntidad;
 
 import javax.sql.DataSource;
 import java.sql.Date;
@@ -15,10 +17,12 @@ public class CombateServicio {
 
     private static CombateServicio instancia;
     private static CombateDAOImplementacion combateDAOImplementacion;
+    private static CombateEntrenadorDAOImplementacion combateEntrenadorDAOImplementacion;
     private static DataSource dataSource;
 
     private CombateServicio(DataSource dataSource) {
         combateDAOImplementacion = CombateDAOImplementacion.getInstancia(dataSource);
+        combateEntrenadorDAOImplementacion = CombateEntrenadorDAOImplementacion.getInstancia(dataSource);
     }
 
     public static CombateServicio getInstancia (DataSource dataSource) {
@@ -32,6 +36,12 @@ public class CombateServicio {
         Date fechaCombate = Date.valueOf(combate.getFecha());
         CombateEntidad combateEntidad = new CombateEntidad((int) combate.getId(), fechaCombate, combate.getIdTorneo());
         combateDAOImplementacion.crearCombate(combateEntidad);
+        instancia.crearCombateEntrenador(combate);
+    }
+
+    public void crearCombateEntrenador (CombateDTO combateDTO) {
+        CombateEntrenadorEntidad combateEntrenadorEntidad = instancia.mapearCombateDtoACombateEntrenador(combateDTO);
+        combateEntrenadorDAOImplementacion.crearCombateTorneo(combateEntrenadorEntidad);
     }
 
     public CombateDTO obtenerCombatePorId (int id) {
@@ -71,6 +81,11 @@ public class CombateServicio {
             listaDeCombateDto.add(combateDTO);
         }
         return listaDeCombateDto;
+    }
+
+    public CombateEntrenadorEntidad mapearCombateDtoACombateEntrenador (CombateDTO combateDTO) {
+        int idCombate = (int) combateDTO.getId();
+        return new CombateEntrenadorEntidad(idCombate, 0,0);
     }
 
 }

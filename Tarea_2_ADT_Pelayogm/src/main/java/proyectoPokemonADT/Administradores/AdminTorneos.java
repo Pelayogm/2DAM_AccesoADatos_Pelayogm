@@ -24,4 +24,8 @@ public class AdminTorneos extends Usuario implements Serializable {
         this.contrasenaAdminTorneo = contrasenaAdminTorneo;
         this.nombreAdminTorneo = nombreAdminTorneo;
     }
+
+    public long getIdUsuario() {
+        return idUsuario;
+    }
 }

@@ -8,5 +8,6 @@ public interface CombateEntrenadorDAO {
     void crearCombateTorneo (CombateEntrenadorEntidad combateEntrenador);
     void eliminarCombateTorneo(int id);
     List<CombateEntrenadorEntidad> obtenerTodosLosParticipantes();
-    CombateEntrenadorEntidad obtenerParticipantesPorId(int idCombate);
+    void actualizarCombateEntrenador (int idCombate, CombateEntrenadorEntidad combateEntrenador);
+    List<Integer> obtenerParticipantesPorIdDelCombate(int idCombate);
 }

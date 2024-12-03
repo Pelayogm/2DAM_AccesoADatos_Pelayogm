@@ -2,12 +2,15 @@ package proyectoPokemonADT;
 import proyectoPokemonADT.ArchivosDelPrograma.ConexionBaseDeDatos;
 import proyectoPokemonADT.Credenciales.Credenciales;
 import proyectoPokemonADT.Administradores.*;
+import proyectoPokemonADT.DTO.CombateDTO;
+import proyectoPokemonADT.DTO.TorneoDTO;
 import proyectoPokemonADT.Servicios.EntrenadoresServicio;
 import proyectoPokemonADT.Servicios.TorneosServicio;
 
 import javax.sql.DataSource;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class Funciones {
@@ -108,30 +111,44 @@ public class Funciones {
 
                         //SE CREAN UN FILE UNO PARA CREDENCIALES
                         File file = new File("src/main/java/proyectoPokemonADT/ArchivosDelPrograma", "Credenciales.txt");
-
-                        File fileCredenciales = new File("src/main/java/proyectoPokemonADT/ArchivosDelPrograma", "Credenciales.txt");
-                        Credenciales.leerFichero(fileCredenciales);
+                        Credenciales.leerFichero(file);
 
                         if (!Credenciales.comprobarCredenciales(nombreAdminTorneos, contrasenaAdminTorneos)) {
+                            //Creación del administrador de torneos en caso de que no exista en el fichero de credenciales.
                             int ultimoId = Integer.parseInt(credenciales.get(credenciales.size() - 1));
                             long idUsuario = ultimoId + 1;
                             AdminTorneos adminTorneos = new AdminTorneos(contrasenaAdminTorneos, nombreAdminTorneos, idUsuario);
                             String rolUsuario = "AdministradorTorneos";
-
                             String idUsuarioString = Long.toString(idUsuario);
                             Credenciales.escribirFichero(file, nombreAdminTorneos, contrasenaAdminTorneos, rolUsuario, idUsuarioString);
+                            //Cuando todos los datos están listos se escribe el fichero de credenciales.
+
+                            //Se crea un nuevo torneo.
                             Torneo torneo = new Torneo(listTorneos.size() + 1, nombreTorneo, charRegion);
                             torneo.setAdminTorneos(adminTorneos);
+                            TorneoDTO torneoDTO = torneosServicio.mapearTorneoDTOaTorneo(torneo, adminTorneos.getIdUsuario());
+                            torneosServicio.crearTorneo(torneoDTO);
+
                             GestorArchivosDat.exportarTorneo(file_torneos, torneo);
                             System.out.println("Torneo creado");
                             listTorneos.add(torneo);
                         } else {
-                            //SI YA ESTA EN LA LISTA DE CREDENCIALES SE CREA EL TORNEO Y SE AÑADE A LA LISTA
+                            //Esto sirve para sacar el id del Administrador de Torneos para crear el Torneo.
+                            int idAdminTorneos = 0;
+                            for (int i = 0; i < credenciales.size(); i++) {
+                                if (credenciales.get(i).equals(nombreAdminTorneos) && credenciales.get(i + 1).equals(contrasenaAdminTorneos) && credenciales.get(i + 2).equals("AdministradorTorneos")) {
+                                    idAdminTorneos = Integer.valueOf(credenciales.get(i + 3));
+                                }
+                            }
+                            //Si el AdministradorDeTorneos ya estaba creado con anterioridad, se crea el torneo.
                             Torneo torneo = new Torneo(listTorneos.size() + 1, nombreTorneo, charRegion);
-                            AdminTorneos adminTorneos = new AdminTorneos(contrasenaAdminTorneos, nombreAdminTorneos);
-
-
+                            AdminTorneos adminTorneos = new AdminTorneos(contrasenaAdminTorneos, nombreAdminTorneos, idAdminTorneos);
                             torneo.setAdminTorneos(adminTorneos);
+
+                            //Y ahora se añade a la BD el nuevo torneo creado.
+                            TorneoDTO torneoDTO = torneosServicio.mapearTorneoDTOaTorneo(torneo, adminTorneos.getIdUsuario());
+                            torneosServicio.crearTorneo(torneoDTO);
+
                             GestorArchivosDat.exportarTorneo(file_torneos, torneo);
                             System.out.println("Torneo creado");
                             listTorneos.add(torneo);

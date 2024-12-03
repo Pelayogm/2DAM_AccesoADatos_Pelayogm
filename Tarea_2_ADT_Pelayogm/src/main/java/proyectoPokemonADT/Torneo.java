@@ -19,10 +19,6 @@ public class Torneo implements Serializable {
         return participantesDelTorneo;
     }
 
-    public void setParticipantesDelTorneo(ArrayList<Entrenador> participantesDelTorneo) {
-        this.participantesDelTorneo = participantesDelTorneo;
-    }
-
     public int getId() {
         return id;
     }
