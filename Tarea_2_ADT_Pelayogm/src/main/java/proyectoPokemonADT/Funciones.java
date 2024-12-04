@@ -71,7 +71,7 @@ public class Funciones {
                     System.out.println("Hola");
                 }
 
-                System.out.println("1. Exportar Carnet de Entrenador | 2. Cerrar Sesión");
+                System.out.println("1. Exportar Carnet de Entrenador | 3. Cerrar Sesión");
                 userOpcion = scanner.nextInt();
             }
 
@@ -140,16 +140,23 @@ public class Funciones {
                             //Para calcular los idDeLosCombates sacamos la longitud de la lista de todos los combates de la BD.
                             int idCombate = listaDeTodosLosCombate.size();
 
+                            int valor;
+                            if (listaDeTorneos.isEmpty()) {
+                                valor = 1;
+                            } else {
+                                valor = listaDeTorneos.size() + 1;
+                            }
+
                             //Se crean los 3 combates del Torneo, vacios.
                             ArrayList<CombateDTO> combatesDelTorneo = torneo.getCombatesDelTorneo();
                             for (int i = 1; i < 4; i++) {
-                                CombateDTO combate = new CombateDTO(LocalDate.now(),idCombate + 1, listaDeTodosLosCombate.size() + 1);
+                                CombateDTO combate = new CombateDTO(LocalDate.now(),idCombate + 1, valor);
                                 combatesDelTorneo.add(combate);
                             }
                             torneo.setCombatesDelTorneo(combatesDelTorneo);
 
                             //Y esto sirve para convertir el objeto Torneo en DTO y interactuar con la BD.
-                            TorneoDTO torneoDTO = torneosServicio.mapearTorneoDTOaTorneo(torneo, adminTorneos.getIdUsuario());
+                            TorneoDTO torneoDTO = torneosServicio.mapearTorneoATorneoDto(torneo, adminTorneos.getIdUsuario());
                             torneosServicio.crearTorneo(torneoDTO);
 
                             GestorArchivosDat.exportarTorneo(file_torneos, torneo);
@@ -173,14 +180,21 @@ public class Funciones {
                             //Se crean los 3 combates del Torneo, vacios.
                             ArrayList<CombateDTO> combatesDelTorneo = torneo.getCombatesDelTorneo();
 
+                            int valor;
+                            if (listaDeTorneos.isEmpty()) {
+                                valor = 1;
+                            } else {
+                                valor = listaDeTorneos.size() + 1;
+                            }
+
                             for (int i = 1; i < 4; i++) {
-                                CombateDTO combate = new CombateDTO(LocalDate.now(), idCombate + i, listaDeTodosLosCombate.size() + 1);
+                                CombateDTO combate = new CombateDTO(LocalDate.now(), idCombate + i, valor);
                                 combatesDelTorneo.add(combate);
                             }
                             torneo.setCombatesDelTorneo(combatesDelTorneo);
 
                             //Y ahora se añade a la BD el nuevo torneo creado.
-                            TorneoDTO torneoDTO = torneosServicio.mapearTorneoDTOaTorneo(torneo, adminTorneos.getIdUsuario());
+                            TorneoDTO torneoDTO = torneosServicio.mapearTorneoATorneoDto(torneo, adminTorneos.getIdUsuario());
                             torneosServicio.crearTorneo(torneoDTO);
 
                             GestorArchivosDat.exportarTorneo(file_torneos, torneo);

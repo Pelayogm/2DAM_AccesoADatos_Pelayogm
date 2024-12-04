@@ -10,9 +10,9 @@ public class EntrenadorDTO extends Usuario {
     private final String nombre;
     private final String nacionalidad;
     private final CarnetDTO carnet;
-    //private final List<TorneoDTO> listaDeTorneos;
+    private final List<TorneoDTO> listaDeTorneos;
 
-    public EntrenadorDTO(int id, String nombre, String nacionalidad, CarnetDTO carnet) {
+    public EntrenadorDTO(int id, String nombre, String nacionalidad, CarnetDTO carnet, List<TorneoDTO> listaDeTorneos) {
         setEstadoSesion(true);
         setUsuario(false);
         setNombreUsuario(nombre);
@@ -20,6 +20,7 @@ public class EntrenadorDTO extends Usuario {
         this.nombre = nombre;
         this.nacionalidad = nacionalidad;
         this.carnet = carnet;
+        this.listaDeTorneos = listaDeTorneos;
     }
 
     public int getId() {
@@ -36,5 +37,9 @@ public class EntrenadorDTO extends Usuario {
 
     public CarnetDTO getCarnet() {
         return carnet;
+    }
+
+    public List<TorneoDTO> getListaDeTorneos() {
+        return listaDeTorneos;
     }
 }

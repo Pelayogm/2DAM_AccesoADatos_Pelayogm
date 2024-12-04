@@ -2,6 +2,10 @@ package proyectoPokemonADT;
 
 public class GestionDeTorneos {
 
+    public static void crearTorneo () {
+
+    }
+
     public static void apuntarseAUnTorneo (int idUsuario) {
 
     }

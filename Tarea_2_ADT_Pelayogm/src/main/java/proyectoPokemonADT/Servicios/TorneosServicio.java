@@ -89,9 +89,13 @@ public class TorneosServicio {
         return new TorneoDTO(torneo.getIdTorneo(), torneo.getNombreTorneo(), codigoTorneo, puntosTorneo, combatesTorneo, idAdminTorneo);
     }
 
-    public TorneoDTO mapearTorneoDTOaTorneo (Torneo torneo, long idAdminTorneo) {
+    public TorneoDTO mapearTorneoATorneoDto(Torneo torneo, long idAdminTorneo) {
         int idAdminTorneos = (int) idAdminTorneo;
         return new TorneoDTO(torneo.getId(), torneo.getNombre(), torneo.getCodRegion(), torneo.getPuntosVictoria(), torneo.getCombatesDelTorneo(), idAdminTorneos);
+    }
+
+    public Torneo mapearDtoATorneo (TorneoDTO torneo) {
+        return new Torneo(torneo.getId(), torneo.getNombre(), torneo.getCodRegion(), torneo.getPuntosVictoria());
     }
 
     public TorneoAdminEntidad mapearTorneoDTOATorneoAdminEntidad (TorneoDTO torneo) {

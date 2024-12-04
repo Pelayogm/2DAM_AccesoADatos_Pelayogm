@@ -1,12 +1,14 @@
 package proyectoPokemonADT.Servicios;
 
 import proyectoPokemonADT.Carnet;
-import proyectoPokemonADT.DAO.CarnetDAOImplementacion;
 import proyectoPokemonADT.DAO.EntrenadorDAOImplementacion;
+import proyectoPokemonADT.DAO.EntrenadorTorneoDAOImplementacion;
 import proyectoPokemonADT.DTO.CarnetDTO;
 import proyectoPokemonADT.DTO.EntrenadorDTO;
+import proyectoPokemonADT.DTO.TorneoDTO;
 import proyectoPokemonADT.Entidades.EntrenadorEntidad;
 import proyectoPokemonADT.Entrenador;
+import proyectoPokemonADT.Torneo;
 
 import javax.sql.DataSource;
 import java.util.ArrayList;
@@ -17,11 +19,15 @@ public class EntrenadoresServicio {
     private static EntrenadoresServicio instancia;
     private static EntrenadorDAOImplementacion entrenadorDAOImplementacion;
     private static CarnetServicio carnetServicio;
+    private static EntrenadorTorneoDAOImplementacion entrenadorTorneoDAOImplementacion;
+    private static TorneosServicio torneosServicio;
     private static DataSource dataSource;
 
     private EntrenadoresServicio (DataSource dataSource) {
         entrenadorDAOImplementacion = EntrenadorDAOImplementacion.getInstancia(dataSource);
         carnetServicio = CarnetServicio.getInstancia(dataSource);
+        entrenadorTorneoDAOImplementacion = EntrenadorTorneoDAOImplementacion.getInstancia(dataSource);
+        torneosServicio = TorneosServicio.getInstancia(dataSource);
     }
 
     public static EntrenadoresServicio getInstancia (DataSource dataSource) {
@@ -40,7 +46,13 @@ public class EntrenadoresServicio {
     public EntrenadorDTO obtenerEntrenadorPorId (int id) {
         EntrenadorEntidad entrenadorEntidad = entrenadorDAOImplementacion.obtenerEntrenadorPorId(id);
         CarnetDTO carnet = carnetServicio.obtenerCarnetPorId(id);
-        return new EntrenadorDTO(entrenadorEntidad.getIdEntrenador(), entrenadorEntidad.getNombreEntrenador(), entrenadorEntidad.getNacionalidadEntrenador(), carnet);
+        List<Integer> idDeLosTorneos = entrenadorTorneoDAOImplementacion.obtenerTorneosDeUnEntrenador(id);
+        List<TorneoDTO> torneosDelUsuario = new ArrayList<>();
+        for (int i = 0; i < idDeLosTorneos.size(); i++) {
+            torneosDelUsuario.add(torneosServicio.obtenerTorneoPorId(idDeLosTorneos.get(i)));
+        }
+
+        return new EntrenadorDTO(entrenadorEntidad.getIdEntrenador(), entrenadorEntidad.getNombreEntrenador(), entrenadorEntidad.getNacionalidadEntrenador(), carnet, torneosDelUsuario);
     }
 
     public List<EntrenadorDTO> obtenerTodosLosEntrenador () {
@@ -50,7 +62,14 @@ public class EntrenadoresServicio {
         for (int i = 0; i < listaDeEntrenadoresEntidad.size(); i++) {
             EntrenadorEntidad entrenadorEntidad = listaDeEntrenadoresEntidad.get(i);
             CarnetDTO carnet = carnetServicio.obtenerCarnetPorId(entrenadorEntidad.getIdEntrenador());
-            EntrenadorDTO entrenadorDTO = new EntrenadorDTO(entrenadorEntidad.getIdEntrenador(), entrenadorEntidad.getNombreEntrenador(), entrenadorEntidad.getNacionalidadEntrenador(), carnet);
+
+            List<Integer> idDeLosTorneos = entrenadorTorneoDAOImplementacion.obtenerTorneosDeUnEntrenador(entrenadorEntidad.getIdEntrenador());
+            List<TorneoDTO> torneosDelUsuario = new ArrayList<>();
+                for (int x = 0; x < idDeLosTorneos.size(); x++) {
+                    torneosDelUsuario.add(torneosServicio.obtenerTorneoPorId(idDeLosTorneos.get(x)));
+                }
+
+            EntrenadorDTO entrenadorDTO = new EntrenadorDTO(entrenadorEntidad.getIdEntrenador(), entrenadorEntidad.getNombreEntrenador(), entrenadorEntidad.getNacionalidadEntrenador(), carnet, torneosDelUsuario);
             listaDeEntrenadoresDto.add(entrenadorDTO);
         }
         return listaDeEntrenadoresDto;
@@ -72,7 +91,14 @@ public class EntrenadoresServicio {
         entrenadorDAOImplementacion.actualizarEntrenador(entrenadorEntidad);
         EntrenadorEntidad entrenadorEntidadActualizado = entrenadorDAOImplementacion.obtenerEntrenadorPorId(id);
         CarnetDTO carnet = carnetServicio.obtenerCarnetPorId(entrenadorEntidadActualizado.getIdEntrenador());
-        return new EntrenadorDTO(entrenadorEntidadActualizado.getIdEntrenador(), entrenadorEntidadActualizado.getNombreEntrenador(), entrenadorEntidadActualizado.getNacionalidadEntrenador(), carnet);
+
+        List<Integer> idDeLosTorneos = entrenadorTorneoDAOImplementacion.obtenerTorneosDeUnEntrenador(id);
+        List<TorneoDTO> torneosDelUsuario = new ArrayList<>();
+        for (int i = 0; i < idDeLosTorneos.size(); i++) {
+            torneosDelUsuario.add(torneosServicio.obtenerTorneoPorId(idDeLosTorneos.get(i)));
+        }
+
+        return new EntrenadorDTO(entrenadorEntidadActualizado.getIdEntrenador(), entrenadorEntidadActualizado.getNombreEntrenador(), entrenadorEntidadActualizado.getNacionalidadEntrenador(), carnet, torneosDelUsuario);
     }
 
     public EntrenadorEntidad mapearDtoAEntidad (EntrenadorDTO entrenador) {
@@ -81,16 +107,40 @@ public class EntrenadoresServicio {
 
     public EntrenadorDTO mapearEntidadADto (EntrenadorEntidad entrenador) {
         CarnetDTO carnet = carnetServicio.obtenerCarnetPorId(entrenador.getIdEntrenador());
-        return new EntrenadorDTO(entrenador.getIdEntrenador(), entrenador.getNombreEntrenador(), entrenador.getNacionalidadEntrenador(), carnet);
+        List<Integer> idDeLosTorneos = entrenadorTorneoDAOImplementacion.obtenerTorneosDeUnEntrenador(entrenador.getIdEntrenador());
+        List<TorneoDTO> torneosDelUsuario = new ArrayList<>();
+        for (int i = 0; i < idDeLosTorneos.size(); i++) {
+            torneosDelUsuario.add(torneosServicio.obtenerTorneoPorId(idDeLosTorneos.get(i)));
+        }
+        return new EntrenadorDTO(entrenador.getIdEntrenador(), entrenador.getNombreEntrenador(), entrenador.getNacionalidadEntrenador(), carnet, torneosDelUsuario);
     }
 
     public EntrenadorDTO mapearEntrenadorAEntrenadorDto (Entrenador entrenador, CarnetDTO carnet) {
         int idEntrenador = (int) entrenador.getId();
-        return new EntrenadorDTO(idEntrenador, entrenador.getNombre(), entrenador.getNacionalidad(), carnet);
+        List<Integer> idDeLosTorneos = entrenadorTorneoDAOImplementacion.obtenerTorneosDeUnEntrenador(idEntrenador);
+        List<TorneoDTO> torneosDelUsuario = new ArrayList<>();
+        for (int i = 0; i < idDeLosTorneos.size(); i++) {
+            torneosDelUsuario.add(torneosServicio.obtenerTorneoPorId(idDeLosTorneos.get(i)));
+        }
+        return new EntrenadorDTO(idEntrenador, entrenador.getNombre(), entrenador.getNacionalidad(), carnet, torneosDelUsuario);
     }
 
     public Entrenador mapearEntrenadorDtoAEntrenador (EntrenadorDTO entrenador, CarnetDTO carnet) {
         Carnet carnetEntrenador = carnetServicio.mapearCarnetDtoACarnet(carnet);
-        return new Entrenador(entrenador.getId(), entrenador.getNombre(), entrenador.getNacionalidad(), carnetEntrenador);
+        List<Integer> idDeLosTorneos = entrenadorTorneoDAOImplementacion.obtenerTorneosDeUnEntrenador(entrenador.getId());
+
+        List<TorneoDTO> torneosDelUsuario = new ArrayList<>();
+        for (int i = 0; i < idDeLosTorneos.size(); i++) {
+            torneosDelUsuario.add(torneosServicio.obtenerTorneoPorId(idDeLosTorneos.get(i)));
+        }
+
+        ArrayList<Torneo> listaDeTorneos = new ArrayList<>();
+        for (int x = 0; x < torneosDelUsuario.size(); x++) {
+            TorneoDTO torneoDTOActual = torneosDelUsuario.get(x);
+            listaDeTorneos.add(torneosServicio.mapearDtoATorneo(torneoDTOActual));
+        }
+        Entrenador entrenadorReturn = new Entrenador(entrenador.getId(), entrenador.getNombre(), entrenador.getNacionalidad(), carnetEntrenador);
+        entrenadorReturn.setTorneosDelEntrenador(listaDeTorneos);
+        return entrenadorReturn;
     }
 }

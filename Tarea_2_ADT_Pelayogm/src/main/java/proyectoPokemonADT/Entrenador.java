@@ -63,6 +63,8 @@ public class Entrenador extends Usuario implements Serializable {
                 //if (torneos.get(i).isTorneoCreado()) {
                     //SE AÑADE A LISTA DE TORNEOS QUE TIENE EL ENTRENADOR EL TORNEO QUE SE ENCUENTRE ACTIVO
                     //entrenador.torneosDelEntrenador.add(torneos.get(i));
+                    Torneo torneo = new Torneo(0, "Inicial", 'I', 100);
+                    entrenador.torneosDelEntrenador.add(torneo);
                     //PROCEDIMIENTO DE ENTRADA AL CREAR LA CUENTA
                     System.out.println("Bienvenido: " + nombreUsuario);
                     //System.out.println("Estas apuntado en el torneo " + torneos.get(i).getNombre());
@@ -104,4 +106,7 @@ public class Entrenador extends Usuario implements Serializable {
         return esEntrenador;
     }
 
+    public void setTorneosDelEntrenador(ArrayList<Torneo> torneosDelEntrenador) {
+        this.torneosDelEntrenador = torneosDelEntrenador;
+    }
 }

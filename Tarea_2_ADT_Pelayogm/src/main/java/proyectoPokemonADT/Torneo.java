@@ -61,6 +61,8 @@ public class Torneo implements Serializable {
         this.PuntosVictoria = 100;
     }
 
+
+
     public AdminTorneos getAdminTorneos() {
         return adminTorneos;
     }
