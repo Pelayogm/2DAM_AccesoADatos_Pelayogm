@@ -85,7 +85,7 @@ public class CombateServicio {
 
     public CombateEntrenadorEntidad mapearCombateDtoACombateEntrenador (CombateDTO combateDTO) {
         int idCombate = (int) combateDTO.getId();
-        return new CombateEntrenadorEntidad(idCombate, 0,0);
+        return new CombateEntrenadorEntidad(idCombate, 1,1);
     }
 
 }

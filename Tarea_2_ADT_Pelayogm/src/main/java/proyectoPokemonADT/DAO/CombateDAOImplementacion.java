@@ -1,5 +1,6 @@
 package proyectoPokemonADT.DAO;
 
+import proyectoPokemonADT.DAO.InterfacesDAO.CombateDAO;
 import proyectoPokemonADT.Entidades.CombateEntidad;
 
 import javax.sql.DataSource;
@@ -49,8 +50,8 @@ public class CombateDAOImplementacion implements CombateDAO {
 
             while (resultSet.next()) {
                 int idCombate = resultSet.getInt(1);
-                Date fechaCombate = resultSet.getDate(2);
-                int idTorneo = resultSet.getInt(3);
+                Date fechaCombate = resultSet.getDate(3);
+                int idTorneo = resultSet.getInt(2);
 
                 CombateEntidad combateEntidad = new CombateEntidad(idCombate, fechaCombate, idTorneo);
                 listaDeCombates.add(combateEntidad);
@@ -69,12 +70,12 @@ public class CombateDAOImplementacion implements CombateDAO {
             Connection connection = dataSource.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setInt(1, id);
-            ResultSet resultSet = preparedStatement.executeQuery(sql);
+            ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
                 int idCombate = resultSet.getInt(1);
-                Date fechaCombate = resultSet.getDate(2);
-                int idTorneo = resultSet.getInt(3);
+                int idTorneo = resultSet.getInt(2);
+                Date fechaCombate = resultSet.getDate(3);
 
                 CombateEntidad combateEntidad = new CombateEntidad(idCombate, fechaCombate, idTorneo);
                 listaDeCombates.add(combateEntidad);

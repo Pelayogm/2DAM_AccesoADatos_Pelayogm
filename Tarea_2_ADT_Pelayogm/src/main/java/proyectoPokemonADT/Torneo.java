@@ -1,19 +1,21 @@
 package proyectoPokemonADT;
 
 import proyectoPokemonADT.Administradores.AdminTorneos;
+import proyectoPokemonADT.DTO.CombateDTO;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 
 public class Torneo implements Serializable {
-    private int id;
-    private String nombre;
-    private char codRegion;
-    private float PuntosVictoria;
+    private final int id;
+    private final String nombre;
+    private final char codRegion;
+    private final float PuntosVictoria;
     private AdminTorneos adminTorneos;
     //Boolean para saber si esta activo el torneo
     private boolean torneoCreado;
     private ArrayList <Entrenador> participantesDelTorneo = new ArrayList<>();
+    private ArrayList <CombateDTO> combatesDelTorneo = new ArrayList<>();
 
     public ArrayList<Entrenador> getParticipantesDelTorneo() {
         return participantesDelTorneo;
@@ -31,16 +33,8 @@ public class Torneo implements Serializable {
         return PuntosVictoria;
     }
 
-    public void setPuntosVictoria(float puntosVictoria) {
-        PuntosVictoria = puntosVictoria;
-    }
-
     public char getCodRegion() {
         return codRegion;
-    }
-
-    public void setCodRegion(char codRegion) {
-        this.codRegion = codRegion;
     }
 
     public boolean isTorneoCreado() {
@@ -73,5 +67,13 @@ public class Torneo implements Serializable {
 
     public void setAdminTorneos(AdminTorneos adminTorneos) {
         this.adminTorneos = adminTorneos;
+    }
+
+    public ArrayList<CombateDTO> getCombatesDelTorneo() {
+        return combatesDelTorneo;
+    }
+
+    public void setCombatesDelTorneo(ArrayList<CombateDTO> combatesDelTorneo) {
+        this.combatesDelTorneo = combatesDelTorneo;
     }
 }

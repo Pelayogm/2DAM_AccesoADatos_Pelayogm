@@ -1,5 +1,6 @@
 package proyectoPokemonADT.DAO;
 
+import proyectoPokemonADT.DAO.InterfacesDAO.EntrenadorDAO;
 import proyectoPokemonADT.Entidades.EntrenadorEntidad;
 
 import javax.sql.DataSource;

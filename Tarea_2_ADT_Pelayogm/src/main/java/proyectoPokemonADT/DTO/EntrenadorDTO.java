@@ -2,12 +2,15 @@ package proyectoPokemonADT.DTO;
 
 import proyectoPokemonADT.Usuario;
 
+import java.util.List;
+
 public class EntrenadorDTO extends Usuario {
 
     private final int id;
     private final String nombre;
     private final String nacionalidad;
     private final CarnetDTO carnet;
+    //private final List<TorneoDTO> listaDeTorneos;
 
     public EntrenadorDTO(int id, String nombre, String nacionalidad, CarnetDTO carnet) {
         setEstadoSesion(true);

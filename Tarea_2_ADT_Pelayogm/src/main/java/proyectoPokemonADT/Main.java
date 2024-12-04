@@ -21,13 +21,18 @@ public class Main {
     }
 }
 
+//En casa es root-root y en clase es root-
+
 //ERRORES / REVISAR
 //_____________________________________________
-//ORDENAR CLASE SESION - CREAR CUENTA - (PRIMERO COMPROBAR USUARIO Y LUEGO CREAR CUENTA)
+//ORDENAR CLASE SESION - CREAR CUENTA - (PRIMERO COMPROBAR USUARIO Y LUEGO CREAR CUENTA) - (COMPLETADO) - REVISAR CON LA BD
 //ELIMINAR ENTRENADORES.DAT (COMPLETADO)
 //DESLIAR EL CODIGO / Comentar el codigo
 //ESTRUCTURAR EN PAQUETES (SEMI-COMPLETADO)
 //Corregir script de la BD
+//Al crear un torneo vacio, los idDeLos participantes son 0, y no hay entrenador con id 0 (se soluciona con Entrenador Default)
+//La tabla TorneoAdmin (Revisar)
+
 
 //TAREA 2
 //TorneoDTO lleva una ListaDeCombates que se tiene que hacer en torneoServices (COMPLETADA)
@@ -36,9 +41,8 @@ public class Main {
 
 //DUDAS
 //_____________________________________________________________________________________
-//Como creo los combates del torneo, al crear el torneo?
 
-//El entrenador lleva una lista de torneos.
+//El entrenador lleva una lista de torneos. (Hacer Tabla TorneoEntrenador)
 //TorneoDTO tiene listaDeParticipantes
 //El torneo se exporta en .txt y se sale por pantalla y se guarda el id del torneo Creado con el adminDeTorneos.
 //En un torneo un entrenador solo puede combatir 2 veces y en un torneo hay 3 combates.

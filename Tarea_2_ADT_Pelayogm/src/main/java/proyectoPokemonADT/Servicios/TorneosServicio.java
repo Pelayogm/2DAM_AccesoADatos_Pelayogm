@@ -4,6 +4,7 @@ import proyectoPokemonADT.DAO.TorneoAdminDAOImplementacion;
 import proyectoPokemonADT.DAO.TorneoDAOImplementacion;
 import proyectoPokemonADT.DTO.CombateDTO;
 import proyectoPokemonADT.DTO.TorneoDTO;
+import proyectoPokemonADT.Entidades.TorneoAdminEntidad;
 import proyectoPokemonADT.Entidades.TorneoEntidad;
 import proyectoPokemonADT.Torneo;
 
@@ -35,11 +36,13 @@ public class TorneosServicio {
     public void crearTorneo (TorneoDTO torneo) {
         String codigoTorneo = String.valueOf(torneo.getCodRegion());
         TorneoEntidad torneoEntidad = new TorneoEntidad(torneo.getId(), torneo.getNombre(), codigoTorneo, torneo.getPuntosVictoria());
+        TorneoAdminEntidad torneoAdminEntidad = mapearTorneoDTOATorneoAdminEntidad(torneo);
+        torneoDAOImplementacion.crearTorneo(torneoEntidad);
         for (int i = 0; i < torneo.getCombatesDelTorneo().size(); i++) {
             CombateDTO combate = torneo.getCombatesDelTorneo().get(i);
             combateServicio.crearCombate(combate);
         }
-        torneoDAOImplementacion.crearTorneo(torneoEntidad);
+        torneoAdminDAOImplementacion.crearTorneoAdmin(torneoAdminEntidad);
     }
 
     public TorneoDTO obtenerTorneoPorId (int id) {
@@ -88,7 +91,10 @@ public class TorneosServicio {
 
     public TorneoDTO mapearTorneoDTOaTorneo (Torneo torneo, long idAdminTorneo) {
         int idAdminTorneos = (int) idAdminTorneo;
-        List<CombateDTO> combateDTO = new ArrayList<>();
-        return new TorneoDTO(torneo.getId(), torneo.getNombre(), torneo.getCodRegion(), torneo.getPuntosVictoria(), combateDTO, idAdminTorneos);
+        return new TorneoDTO(torneo.getId(), torneo.getNombre(), torneo.getCodRegion(), torneo.getPuntosVictoria(), torneo.getCombatesDelTorneo(), idAdminTorneos);
+    }
+
+    public TorneoAdminEntidad mapearTorneoDTOATorneoAdminEntidad (TorneoDTO torneo) {
+        return new TorneoAdminEntidad(torneo.getId(), torneo.getIdAdminTorneos());
     }
 }

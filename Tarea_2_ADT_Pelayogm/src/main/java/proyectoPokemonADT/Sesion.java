@@ -135,26 +135,6 @@ public class Sesion {
             Credenciales.leerFichero(file);
             Entrenador entrenador = new Entrenador();
 
-            if (flag) {
-                try {
-                    int ultimoId = Integer.parseInt(listCredenciales.get(listCredenciales.size() - 1));
-                    long idUsuario = ultimoId + 1;
-                    //SE LLAMA A CREAR ENTRENADOR
-                    entrenador = Entrenador.crearEntrenador(nombreUsuario, idUsuario);
-                    //CREAMOS EL CARNET DTO
-                    assert entrenador != null;
-                    CarnetDTO carnet = new CarnetDTO(idUsuario, entrenador.getCarnet().getFechaExpedicion(), entrenador.getCarnet().getPuntos(),entrenador.getCarnet().getNumVictorias());
-                    EntrenadorDTO entrenadorDto = entrenadoresServicio.mapearEntrenadorAEntrenadorDto(entrenador, carnet);
-                    entrenadoresServicio.crearEntrenador(entrenadorDto);
-                } catch (Exception e) {
-                    System.out.println("Error con el DAT");
-                }
-            } else {
-                System.out.println("No esta disponible este servicio por el momento");
-                System.out.println("Informese de si existe algún torneo para registrarse");
-            }
-
-            //COMPROBAR EL ARRAYLIST DE CREDENCIALES PARA VER SI HAY COINCIDENCIAS
             try {
                 if (Credenciales.comprobarCredenciales(nombreUsuario, constrasenaUsuario)) {
                     Scanner scanner_2 = new Scanner(System.in);
@@ -169,25 +149,42 @@ public class Sesion {
                     } catch (Exception e) {
                         System.out.println("Valor no válido");
                     }
-
                 } else {
-                    //SI LA LISTA DE TORNEOS TIENE DATOS
                     if (flag) {
-                        //SE AÑADE AL ARCHIVO DE CREDENCIALES LOS DATOS DEL USUARIO
-                        String rolUsuario = "Entrenador";
-                        int ultimoId = Integer.parseInt(listCredenciales.get(listCredenciales.size() - 1));
-                        long idUsuario = ultimoId + 1;
-                        String idUsuarioString = Long.toString(idUsuario);
-                        Credenciales.escribirFichero(file, nombreUsuario, constrasenaUsuario, rolUsuario, idUsuarioString);
-                        System.out.println("Cuenta creada con éxito");
-                        Funciones.MostrarFunciones(entrenador);
+                        try {
+                            //Cogemos el ultimo id del fichero de credenciales
+                            int ultimoId = Integer.parseInt(listCredenciales.get(listCredenciales.size() - 1));
+                            long idUsuario = ultimoId + 1;
+                            //Creamos el rol del usuario.
+                            String rolUsuario = "Entrenador";
+                            //Pasamos el id a String para escribirlo
+                            String idUsuarioString = Long.toString(idUsuario);
+
+                            //SE LLAMA A CREAR ENTRENADOR
+                            entrenador = Entrenador.crearEntrenador(nombreUsuario, idUsuario);
+                            //CREAMOS EL CARNET DTO
+                            assert entrenador != null;
+                            CarnetDTO carnet = new CarnetDTO(idUsuario, entrenador.getCarnet().getFechaExpedicion(), entrenador.getCarnet().getPuntos(), entrenador.getCarnet().getNumVictorias());
+                            EntrenadorDTO entrenadorDto = entrenadoresServicio.mapearEntrenadorAEntrenadorDto(entrenador, carnet);
+                            entrenadoresServicio.crearEntrenador(entrenadorDto);
+                            Credenciales.escribirFichero(file, nombreUsuario, constrasenaUsuario, rolUsuario, idUsuarioString);
+                            System.out.println("Cuenta creada con éxito");
+                            Funciones.MostrarFunciones(entrenador);
+
+                        } catch (Exception e) {
+                            System.out.println("Error con el DAT");
+                        }
+                    } else {
+                        System.out.println("No esta disponible este servicio por el momento");
+                        System.out.println("Informese de si existe algún torneo para registrarse");
                     }
                 }
+
             } catch (Exception e) {
-                System.out.println("No se ha podido comprobar las credenciales");
+                System.out.println("No se ha podido encontrar el fichero de credenciales");
             }
         } catch (Exception e) {
-            System.out.println("No se ha podido encontrar el fichero de credenciales");
+            System.out.println("No se ha podido comprobar las credenciales");
         }
     }
 

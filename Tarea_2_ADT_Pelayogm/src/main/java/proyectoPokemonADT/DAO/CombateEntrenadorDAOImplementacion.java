@@ -1,5 +1,6 @@
 package proyectoPokemonADT.DAO;
 
+import proyectoPokemonADT.DAO.InterfacesDAO.CombateEntrenadorDAO;
 import proyectoPokemonADT.Entidades.CombateEntrenadorEntidad;
 
 import javax.sql.DataSource;
@@ -43,7 +44,7 @@ public class CombateEntrenadorDAOImplementacion implements CombateEntrenadorDAO 
 
     @Override
     public void eliminarCombateTorneo (int id) {
-        String sql = "DELETE FROM COMBATE_ENTRENADOR WHERE COMBATE_ENTRENADOR.idCombate = ?";
+        String sql = "DELETE FROM COMBATE_ENTRENADOR WHERE idCombate = ?";
         try {
             Connection connection = dataSource.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(sql);

@@ -4,11 +4,12 @@ import proyectoPokemonADT.Credenciales.Credenciales;
 import proyectoPokemonADT.Administradores.*;
 import proyectoPokemonADT.DTO.CombateDTO;
 import proyectoPokemonADT.DTO.TorneoDTO;
-import proyectoPokemonADT.Servicios.EntrenadoresServicio;
+import proyectoPokemonADT.Servicios.CombateServicio;
 import proyectoPokemonADT.Servicios.TorneosServicio;
 
 import javax.sql.DataSource;
 import java.io.File;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -16,7 +17,8 @@ import java.util.Scanner;
 public class Funciones {
     private static final ConexionBaseDeDatos conexionBaseDeDatos = ConexionBaseDeDatos.getInstancia();
     private static final DataSource dataSource = conexionBaseDeDatos.configurarDataSource();
-    private static TorneosServicio torneosServicio = TorneosServicio.getInstancia(dataSource);
+    private static final TorneosServicio torneosServicio = TorneosServicio.getInstancia(dataSource);
+    private static final CombateServicio combateServicio = CombateServicio.getInstancia(dataSource);
 
     private static ArrayList<Torneo> listTorneos = new ArrayList<>();
     private static ArrayList<String> credenciales = Credenciales.getCredenciales();
@@ -48,19 +50,24 @@ public class Funciones {
             System.out.println("Hola " + usuario.getNombre());
             usuario.setEstadoSesion(true);
             Entrenador entrenador = (Entrenador) usuario;
-            System.out.println("1. Exportar Carnet de Entrenador | 2. Cerrar Sesión");
+            System.out.println("1. Exportar Carnet de Entrenador | 2. Apuntarse a un torneo | 3. Cerrar Sesión");
             int userOpcion = scanner.nextInt();
-            while (userOpcion < 4) {
+            while (userOpcion < 5) {
                 if (userOpcion == 1) {
                     Exportar.ExportarCarnet(entrenador);
                 }
 
                 if (userOpcion == 2) {
+                    int id = (int) entrenador.getId();
+                    GestionDeTorneos.apuntarseAUnTorneo(id);
+                }
+
+                if (userOpcion == 3) {
                     Funciones.CerrarSesion(entrenador);
                     break;
                 }
 
-                if (userOpcion == 3) {
+                if (userOpcion == 4) {
                     System.out.println("Hola");
                 }
 
@@ -85,6 +92,9 @@ public class Funciones {
     }
 
     private static void CrearTorneo (Usuario usuario) {
+        List<TorneoDTO> listaDeTorneos = torneosServicio.obtenerTodosLosTorneos();
+        List<CombateDTO> listaDeTodosLosCombate = combateServicio.obtenerTodosLosCombates();
+
         if (usuario.isUsuario()) {
             Scanner scanner = new Scanner(System.in);
             System.out.println("¿Desea crear un nuevo Torneo?");
@@ -109,8 +119,9 @@ public class Funciones {
                         System.out.println("¿Contraseña del administrador de Torneos?");
                         String contrasenaAdminTorneos = scanner.next();
 
-                        //SE CREAN UN FILE UNO PARA CREDENCIALES
+                        //Se crea el archivo de credenciales para guardar el administrador de torneos en caso de que no estuviera creado.
                         File file = new File("src/main/java/proyectoPokemonADT/ArchivosDelPrograma", "Credenciales.txt");
+                        //Cargamos los datos del fichero
                         Credenciales.leerFichero(file);
 
                         if (!Credenciales.comprobarCredenciales(nombreAdminTorneos, contrasenaAdminTorneos)) {
@@ -124,8 +135,20 @@ public class Funciones {
                             //Cuando todos los datos están listos se escribe el fichero de credenciales.
 
                             //Se crea un nuevo torneo.
-                            Torneo torneo = new Torneo(listTorneos.size() + 1, nombreTorneo, charRegion);
+                            Torneo torneo = new Torneo(listaDeTorneos.size() + 1, nombreTorneo, charRegion);
                             torneo.setAdminTorneos(adminTorneos);
+                            //Para calcular los idDeLosCombates sacamos la longitud de la lista de todos los combates de la BD.
+                            int idCombate = listaDeTodosLosCombate.size();
+
+                            //Se crean los 3 combates del Torneo, vacios.
+                            ArrayList<CombateDTO> combatesDelTorneo = torneo.getCombatesDelTorneo();
+                            for (int i = 1; i < 4; i++) {
+                                CombateDTO combate = new CombateDTO(LocalDate.now(),idCombate + 1, listaDeTodosLosCombate.size() + 1);
+                                combatesDelTorneo.add(combate);
+                            }
+                            torneo.setCombatesDelTorneo(combatesDelTorneo);
+
+                            //Y esto sirve para convertir el objeto Torneo en DTO y interactuar con la BD.
                             TorneoDTO torneoDTO = torneosServicio.mapearTorneoDTOaTorneo(torneo, adminTorneos.getIdUsuario());
                             torneosServicio.crearTorneo(torneoDTO);
 
@@ -133,6 +156,7 @@ public class Funciones {
                             System.out.println("Torneo creado");
                             listTorneos.add(torneo);
                         } else {
+                            //Si el admin de torneos ya está creado se pasa por aquí.
                             //Esto sirve para sacar el id del Administrador de Torneos para crear el Torneo.
                             int idAdminTorneos = 0;
                             for (int i = 0; i < credenciales.size(); i++) {
@@ -141,9 +165,19 @@ public class Funciones {
                                 }
                             }
                             //Si el AdministradorDeTorneos ya estaba creado con anterioridad, se crea el torneo.
-                            Torneo torneo = new Torneo(listTorneos.size() + 1, nombreTorneo, charRegion);
+                            Torneo torneo = new Torneo(listaDeTorneos.size() + 1, nombreTorneo, charRegion);
                             AdminTorneos adminTorneos = new AdminTorneos(contrasenaAdminTorneos, nombreAdminTorneos, idAdminTorneos);
                             torneo.setAdminTorneos(adminTorneos);
+                            //Para calcular los idDeLosCombates sacamos la longitud de la lista de todos los combates de la BD.
+                            int idCombate = listaDeTodosLosCombate.size();
+                            //Se crean los 3 combates del Torneo, vacios.
+                            ArrayList<CombateDTO> combatesDelTorneo = torneo.getCombatesDelTorneo();
+
+                            for (int i = 1; i < 4; i++) {
+                                CombateDTO combate = new CombateDTO(LocalDate.now(), idCombate + i, listaDeTodosLosCombate.size() + 1);
+                                combatesDelTorneo.add(combate);
+                            }
+                            torneo.setCombatesDelTorneo(combatesDelTorneo);
 
                             //Y ahora se añade a la BD el nuevo torneo creado.
                             TorneoDTO torneoDTO = torneosServicio.mapearTorneoDTOaTorneo(torneo, adminTorneos.getIdUsuario());

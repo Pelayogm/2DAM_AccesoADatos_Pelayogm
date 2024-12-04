@@ -2,7 +2,3 @@ admin admin Administrador 1
 aniceto aniceto AdministradorTorneos 2
 jorge jorge Entrenador 3
 moris moris Entrenador 4
-tomas tomas Entrenador 5
-gus gus Entrenador 6
-alfonso alfonso Entrenador 7
-carlos carlos Entrenador 8

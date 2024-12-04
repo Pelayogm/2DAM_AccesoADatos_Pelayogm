@@ -1,6 +1,6 @@
 package proyectoPokemonADT.DAO;
 
-import proyectoPokemonADT.Entidades.CarnetEntidad;
+import proyectoPokemonADT.DAO.InterfacesDAO.TorneoAdminDAO;
 import proyectoPokemonADT.Entidades.TorneoAdminEntidad;
 
 import javax.sql.DataSource;
@@ -24,9 +24,10 @@ public class TorneoAdminDAOImplementacion implements TorneoAdminDAO {
         return instancia;
     }
 
+    //Revisar FK
     @Override
     public void crearTorneoAdmin(TorneoAdminEntidad torneoAdmin) {
-        String sql = "INSERT INTO TORNEO_ADMIN (idTorneo, idAdminTorneo) VALUES (?,?)";
+        String sql = "INSERT INTO TORNEO_ADMIN (idTorneo, idAdminTorneos) VALUES (?,?)";
         try {
             Connection connection = dataSource.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
@@ -64,7 +65,7 @@ public class TorneoAdminDAOImplementacion implements TorneoAdminDAO {
 
     @Override
     public int obtenerAdminTorneoPorId(int id) {
-        String sql = "SELECT * FROM TORNEO_ADMIN WHERE TORNEO_ADMIN.idAdminTorneo = ?";
+        String sql = "SELECT * FROM TORNEO_ADMIN WHERE TORNEO_ADMIN.idAdminTorneos = ?";
         try {
             Connection connection = dataSource.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
@@ -83,7 +84,7 @@ public class TorneoAdminDAOImplementacion implements TorneoAdminDAO {
     @Override
     public List<TorneoAdminEntidad> obtenerTorneosPorAdminId(int id) {
         List<TorneoAdminEntidad> listDeTorneoAdmin = new ArrayList<>();
-        String sql = "SELECT * FROM TORNEO_ADMIN WHERE TORNEO_ADMIN.idAdminTorneo = ?";
+        String sql = "SELECT * FROM TORNEO_ADMIN WHERE TORNEO_ADMIN.idAdminTorneos = ?";
         try {
             Connection connection = dataSource.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
@@ -106,7 +107,7 @@ public class TorneoAdminDAOImplementacion implements TorneoAdminDAO {
 
     @Override
     public void eliminarTorneoAdmin(int id) {
-        String sql = "DELETE FROM TORNEO_ADMIN WHERE TORNEO_ADMIN.idAdminTorneo = ?";
+        String sql = "DELETE FROM TORNEO_ADMIN WHERE TORNEO_ADMIN.idAdminTorneos = ?";
         try {
             Connection connection = dataSource.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(sql);

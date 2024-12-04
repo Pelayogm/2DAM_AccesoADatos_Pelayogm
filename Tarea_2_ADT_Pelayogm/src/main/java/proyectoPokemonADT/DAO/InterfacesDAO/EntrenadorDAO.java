@@ -1,4 +1,4 @@
-package proyectoPokemonADT.DAO;
+package proyectoPokemonADT.DAO.InterfacesDAO;
 import proyectoPokemonADT.Entidades.*;
 
 import java.util.List;

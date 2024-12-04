@@ -1,5 +1,6 @@
 package proyectoPokemonADT.DAO;
 
+import proyectoPokemonADT.DAO.InterfacesDAO.CarnetDAO;
 import proyectoPokemonADT.Entidades.CarnetEntidad;
 
 import javax.sql.DataSource;

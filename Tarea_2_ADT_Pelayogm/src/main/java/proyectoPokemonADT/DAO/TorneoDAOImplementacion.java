@@ -1,5 +1,6 @@
 package proyectoPokemonADT.DAO;
 
+import proyectoPokemonADT.DAO.InterfacesDAO.TorneoDAO;
 import proyectoPokemonADT.Entidades.TorneoEntidad;
 
 import javax.sql.DataSource;
@@ -107,7 +108,7 @@ public class TorneoDAOImplementacion implements TorneoDAO {
     }
 
     @Override
-    public void eliminarTorno(int id) {
+    public void eliminarTorneo(int id) {
         String sql = "DELETE FROM TORNEO WHERE idTorneo = ?";
         try {
             Connection connection = dataSource.getConnection();

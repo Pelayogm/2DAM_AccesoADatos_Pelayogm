@@ -1,4 +1,4 @@
-package proyectoPokemonADT.DAO;
+package proyectoPokemonADT.DAO.InterfacesDAO;
 
 import proyectoPokemonADT.Entidades.TorneoEntidad;
 
@@ -9,5 +9,5 @@ public interface TorneoDAO {
     List<TorneoEntidad> obtenerTodosLosTorneos();
     TorneoEntidad obtenerTorneoPorId (int id);
     void actualizarTorneo (TorneoEntidad torneo);
-    void eliminarTorno (int id);
+    void eliminarTorneo (int id);
 }
