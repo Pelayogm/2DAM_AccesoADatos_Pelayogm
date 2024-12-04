@@ -58,20 +58,20 @@ public class Entrenador extends Usuario implements Serializable {
             Entrenador entrenador = new Entrenador(id, nombreUsuario, nacionalidadEntrenador);
 
             //SE RECORRE LA LISTA DE TORNEOS EXISTENTES EN LA SESION
-            for (int i = 0; i < torneos.size(); i++) {
+            //for (int i = 0; i < torneos.size(); i++) {
                 //SI HAY UNO CREADO
-                if (torneos.get(i).isTorneoCreado()) {
+                //if (torneos.get(i).isTorneoCreado()) {
                     //SE AÑADE A LISTA DE TORNEOS QUE TIENE EL ENTRENADOR EL TORNEO QUE SE ENCUENTRE ACTIVO
-                    entrenador.torneosDelEntrenador.add(torneos.get(i));
+                    //entrenador.torneosDelEntrenador.add(torneos.get(i));
                     //PROCEDIMIENTO DE ENTRADA AL CREAR LA CUENTA
                     System.out.println("Bienvenido: " + nombreUsuario);
-                    System.out.println("Estas apuntado en el torneo " + torneos.get(i).getNombre());
+                    //System.out.println("Estas apuntado en el torneo " + torneos.get(i).getNombre());
 
                     //SE AÑADE EL ENTRENADOR A LA LISTA DE PARTICIPANTES QUE TIENE EL TORNEO
-                    torneos.get(i).getParticipantesDelTorneo().add(entrenador);
+                    //torneos.get(i).getParticipantesDelTorneo().add(entrenador);
                     return entrenador;
-                }
-            }
+                //}
+            //}
 
         } else {
             System.out.println("Datos mal introducidos");

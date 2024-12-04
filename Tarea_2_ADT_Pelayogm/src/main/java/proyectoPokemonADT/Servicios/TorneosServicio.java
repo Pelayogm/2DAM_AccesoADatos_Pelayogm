@@ -38,11 +38,11 @@ public class TorneosServicio {
         TorneoEntidad torneoEntidad = new TorneoEntidad(torneo.getId(), torneo.getNombre(), codigoTorneo, torneo.getPuntosVictoria());
         TorneoAdminEntidad torneoAdminEntidad = mapearTorneoDTOATorneoAdminEntidad(torneo);
         torneoDAOImplementacion.crearTorneo(torneoEntidad);
+        torneoAdminDAOImplementacion.crearTorneoAdmin(torneoAdminEntidad);
         for (int i = 0; i < torneo.getCombatesDelTorneo().size(); i++) {
             CombateDTO combate = torneo.getCombatesDelTorneo().get(i);
             combateServicio.crearCombate(combate);
         }
-        torneoAdminDAOImplementacion.crearTorneoAdmin(torneoAdminEntidad);
     }
 
     public TorneoDTO obtenerTorneoPorId (int id) {

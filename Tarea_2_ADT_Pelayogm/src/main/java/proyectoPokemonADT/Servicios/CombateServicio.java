@@ -36,7 +36,7 @@ public class CombateServicio {
         Date fechaCombate = Date.valueOf(combate.getFecha());
         CombateEntidad combateEntidad = new CombateEntidad((int) combate.getId(), fechaCombate, combate.getIdTorneo());
         combateDAOImplementacion.crearCombate(combateEntidad);
-        instancia.crearCombateEntrenador(combate);
+        crearCombateEntrenador(combate);
     }
 
     public void crearCombateEntrenador (CombateDTO combateDTO) {

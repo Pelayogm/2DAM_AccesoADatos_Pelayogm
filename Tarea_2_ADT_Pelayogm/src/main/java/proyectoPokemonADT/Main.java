@@ -37,10 +37,11 @@ public class Main {
 //TAREA 2
 //TorneoDTO lleva una ListaDeCombates que se tiene que hacer en torneoServices (COMPLETADA)
 //ESTRUCTURA DAO (COMPLETADA)
-//Coger datos del torneo en la base de datos
+//Coger datos del torneo en la base de datos (Apuntarse a un torneo)
 
 //DUDAS
 //_____________________________________________________________________________________
+//Enseñar el error de crear 2 torneos seguidos
 
 //El entrenador lleva una lista de torneos. (Hacer Tabla TorneoEntrenador)
 //TorneoDTO tiene listaDeParticipantes

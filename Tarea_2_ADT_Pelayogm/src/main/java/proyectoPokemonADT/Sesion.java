@@ -150,7 +150,6 @@ public class Sesion {
                         System.out.println("Valor no válido");
                     }
                 } else {
-                    if (flag) {
                         try {
                             //Cogemos el ultimo id del fichero de credenciales
                             int ultimoId = Integer.parseInt(listCredenciales.get(listCredenciales.size() - 1));
@@ -162,8 +161,6 @@ public class Sesion {
 
                             //SE LLAMA A CREAR ENTRENADOR
                             entrenador = Entrenador.crearEntrenador(nombreUsuario, idUsuario);
-                            //CREAMOS EL CARNET DTO
-                            assert entrenador != null;
                             CarnetDTO carnet = new CarnetDTO(idUsuario, entrenador.getCarnet().getFechaExpedicion(), entrenador.getCarnet().getPuntos(), entrenador.getCarnet().getNumVictorias());
                             EntrenadorDTO entrenadorDto = entrenadoresServicio.mapearEntrenadorAEntrenadorDto(entrenador, carnet);
                             entrenadoresServicio.crearEntrenador(entrenadorDto);
@@ -172,13 +169,10 @@ public class Sesion {
                             Funciones.MostrarFunciones(entrenador);
 
                         } catch (Exception e) {
-                            System.out.println("Error con el DAT");
+                            System.out.println("No esta disponible este servicio por el momento");
+                            System.out.println("Informese de si existe algún torneo para registrarse");
                         }
-                    } else {
-                        System.out.println("No esta disponible este servicio por el momento");
-                        System.out.println("Informese de si existe algún torneo para registrarse");
                     }
-                }
 
             } catch (Exception e) {
                 System.out.println("No se ha podido encontrar el fichero de credenciales");
