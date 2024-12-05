@@ -6,3 +6,4 @@ fran fran Entrenador 7
 paco paco Entrenador 8tomas tomas Entrenador 9
 fran garonda garonda Entrenador 10
 Garonda Garonda Entrenador 11
+pepe pepe Entrenador 12
