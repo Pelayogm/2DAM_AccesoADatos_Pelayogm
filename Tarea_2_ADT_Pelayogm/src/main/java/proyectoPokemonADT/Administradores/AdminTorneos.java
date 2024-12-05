@@ -12,6 +12,10 @@ public class AdminTorneos extends Usuario implements Serializable {
        setEstadoSesion(true);
     }
 
+    public AdminTorneos(long idUsuario) {
+        this.idUsuario = idUsuario;
+    }
+
     public AdminTorneos(String contrasenaAdminTorneo, String nombreAdminTorneo, long idUsuario) {
         setNombreUsuario(nombreAdminTorneo);
         setEstadoSesion(true);

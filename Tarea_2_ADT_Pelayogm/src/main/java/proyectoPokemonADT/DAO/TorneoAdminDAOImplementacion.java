@@ -65,7 +65,7 @@ public class TorneoAdminDAOImplementacion implements TorneoAdminDAO {
 
     @Override
     public int obtenerAdminTorneoPorId(int id) {
-        String sql = "SELECT * FROM TORNEO_ADMIN WHERE TORNEO_ADMIN.idAdminTorneos = ?";
+        String sql = "SELECT * FROM TORNEO_ADMIN WHERE TORNEO_ADMIN.idTorneo = ?";
         try {
             Connection connection = dataSource.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(sql);

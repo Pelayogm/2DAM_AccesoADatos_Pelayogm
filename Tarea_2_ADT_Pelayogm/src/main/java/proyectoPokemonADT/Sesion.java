@@ -69,7 +69,8 @@ public class Sesion {
                         }
 
                         if (nombreEntrenador.equals(listCredenciales.get(i)) && contrasena.equals(listCredenciales.get(i + 1)) && listCredenciales.get(i + 2).equals("AdministradorTorneos")) {
-                            AdminTorneos adminTorneos = new AdminTorneos();
+                            int idAdminTorneos = Integer.parseInt(listCredenciales.get(i + 3));
+                            AdminTorneos adminTorneos = new AdminTorneos(idAdminTorneos);
                             Funciones.MostrarFunciones(adminTorneos);
                             return adminTorneos;
                         }
@@ -161,13 +162,22 @@ public class Sesion {
 
                             //SE LLAMA A CREAR ENTRENADOR
                             entrenador = Entrenador.crearEntrenador(nombreUsuario, idUsuario);
-                            CarnetDTO carnet = new CarnetDTO(idUsuario, entrenador.getCarnet().getFechaExpedicion(), entrenador.getCarnet().getPuntos(), entrenador.getCarnet().getNumVictorias());
-                            EntrenadorDTO entrenadorDto = entrenadoresServicio.mapearEntrenadorAEntrenadorDto(entrenador, carnet);
-                            entrenadoresServicio.crearEntrenador(entrenadorDto);
-                            Credenciales.escribirFichero(file, nombreUsuario, constrasenaUsuario, rolUsuario, idUsuarioString);
-                            System.out.println("Cuenta creada con éxito");
-                            Funciones.MostrarFunciones(entrenador);
-
+                            if (entrenador != null) {
+                                //Creamos el carnet del entrenador
+                                CarnetDTO carnet = new CarnetDTO(idUsuario, entrenador.getCarnet().getFechaExpedicion(), entrenador.getCarnet().getPuntos(), entrenador.getCarnet().getNumVictorias());
+                                //Mapeamos el objeto entrenador y su carnet que obtuvimos durante el registro
+                                EntrenadorDTO entrenadorDto = entrenadoresServicio.mapearEntrenadorAEntrenadorDto(entrenador, carnet);
+                                //Se crea el entrenador en la BD
+                                entrenadoresServicio.crearEntrenador(entrenadorDto);
+                                //Añadimos el entrenador al fichero de credenciales
+                                Credenciales.escribirFichero(file, nombreUsuario, constrasenaUsuario, rolUsuario, idUsuarioString);
+                                //Informamos del éxito de la creación de cuenta
+                                System.out.println("Cuenta creada con éxito");
+                                //Mostramos las funciones disponibles al entrenador
+                                Funciones.MostrarFunciones(entrenador);
+                            } else {
+                                System.exit(1);
+                            }
                         } catch (Exception e) {
                             System.out.println("No esta disponible este servicio por el momento");
                             System.out.println("Informese de si existe algún torneo para registrarse");

@@ -77,13 +77,20 @@ public class Funciones {
 
         } else if (usuario instanceof AdminTorneos) {
             System.out.println("Hola Administrador de Torneos");
-            System.out.println("1. Cerrar Sesión");
+            System.out.println("1. Exportar Torneo | 2. Cerrar Sesión");
+            usuario.setEstadoSesion(true);
             int userOpcion = scanner.nextInt();
-            while (userOpcion < 2) {
+            while (userOpcion < 3) {
                 if (userOpcion == 1) {
+                    GestionDeTorneos.exportarTorneo(usuario);
+                }
+
+                if (userOpcion == 2) {
                     Funciones.CerrarSesion(usuario);
                     break;
                 }
+                System.out.println("1. Exportar Torneo | 2. Cerrar Sesión");
+                userOpcion = scanner.nextInt();
             }
 
         } else {

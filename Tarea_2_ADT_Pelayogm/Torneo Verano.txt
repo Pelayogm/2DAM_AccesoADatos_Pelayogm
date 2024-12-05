@@ -1,0 +1,5 @@
+Nombre Torneo: Torneo Verano
+Region Torneo: B
+Combates del torneo
+Combate 0: 2023-06-15 | 3
+Puntos del torneo: 75.0

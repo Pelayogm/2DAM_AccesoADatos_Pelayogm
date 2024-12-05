@@ -101,6 +101,10 @@ public class EntrenadoresServicio {
         return new EntrenadorDTO(entrenadorEntidadActualizado.getIdEntrenador(), entrenadorEntidadActualizado.getNombreEntrenador(), entrenadorEntidadActualizado.getNacionalidadEntrenador(), carnet, torneosDelUsuario);
     }
 
+    public List<Integer> listaDeParticipantes(int idTorneo) {
+        return entrenadorTorneoDAOImplementacion.obtenerIdDeEntrenadorPorIdTorneo(idTorneo);
+    }
+
     public EntrenadorEntidad mapearDtoAEntidad (EntrenadorDTO entrenador) {
         return new EntrenadorEntidad(entrenador.getId(), entrenador.getNombre(), entrenador.getNacionalidad());
     }

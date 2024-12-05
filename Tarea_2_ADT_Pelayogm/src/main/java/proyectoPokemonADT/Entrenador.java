@@ -1,9 +1,15 @@
 package proyectoPokemonADT;
+import proyectoPokemonADT.ArchivosDelPrograma.ConexionBaseDeDatos;
+import proyectoPokemonADT.DTO.TorneoDTO;
+import proyectoPokemonADT.Servicios.EntrenadoresServicio;
+import proyectoPokemonADT.Servicios.TorneosServicio;
 import proyectoPokemonADT.XML.*;
 
+import javax.sql.DataSource;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class Entrenador extends Usuario implements Serializable {
@@ -13,8 +19,11 @@ public class Entrenador extends Usuario implements Serializable {
     private final boolean esEntrenador = true;
     private Carnet carnet;
 
-    //LISTA DE TORNEOS PARA VER SI HAY ALGUNO ACTIVO
-    private static ArrayList <Torneo> torneos = Funciones.getListTorneos();
+    private static final ConexionBaseDeDatos conexionBaseDeDatos = ConexionBaseDeDatos.getInstancia();
+    private static final DataSource dataSource = conexionBaseDeDatos.configurarDataSource();
+    private static final TorneosServicio torneosServicio = TorneosServicio.getInstancia(dataSource);
+    private static final EntrenadoresServicio entrenadoresServicio = EntrenadoresServicio.getInstancia(dataSource);
+
     //ARRAYLIST DE LOS TORNEOS EN LOS QUE ESTA O ESTUVO PRESENTE
     private ArrayList<Torneo> torneosDelEntrenador = new ArrayList<>();
     //FECHA PARA PASARSELA AL CONSTRUCTOR
@@ -33,6 +42,7 @@ public class Entrenador extends Usuario implements Serializable {
         this.carnet = new Carnet(id, fechaActual);
     }
 
+    //Constructor utilizado para los mapeos de Entrenador a EntrenadorDTO y viceversa.
     public Entrenador(long id, String nombre, String nacionalidad, Carnet carnet) {
         setEstadoSesion(true);
         setUsuario(false);
@@ -43,6 +53,7 @@ public class Entrenador extends Usuario implements Serializable {
         this.carnet = carnet;
     }
 
+    //Metodo de crear entrenador en caso de nuevo registro
     public static Entrenador crearEntrenador (String nombreUsuario, long id) {
         Scanner scanner_entrenador = new Scanner(System.in);
         System.out.println("¿Nombre?");
@@ -52,29 +63,52 @@ public class Entrenador extends Usuario implements Serializable {
         System.out.println("¿Nacionalidad?");
         String nacionalidadEntrenador = scanner_entrenador.nextLine();
 
-        //SI LA NACIONALIDAD QUE ESTA EN PAISES.XML ESTA BIEN
-        if (LectorXML.comprobarNacionalidadConXML(nacionalidadEntrenador)) {
-            //SE CREA EL OBJETO ENTRENADOR
-            Entrenador entrenador = new Entrenador(id, nombreUsuario, nacionalidadEntrenador);
+        System.out.println("¿La información es correcta? 1. Sí | 2. No");
+        int verificarInformacion = scanner_entrenador.nextInt();
+        if (verificarInformacion == 2) {
+            Entrenador.crearEntrenador(nombreUsuario, id);
+        }
 
-            //SE RECORRE LA LISTA DE TORNEOS EXISTENTES EN LA SESION
-            //for (int i = 0; i < torneos.size(); i++) {
-                //SI HAY UNO CREADO
-                //if (torneos.get(i).isTorneoCreado()) {
-                    //SE AÑADE A LISTA DE TORNEOS QUE TIENE EL ENTRENADOR EL TORNEO QUE SE ENCUENTRE ACTIVO
-                    //entrenador.torneosDelEntrenador.add(torneos.get(i));
+        //Se comprueba la nacionalidad introducida por pantalla, con el metodo de la clase LectorXML.
+        if (LectorXML.comprobarNacionalidadConXML(nacionalidadEntrenador)) {
+            //Si la nacionalidad es correcta creamos un objeto entrenador
+            Entrenador entrenador = new Entrenador(id, nombreUsuario, nacionalidadEntrenador);
+            List<TorneoDTO> listaDeTodosLosTorneos = torneosServicio.obtenerTodosLosTorneos();
+            if (listaDeTodosLosTorneos.isEmpty()) {
+                System.out.println("Actualmente no hay ningún torneo disponible, espere a que haya un nuevo torneo");
+                return null;
+            }
+
+            System.out.println("Todos los torneos");
+            //Con la anterior condición filtramos si existen torneos.
+            for (int i = 0; i < listaDeTodosLosTorneos.size(); i++) {
+                System.out.println(i + " - " + listaDeTodosLosTorneos.get(i).getNombre());
+            }
+            System.out.println("Indique el numero del torneo que desee");
+            int torneoUsuario = scanner_entrenador.nextInt();
+            List<Integer> participantes = entrenadoresServicio.listaDeParticipantes(listaDeTodosLosTorneos.get(torneoUsuario).getId());
+            if (participantes.size() < 3) {
+                TorneoDTO torneoDto = listaDeTodosLosTorneos.get(torneoUsuario);
+                Torneo torneo = torneosServicio.mapearDtoATorneo(torneoDto);
+                //Aqui irá el actualizar torneo para añadir al nuevo participante
+                entrenador.torneosDelEntrenador.add(torneo);
+                System.out.println("Bienvenido: " + nombreUsuario);
+                System.out.println("Estas apuntado en el torneo " + torneo.getNombre());
+                return entrenador;
+            } else {
+                System.out.println("El torneo elegido esta lleno");
+                return null;
+            }
+            /*
                     Torneo torneo = new Torneo(0, "Inicial", 'I', 100);
                     entrenador.torneosDelEntrenador.add(torneo);
                     //PROCEDIMIENTO DE ENTRADA AL CREAR LA CUENTA
-                    System.out.println("Bienvenido: " + nombreUsuario);
-                    //System.out.println("Estas apuntado en el torneo " + torneos.get(i).getNombre());
+
 
                     //SE AÑADE EL ENTRENADOR A LA LISTA DE PARTICIPANTES QUE TIENE EL TORNEO
                     //torneos.get(i).getParticipantesDelTorneo().add(entrenador);
                     return entrenador;
-                //}
-            //}
-
+                //}*/
         } else {
             System.out.println("Datos mal introducidos");
         }
@@ -109,4 +143,5 @@ public class Entrenador extends Usuario implements Serializable {
     public void setTorneosDelEntrenador(ArrayList<Torneo> torneosDelEntrenador) {
         this.torneosDelEntrenador = torneosDelEntrenador;
     }
+
 }

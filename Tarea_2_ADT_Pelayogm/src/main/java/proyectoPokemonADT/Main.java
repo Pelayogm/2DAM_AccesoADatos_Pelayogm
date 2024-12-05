@@ -36,8 +36,11 @@ public class Main {
 
 //DUDAS
 //_____________________________________________________________________________________
-//El entrenador lleva una lista de torneos. (Hacer Tabla TorneoEntrenador), para el torneo incial.
+//El entrenador lleva una lista de torneos. (Hacer Tabla TorneoEntrenador), para el torneo inicial.
 //Hacer que se reflejen los torneos en la bd y exportar carnet
+
+//Al entrenador se le enseñan los torneos disponibles y escoge el que quiere
+//Y el administrador de torneos al hacer login se le enseñan todos los torneos que administra y exporta el que quiera.
 
 //TorneoDTO tiene listaDeParticipantes
 //El torneo se exporta en .txt y se sale por pantalla y se guarda el id del torneo Creado con el adminDeTorneos.

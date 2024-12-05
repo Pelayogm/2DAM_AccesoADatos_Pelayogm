@@ -63,4 +63,23 @@ public class EntrenadorTorneoDAOImplementacion implements EntrenadorTorneoDAO {
         }
         return listaDeIdDeTorneo;
     }
+
+    @Override
+    public List<Integer> obtenerIdDeEntrenadorPorIdTorneo(int idTorneo) {
+        List<Integer> listaDeIdDeParticipantes = new ArrayList<>();
+        String sql = "SELECT idEntrenador FROM TORNEO_ENTRENADOR WHERE idTorneo = ?";
+        try {
+            Connection connection = dataSource.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, idTorneo);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                listaDeIdDeParticipantes.add(resultSet.getInt(1));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return listaDeIdDeParticipantes;
+    }
 }
