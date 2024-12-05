@@ -126,6 +126,12 @@ public class Funciones {
                         System.out.println("¿Contraseña del administrador de Torneos?");
                         String contrasenaAdminTorneos = scanner.next();
 
+                        System.out.println("¿Son correctos estos datos? 1. Sí | 2. No");
+                        int opcionUsuario = scanner.nextInt();
+                        if (opcionUsuario == 2) {
+                            Funciones.CrearTorneo(usuario);
+                        }
+
                         //Se crea el archivo de credenciales para guardar el administrador de torneos en caso de que no estuviera creado.
                         File file = new File("src/main/java/proyectoPokemonADT/ArchivosDelPrograma", "Credenciales.txt");
                         //Cargamos los datos del fichero
