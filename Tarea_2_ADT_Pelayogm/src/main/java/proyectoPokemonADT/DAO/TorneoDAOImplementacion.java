@@ -92,15 +92,15 @@ public class TorneoDAOImplementacion implements TorneoDAO {
     }
 
     @Override
-    public void actualizarTorneo(TorneoEntidad torneo) {
-        String sql = "UPDATE TORNEO SET nombreTorneo = ?, codigoTorneo = ?, puntosVictoria = ? ,WHERE idEntrenador = ?";
+    public void actualizarTorneo(TorneoEntidad torneo, int id) {
+        String sql = "UPDATE TORNEO SET nombreTorneo = ?, codigoTorneo = ?, puntosVictoria = ? , WHERE idTorneo = ?";
         try {
             Connection connection = dataSource.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1, torneo.getNombreTorneo());
             preparedStatement.setString(2, torneo.getCodigoTorneo());
             preparedStatement.setDouble(3, torneo.getPuntosVictoriaTorneo());
-            preparedStatement.setDouble(4, torneo.getIdTorneo());
+            preparedStatement.setInt(4, id);
             preparedStatement.executeUpdate();
         } catch (Exception e) {
             e.printStackTrace();

@@ -90,7 +90,6 @@ public class Entrenador extends Usuario implements Serializable {
             if (participantes.size() < 3) {
                 TorneoDTO torneoDto = listaDeTodosLosTorneos.get(torneoUsuario);
                 Torneo torneo = torneosServicio.mapearDtoATorneo(torneoDto);
-                //Aqui irá el actualizar torneo para añadir al nuevo participante
                 entrenador.torneosDelEntrenador.add(torneo);
                 System.out.println("Bienvenido: " + nombreUsuario);
                 System.out.println("Estas apuntado en el torneo " + torneo.getNombre());

@@ -1,9 +1,11 @@
 package proyectoPokemonADT.Servicios;
 
+import proyectoPokemonADT.DAO.EntrenadorTorneoDAOImplementacion;
 import proyectoPokemonADT.DAO.TorneoAdminDAOImplementacion;
 import proyectoPokemonADT.DAO.TorneoDAOImplementacion;
 import proyectoPokemonADT.DTO.CombateDTO;
 import proyectoPokemonADT.DTO.TorneoDTO;
+import proyectoPokemonADT.Entidades.EntrenadorTorneoEntidad;
 import proyectoPokemonADT.Entidades.TorneoAdminEntidad;
 import proyectoPokemonADT.Entidades.TorneoEntidad;
 import proyectoPokemonADT.Torneo;
@@ -17,6 +19,7 @@ public class TorneosServicio {
     private static TorneosServicio instancia;
     private static TorneoDAOImplementacion torneoDAOImplementacion;
     private static TorneoAdminDAOImplementacion torneoAdminDAOImplementacion;
+    private static EntrenadorTorneoDAOImplementacion entrenadorTorneoDAOImplementacion;
     private static CombateServicio combateServicio;
     private static DataSource dataSource;
 
@@ -24,6 +27,7 @@ public class TorneosServicio {
         torneoDAOImplementacion = TorneoDAOImplementacion.getInstancia(dataSource);
         combateServicio = CombateServicio.getInstancia(dataSource);
         torneoAdminDAOImplementacion = TorneoAdminDAOImplementacion.getInstancia(dataSource);
+        entrenadorTorneoDAOImplementacion = EntrenadorTorneoDAOImplementacion.getInstancia(dataSource);
     }
 
     public static TorneosServicio getInstancia (DataSource dataSource) {
@@ -73,7 +77,21 @@ public class TorneosServicio {
     }
 
     public TorneoDTO actualizarTorneo (int id, TorneoDTO torneo) {
+        TorneoEntidad torneoEntidad = mapearDtoAEntidad(torneo);
+        torneoDAOImplementacion.actualizarTorneo(torneoEntidad, id);
         return null;
+    }
+
+    public boolean actualizarParticipantesTorneo (int id, int idParticipante) {
+        //Actualizar los combates también
+        try {
+            EntrenadorTorneoEntidad entrenadorTorneoEntidad = new EntrenadorTorneoEntidad(idParticipante, id);
+            entrenadorTorneoDAOImplementacion.crearEntrenadorTorneo(entrenadorTorneoEntidad);
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 
     public TorneoEntidad mapearDtoAEntidad (TorneoDTO torneo) {

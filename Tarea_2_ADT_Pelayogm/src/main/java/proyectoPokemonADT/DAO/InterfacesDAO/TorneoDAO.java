@@ -8,6 +8,6 @@ public interface TorneoDAO {
     void crearTorneo (TorneoEntidad torneo);
     List<TorneoEntidad> obtenerTodosLosTorneos();
     TorneoEntidad obtenerTorneoPorId (int id);
-    void actualizarTorneo (TorneoEntidad torneo);
+    void actualizarTorneo (TorneoEntidad torneo, int id);
     void eliminarTorneo (int id);
 }

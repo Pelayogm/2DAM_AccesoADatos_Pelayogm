@@ -7,6 +7,7 @@ import proyectoPokemonADT.Credenciales.Credenciales;
 import proyectoPokemonADT.DTO.CarnetDTO;
 import proyectoPokemonADT.DTO.EntrenadorDTO;
 import proyectoPokemonADT.Servicios.EntrenadoresServicio;
+import proyectoPokemonADT.Servicios.TorneosServicio;
 
 import javax.sql.DataSource;
 import java.io.*;
@@ -17,6 +18,7 @@ public class Sesion {
     private static final ConexionBaseDeDatos conexionBaseDeDatos = ConexionBaseDeDatos.getInstancia();
     private static final DataSource dataSource = conexionBaseDeDatos.configurarDataSource();
     private static EntrenadoresServicio entrenadoresServicio = EntrenadoresServicio.getInstancia(dataSource);
+    private static final TorneosServicio torneosServicio = TorneosServicio.getInstancia(dataSource);
 
     public static ArrayList<Usuario> listEntrenadores = new ArrayList<>();
     private static ArrayList<Torneo> listTorneos = Funciones.getListTorneos();
@@ -169,6 +171,10 @@ public class Sesion {
                                 EntrenadorDTO entrenadorDto = entrenadoresServicio.mapearEntrenadorAEntrenadorDto(entrenador, carnet);
                                 //Se crea el entrenador en la BD
                                 entrenadoresServicio.crearEntrenador(entrenadorDto);
+                                //Añadimos el idDelEntrenador a la tabla Entrenador_Torneo después de añadir el entrenador a la BD, para evitar errores de que estamos
+                                //añandiendo un ID que no existe.
+                                Torneo torneo = entrenador.getTorneosDelEntrenador().get(0);
+                                torneosServicio.actualizarParticipantesTorneo(torneo.getId(), entrenadorDto.getId());
                                 //Añadimos el entrenador al fichero de credenciales
                                 Credenciales.escribirFichero(file, nombreUsuario, constrasenaUsuario, rolUsuario, idUsuarioString);
                                 //Informamos del éxito de la creación de cuenta
