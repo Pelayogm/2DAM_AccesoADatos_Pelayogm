@@ -161,7 +161,7 @@ public class Funciones {
                             }
 
                             //Se crean los 3 combates del Torneo, vacios.
-                            ArrayList<CombateDTO> combatesDelTorneo = torneo.getCombatesDelTorneo();
+                            List<CombateDTO> combatesDelTorneo = torneo.getCombatesDelTorneo();
                             for (int i = 1; i < 4; i++) {
                                 CombateDTO combate = new CombateDTO(LocalDate.now(),idCombate + 1, valor);
                                 combatesDelTorneo.add(combate);
@@ -191,7 +191,7 @@ public class Funciones {
                             //Para calcular los idDeLosCombates sacamos la longitud de la lista de todos los combates de la BD.
                             int idCombate = listaDeTodosLosCombate.size();
                             //Se crean los 3 combates del Torneo, vacios.
-                            ArrayList<CombateDTO> combatesDelTorneo = torneo.getCombatesDelTorneo();
+                            List<CombateDTO> combatesDelTorneo = torneo.getCombatesDelTorneo();
 
                             int valor;
                             if (listaDeTorneos.isEmpty()) {

@@ -5,6 +5,7 @@ import proyectoPokemonADT.DTO.CombateDTO;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Torneo implements Serializable {
     private final int id;
@@ -15,7 +16,7 @@ public class Torneo implements Serializable {
     //Boolean para saber si esta activo el torneo
     private boolean torneoCreado;
     private ArrayList <Entrenador> participantesDelTorneo = new ArrayList<>();
-    private ArrayList <CombateDTO> combatesDelTorneo = new ArrayList<>();
+    private List <CombateDTO> combatesDelTorneo = new ArrayList<>();
 
     public ArrayList<Entrenador> getParticipantesDelTorneo() {
         return participantesDelTorneo;
@@ -45,11 +46,12 @@ public class Torneo implements Serializable {
         this.torneoCreado = torneoCreado;
     }
 
-    public Torneo(int id, String nombre, char codRegion, float puntosVictoria) {
+    public Torneo(int id, String nombre, char codRegion, float puntosVictoria, List<CombateDTO> combateDTO) {
         this.id = id;
         this.nombre = nombre;
         this.codRegion = codRegion;
         PuntosVictoria = puntosVictoria;
+        this.combatesDelTorneo = combateDTO;
         torneoCreado = true;
     }
 
@@ -61,8 +63,6 @@ public class Torneo implements Serializable {
         this.PuntosVictoria = 100;
     }
 
-
-
     public AdminTorneos getAdminTorneos() {
         return adminTorneos;
     }
@@ -71,11 +71,11 @@ public class Torneo implements Serializable {
         this.adminTorneos = adminTorneos;
     }
 
-    public ArrayList<CombateDTO> getCombatesDelTorneo() {
+    public List<CombateDTO> getCombatesDelTorneo() {
         return combatesDelTorneo;
     }
 
-    public void setCombatesDelTorneo(ArrayList<CombateDTO> combatesDelTorneo) {
+    public void setCombatesDelTorneo(List<CombateDTO> combatesDelTorneo) {
         this.combatesDelTorneo = combatesDelTorneo;
     }
 }

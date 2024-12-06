@@ -24,18 +24,6 @@ public class Sesion {
     private static ArrayList<Torneo> listTorneos = Funciones.getListTorneos();
     private static ArrayList<String> listCredenciales = Credenciales.getCredenciales();
 
-    //BOOLEANO PARA COMPROBAR QUE SE HAN COMPROBADO LOS TORNEOS
-    private static boolean flag = false;
-
-    //SI EXISTE AL MENOS UN TORNEO FLAG ES TRUE
-    public static void ComprobacionTorneos () {
-        for (int i = 0; i < listTorneos.size(); i++) {
-            if (listTorneos.get(i).isTorneoCreado()) {
-                flag = true;
-            }
-        }
-    }
-
     public static Usuario IniciarSesion () {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Sistema de la Calle Victoria");
@@ -129,9 +117,9 @@ public class Sesion {
             String constrasenaUsuario = scanner.nextLine();
             System.out.println("A continuacion va a se va a crear una cuenta en el club de Entrenadores Pokemon");
             //SE PREPARA UN ARCHIVO PARA ESCRIBIR EL ENTRENDADOR EN UN ARCHIVO DAT Y UNO PARA LEER LOS TORNEOS
-            File file_torneos = new File("src/main/java/proyectoPokemonADT/ArchivosDelPrograma", "Torneos.dat");
-            GestorArchivosDat.cargarTorneo(file_torneos);
-            ComprobacionTorneos();
+            //File file_torneos = new File("src/main/java/proyectoPokemonADT/ArchivosDelPrograma", "Torneos.dat");
+            //GestorArchivosDat.cargarTorneo(file_torneos);
+            //ComprobacionTorneos();
 
             //CREAMOS EL ARCHIVO FILE PARA MANDARSELO AL METODO DE LEER
             file = new File("src/main/java/proyectoPokemonADT/ArchivosDelPrograma", "Credenciales.txt");

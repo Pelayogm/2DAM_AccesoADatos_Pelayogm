@@ -43,9 +43,9 @@ public class Main {
 //Y el administrador de torneos al hacer login se le enseñan todos los torneos que administra y exporta el que quiera. (COMPLETADO)
 //El torneo se exporta en .txt y se sale por pantalla y se guarda el id del torneo Creado con el adminDeTorneos. (COMPLETADO)
 
-//En un torneo un entrenador solo puede combatir 2 veces y en un torneo hay 3 combates.
+//En un torneo un entrenador solo puede combatir 2 veces y en un torneo hay 3 combates. (COMPLETADO - REVISAR)
 //Hacer flush en el exportar
-//Añadir los combates al XML
+//Añadir los combates al XML (COMPLETADO)
 
 //TorneoDTO tiene listaDeParticipantes
 

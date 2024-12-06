@@ -1,13 +1,12 @@
 package proyectoPokemonADT.Servicios;
 
+import proyectoPokemonADT.DAO.CombateEntrenadorDAOImplementacion;
 import proyectoPokemonADT.DAO.EntrenadorTorneoDAOImplementacion;
 import proyectoPokemonADT.DAO.TorneoAdminDAOImplementacion;
 import proyectoPokemonADT.DAO.TorneoDAOImplementacion;
 import proyectoPokemonADT.DTO.CombateDTO;
 import proyectoPokemonADT.DTO.TorneoDTO;
-import proyectoPokemonADT.Entidades.EntrenadorTorneoEntidad;
-import proyectoPokemonADT.Entidades.TorneoAdminEntidad;
-import proyectoPokemonADT.Entidades.TorneoEntidad;
+import proyectoPokemonADT.Entidades.*;
 import proyectoPokemonADT.Torneo;
 
 import javax.sql.DataSource;
@@ -20,6 +19,7 @@ public class TorneosServicio {
     private static TorneoDAOImplementacion torneoDAOImplementacion;
     private static TorneoAdminDAOImplementacion torneoAdminDAOImplementacion;
     private static EntrenadorTorneoDAOImplementacion entrenadorTorneoDAOImplementacion;
+    private static CombateEntrenadorDAOImplementacion combateEntrenadorDAOImplementacion;
     private static CombateServicio combateServicio;
     private static DataSource dataSource;
 
@@ -28,6 +28,7 @@ public class TorneosServicio {
         combateServicio = CombateServicio.getInstancia(dataSource);
         torneoAdminDAOImplementacion = TorneoAdminDAOImplementacion.getInstancia(dataSource);
         entrenadorTorneoDAOImplementacion = EntrenadorTorneoDAOImplementacion.getInstancia(dataSource);
+        combateEntrenadorDAOImplementacion = CombateEntrenadorDAOImplementacion.getInstancia(dataSource);
     }
 
     public static TorneosServicio getInstancia (DataSource dataSource) {
@@ -83,10 +84,27 @@ public class TorneosServicio {
     }
 
     public boolean actualizarParticipantesTorneo (int id, int idParticipante) {
-        //Actualizar los combates también
         try {
+            List<CombateDTO> combateDTO = combateServicio.obtenerTodosLosCombatesDelTorneo(id);
             EntrenadorTorneoEntidad entrenadorTorneoEntidad = new EntrenadorTorneoEntidad(idParticipante, id);
             entrenadorTorneoDAOImplementacion.crearEntrenadorTorneo(entrenadorTorneoEntidad);
+            //Este contador nos permitirá saber si lo hemos añadido a los combates
+            int contador = 0;
+            for (int i = 0; i < combateDTO.size(); i++) {
+                if (contador < 2) {
+                    int idCombate = (int) combateDTO.get(i).getId();
+                    List<Integer> participantesCombateActual = combateEntrenadorDAOImplementacion.obtenerParticipantesPorIdDelCombate(idCombate);
+                    if (participantesCombateActual.get(0) == 1) {
+                        CombateEntrenadorEntidad combateEntrenadorEntidad = new CombateEntrenadorEntidad(idCombate, idParticipante, participantesCombateActual.get(1));
+                        combateEntrenadorDAOImplementacion.actualizarCombateEntrenador(idCombate, combateEntrenadorEntidad);
+                        contador++;
+                    } else if (participantesCombateActual.get(1) == 1) {
+                        CombateEntrenadorEntidad combateEntrenadorEntidad = new CombateEntrenadorEntidad(idCombate, participantesCombateActual.get(0), idParticipante);
+                        combateEntrenadorDAOImplementacion.actualizarCombateEntrenador(idCombate, combateEntrenadorEntidad);
+                        contador++;
+                    }
+                }
+            }
             return true;
         } catch (Exception e) {
             e.printStackTrace();
@@ -113,7 +131,7 @@ public class TorneosServicio {
     }
 
     public Torneo mapearDtoATorneo (TorneoDTO torneo) {
-        return new Torneo(torneo.getId(), torneo.getNombre(), torneo.getCodRegion(), torneo.getPuntosVictoria());
+        return new Torneo(torneo.getId(), torneo.getNombre(), torneo.getCodRegion(), torneo.getPuntosVictoria(), torneo.getCombatesDelTorneo());
     }
 
     public TorneoAdminEntidad mapearTorneoDTOATorneoAdminEntidad (TorneoDTO torneo) {

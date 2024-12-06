@@ -4,6 +4,7 @@ import org.w3c.dom.DOMImplementation;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Text;
+import proyectoPokemonADT.DTO.CombateDTO;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -52,6 +53,24 @@ public class Exportar {
                                 Element elementTorneo = document.createElement("torneo");
                                 CrearElementoXML("nombre", entrenador.getTorneosDelEntrenador().get(i).getNombre(), document, elementTorneo);
                                 CrearElementoXML("region", Character.toString(entrenador.getTorneosDelEntrenador().get(i).getCodRegion()), document, elementTorneo);
+
+                                Element elementCombates = document.createElement("Combates");
+                                //Cogemos el torneo actual y recorremos su lista de combates
+                                Torneo torneo = entrenador.getTorneosDelEntrenador().get(i);
+                                for (int x = 0; x < torneo.getCombatesDelTorneo().size(); x++) {
+                                    CombateDTO combateActual = torneo.getCombatesDelTorneo().get(x);
+
+                                    Element elementCombate = document.createElement("combate");
+                                    String idCombate = String.valueOf(combateActual.getId());
+                                    String fechaCombate = String.valueOf(combateActual.getFecha());
+
+                                    CrearElementoXML("id", idCombate, document, elementCombate);
+                                    CrearElementoXML("fecha", fechaCombate, document, elementCombate);
+                                    CrearElementoXML("victoria","true", document, elementCombate);
+
+                                    elementCombates.appendChild(elementCombate);
+                                }
+                                elementTorneo.appendChild(elementCombates);
 
                                 //APPEND A CADA ELEMENTO AL PADRE, LA ETIQUETA TORNEOS
                                 elementTorneos.appendChild(elementTorneo);

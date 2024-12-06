@@ -130,6 +130,7 @@ public class EntrenadoresServicio {
     }
 
     public Entrenador mapearEntrenadorDtoAEntrenador (EntrenadorDTO entrenador, CarnetDTO carnet) {
+        //COMBATES DTO FALTAN EN EL MAPEO
         Carnet carnetEntrenador = carnetServicio.mapearCarnetDtoACarnet(carnet);
         List<Integer> idDeLosTorneos = entrenadorTorneoDAOImplementacion.obtenerTorneosDeUnEntrenador(entrenador.getId());
 

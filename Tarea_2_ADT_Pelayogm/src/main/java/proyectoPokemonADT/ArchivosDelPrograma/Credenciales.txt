@@ -3,7 +3,5 @@ aniceto aniceto AdministradorTorneos 2
 jorge jorge Entrenador 5
 gus gus Entrenador 6
 fran fran Entrenador 7
-paco paco Entrenador 8tomas tomas Entrenador 9
-fran garonda garonda Entrenador 10
-Garonda Garonda Entrenador 11
-pepe pepe Entrenador 12
+paco paco Entrenador 8
+diego diego Entrenador 9juna juna Entrenador 10
