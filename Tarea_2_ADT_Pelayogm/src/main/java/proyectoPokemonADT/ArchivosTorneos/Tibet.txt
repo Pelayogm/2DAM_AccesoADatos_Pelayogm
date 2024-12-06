@@ -1,0 +1,7 @@
+Nombre Torneo: Tibet
+Region Torneo: T
+Combates del torneo
+Combate 0: 2024-12-06 | 8
+Combate 1: 2024-12-06 | 9
+Combate 2: 2024-12-06 | 10
+Puntos del torneo: 100.0

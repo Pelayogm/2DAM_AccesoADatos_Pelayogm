@@ -4,4 +4,8 @@ jorge jorge Entrenador 5
 gus gus Entrenador 6
 fran fran Entrenador 7
 paco paco Entrenador 8
-diego diego Entrenador 9juna juna Entrenador 10
+diego diego Entrenador 9
+luis luis Entrenador 10
+dani dani Entrenador 11
+sergio sergio Entrenador 12
+tomas tomas Entrenador 13
