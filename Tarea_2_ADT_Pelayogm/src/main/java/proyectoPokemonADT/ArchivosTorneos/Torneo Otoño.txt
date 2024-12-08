@@ -1,0 +1,7 @@
+Nombre Torneo: Torneo Otoño
+Region Torneo: C
+Combates del torneo
+Combate 0: 2023-09-20 | 7
+Combate 1: 2023-09-22 | 8
+Combate 2: 2023-09-25 | 9
+Puntos del torneo: 100.0

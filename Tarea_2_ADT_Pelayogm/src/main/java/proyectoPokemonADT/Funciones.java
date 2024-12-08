@@ -163,7 +163,8 @@ public class Funciones {
                             //Se crean los 3 combates del Torneo, vacios.
                             List<CombateDTO> combatesDelTorneo = torneo.getCombatesDelTorneo();
                             for (int i = 1; i < 4; i++) {
-                                CombateDTO combate = new CombateDTO(LocalDate.now(),idCombate + 1, valor);
+                                idCombate +=1;
+                                CombateDTO combate = new CombateDTO(LocalDate.now(),idCombate, valor);
                                 combatesDelTorneo.add(combate);
                             }
                             torneo.setCombatesDelTorneo(combatesDelTorneo);

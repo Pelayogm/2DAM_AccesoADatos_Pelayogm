@@ -27,7 +27,7 @@ public class Main {
 //_____________________________________________
 //DESLIAR EL CÓDIGO / Comentar el código
 //ESTRUCTURAR EN PAQUETES (SEMI-COMPLETADO)
-//Corregir script de la BD
+//Corregir script de la BD (COMPLETADO)
 
 //TAREA 2
 //TorneoDTO lleva una ListaDeCombates que se tiene que hacer en torneoServices (COMPLETADA)

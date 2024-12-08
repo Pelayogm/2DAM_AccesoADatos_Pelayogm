@@ -1,7 +1,7 @@
 Nombre Torneo: Portugal
 Region Torneo: P
 Combates del torneo
-Combate 0: 2024-12-05 | 5
-Combate 1: 2024-12-05 | 6
-Combate 2: 2024-12-05 | 7
+Combate 0: 2024-12-08 | 10
+Combate 1: 2024-12-08 | 11
+Combate 2: 2024-12-08 | 12
 Puntos del torneo: 100.0

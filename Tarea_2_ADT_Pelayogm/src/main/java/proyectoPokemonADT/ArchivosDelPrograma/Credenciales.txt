@@ -4,9 +4,6 @@ jorge jorge Entrenador 5
 gus gus Entrenador 6
 fran fran Entrenador 7
 paco paco Entrenador 8
-diego diego Entrenador 9
-luis luis Entrenador 10
-dani dani Entrenador 11
-sergio sergio Entrenador 12
-tomas tomas Entrenador 13
-gonzalo gonzalo Entrenador 14
+garonda garonda AdministradorTorneos 9
+pol pol AdministradorTorneos 10
+opi opi Entrenador 11

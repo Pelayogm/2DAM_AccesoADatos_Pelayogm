@@ -1,0 +1,5 @@
+Nombre Torneo: Paella
+Region Torneo: K
+Combates del torneo
+Combate 0: 2024-12-08 | 13
+Puntos del torneo: 100.0

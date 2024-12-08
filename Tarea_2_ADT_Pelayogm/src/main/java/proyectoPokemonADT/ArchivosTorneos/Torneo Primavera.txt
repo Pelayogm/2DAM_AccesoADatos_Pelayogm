@@ -1,0 +1,7 @@
+Nombre Torneo: Torneo Primavera
+Region Torneo: A
+Combates del torneo
+Combate 0: 2023-04-10 | 1
+Combate 1: 2023-04-12 | 2
+Combate 2: 2023-04-14 | 3
+Puntos del torneo: 50.0
