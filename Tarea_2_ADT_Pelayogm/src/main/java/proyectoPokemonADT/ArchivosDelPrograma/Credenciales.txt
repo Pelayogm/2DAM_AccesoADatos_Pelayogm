@@ -7,3 +7,7 @@ paco paco Entrenador 8
 garonda garonda AdministradorTorneos 9
 pol pol AdministradorTorneos 10
 opi opi Entrenador 11
+tom tom Entrenador 12
+ramon ramon Entrenador 13
+paquito paco Entrenador 14
+alberto alberto Entrenador 15

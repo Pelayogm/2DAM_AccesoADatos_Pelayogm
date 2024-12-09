@@ -1,0 +1,7 @@
+Nombre Torneo: polilla
+Region Torneo: a
+Combates del torneo
+Combate 0: 2024-12-08 | 13
+Combate 1: 2024-12-08 | 14
+Combate 2: 2024-12-08 | 15
+Puntos del torneo: 100.0
