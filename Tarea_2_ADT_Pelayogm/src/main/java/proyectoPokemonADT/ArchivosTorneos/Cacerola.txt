@@ -1,0 +1,7 @@
+Nombre Torneo: Cacerola
+Region Torneo: I
+Combates del torneo
+Combate 0: 2024-12-09 | 16
+Combate 1: 2024-12-09 | 17
+Combate 2: 2024-12-09 | 18
+Puntos del torneo: 100.0
