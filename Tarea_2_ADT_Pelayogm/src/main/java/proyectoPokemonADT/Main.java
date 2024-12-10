@@ -25,14 +25,22 @@ public class Main {
 
 //ERRORES / REVISAR
 //_____________________________________________
+//EL PROGRAMA NO TIENE QUE CERRARSE EN SITUACIONES COMO (TORNEO LLENO)
+//CUANDO UN TORNEO QUE SE EXPORTA ESTA LLENO DEBE EXPORTAR LOS DATOS DE LOS ENTRENADORES
+//HACER CLASE MENU, PARA LLAMARLO
+//METER EN UN METODO EL CREAR TORNEO
 //DESLIAR EL CÓDIGO / Comentar el código
 //ESTRUCTURAR EN PAQUETES (SEMI-COMPLETADO)
-//Corregir script de la BD (COMPLETADO)
+//Hacer flush en el exportar
+
+
 
 //TAREA 2
 //TorneoDTO lleva una ListaDeCombates que se tiene que hacer en torneoServices (COMPLETADA)
 //ESTRUCTURA DAO (COMPLETADA)
 //Coger datos del torneo en la base de datos (Apuntarse a un torneo) (COMPLETADO)
+//Corregir script de la BD (COMPLETADO)
+//Añadir los combates al XML (COMPLETADO)
 
 //DUDAS
 //_____________________________________________________________________________________
@@ -44,8 +52,6 @@ public class Main {
 //El torneo se exporta en .txt y se sale por pantalla y se guarda el id del torneo Creado con el adminDeTorneos. (COMPLETADO)
 
 //En un torneo un entrenador solo puede combatir 2 veces y en un torneo hay 3 combates. (COMPLETADO - REVISAR)
-//Hacer flush en el exportar
-//Añadir los combates al XML (COMPLETADO)
 
 //TorneoDTO tiene listaDeParticipantes
 
