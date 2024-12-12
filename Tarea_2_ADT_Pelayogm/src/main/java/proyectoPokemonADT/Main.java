@@ -23,6 +23,7 @@ public class Main {
 
 //En casa es root-root y en clase es root-
 
+
 //ERRORES / REVISAR
 //_____________________________________________
 //EL PROGRAMA NO TIENE QUE CERRARSE EN SITUACIONES COMO (TORNEO LLENO)
@@ -52,5 +53,4 @@ public class Main {
 //En un torneo un entrenador solo puede combatir 2 veces y en un torneo hay 3 combates. (COMPLETADO - REVISAR)
 
 //TorneoDTO tiene listaDeParticipantes
-
 
