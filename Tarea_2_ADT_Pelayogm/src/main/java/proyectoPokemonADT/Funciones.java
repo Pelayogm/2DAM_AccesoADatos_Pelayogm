@@ -3,7 +3,9 @@ import proyectoPokemonADT.ArchivosDelPrograma.ConexionBaseDeDatos;
 import proyectoPokemonADT.Credenciales.Credenciales;
 import proyectoPokemonADT.Administradores.*;
 import proyectoPokemonADT.DTO.CombateDTO;
+import proyectoPokemonADT.DTO.GimnasioDTO;
 import proyectoPokemonADT.DTO.TorneoDTO;
+import proyectoPokemonADT.Entidades.GimnasioEntidad;
 import proyectoPokemonADT.Servicios.CombateServicio;
 import proyectoPokemonADT.Servicios.TorneosServicio;
 
@@ -126,6 +128,17 @@ public class Funciones {
                         System.out.println("¿Contraseña del administrador de Torneos?");
                         String contrasenaAdminTorneos = scanner.next();
 
+                        System.out.println("¿Tipo del gimnasio?");
+                        String tipoGimnasio = scanner.next();
+                        System.out.println("¿Nivel del gimnasio?");
+                        int nivelGimnasio = 0;
+                        try {
+                            nivelGimnasio = scanner.nextInt();
+                        } catch (Exception e) {
+                            System.out.println("Dato erroneo. Volviendo a la creacion del torneo");
+                            CrearTorneo(usuario);
+                        }
+
                         System.out.println("¿Son correctos estos datos? 1. Sí | 2. No");
                         int opcionUsuario = scanner.nextInt();
                         if (opcionUsuario == 2) {
@@ -171,7 +184,9 @@ public class Funciones {
 
                             //Y esto sirve para convertir el objeto Torneo en DTO y interactuar con la BD.
                             TorneoDTO torneoDTO = torneosServicio.mapearTorneoATorneoDto(torneo, adminTorneos.getIdUsuario());
-                            torneosServicio.crearTorneo(torneoDTO);
+                            GimnasioDTO gimnasioDTO = new GimnasioDTO(torneoDTO.getId(), torneoDTO.getNombre(), tipoGimnasio, nivelGimnasio, torneoDTO);
+                            GimnasioEntidad gimnasioEntidad = torneosServicio.mapearGimnasioDtoAEntidad(gimnasioDTO);
+                            torneosServicio.crearTorneo(torneoDTO, gimnasioEntidad);
 
                             GestorArchivosDat.exportarTorneo(file_torneos, torneo);
                             System.out.println("Torneo creado");
@@ -209,7 +224,9 @@ public class Funciones {
 
                             //Y ahora se añade a la BD el nuevo torneo creado.
                             TorneoDTO torneoDTO = torneosServicio.mapearTorneoATorneoDto(torneo, adminTorneos.getIdUsuario());
-                            torneosServicio.crearTorneo(torneoDTO);
+                            GimnasioDTO gimnasioDTO = new GimnasioDTO(torneoDTO.getId(), torneoDTO.getNombre(), tipoGimnasio, nivelGimnasio, torneoDTO);
+                            GimnasioEntidad gimnasioEntidad = torneosServicio.mapearGimnasioDtoAEntidad(gimnasioDTO);
+                            torneosServicio.crearTorneo(torneoDTO, gimnasioEntidad);
 
                             GestorArchivosDat.exportarTorneo(file_torneos, torneo);
                             System.out.println("Torneo creado");

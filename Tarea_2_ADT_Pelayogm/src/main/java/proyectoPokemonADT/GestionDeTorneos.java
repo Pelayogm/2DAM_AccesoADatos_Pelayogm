@@ -1,6 +1,7 @@
 package proyectoPokemonADT;
 
 import proyectoPokemonADT.Administradores.AdminTorneos;
+import proyectoPokemonADT.DTO.GimnasioDTO;
 import proyectoPokemonADT.DTO.TorneoDTO;
 import proyectoPokemonADT.FicherosDeTexto.TorneoTXT;
 import proyectoPokemonADT.Servicios.TorneosServicio;
@@ -49,6 +50,8 @@ public class GestionDeTorneos {
                 int opcionUsuario = scanner.nextInt();
                 try {
                     TorneoTXT.exportarTorneo(torneosDelAdmin.get(opcionUsuario));
+                    GimnasioDTO gimnasioDTO = torneosServicio.obtenerGimnasioPorId(torneosDelAdmin.get(opcionUsuario).getId());
+                    TorneoTXT.exportarGimnasio(gimnasioDTO);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

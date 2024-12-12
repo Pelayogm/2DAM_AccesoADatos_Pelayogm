@@ -1,10 +1,8 @@
 package proyectoPokemonADT.Servicios;
 
-import proyectoPokemonADT.DAO.CombateEntrenadorDAOImplementacion;
-import proyectoPokemonADT.DAO.EntrenadorTorneoDAOImplementacion;
-import proyectoPokemonADT.DAO.TorneoAdminDAOImplementacion;
-import proyectoPokemonADT.DAO.TorneoDAOImplementacion;
+import proyectoPokemonADT.DAO.*;
 import proyectoPokemonADT.DTO.CombateDTO;
+import proyectoPokemonADT.DTO.GimnasioDTO;
 import proyectoPokemonADT.DTO.TorneoDTO;
 import proyectoPokemonADT.Entidades.*;
 import proyectoPokemonADT.Torneo;
@@ -20,6 +18,7 @@ public class TorneosServicio {
     private static TorneoAdminDAOImplementacion torneoAdminDAOImplementacion;
     private static EntrenadorTorneoDAOImplementacion entrenadorTorneoDAOImplementacion;
     private static CombateEntrenadorDAOImplementacion combateEntrenadorDAOImplementacion;
+    private static GimnasioDAOImplementacion gimnasioDAOImplementacion;
     private static CombateServicio combateServicio;
     private static DataSource dataSource;
 
@@ -29,6 +28,7 @@ public class TorneosServicio {
         torneoAdminDAOImplementacion = TorneoAdminDAOImplementacion.getInstancia(dataSource);
         entrenadorTorneoDAOImplementacion = EntrenadorTorneoDAOImplementacion.getInstancia(dataSource);
         combateEntrenadorDAOImplementacion = CombateEntrenadorDAOImplementacion.getInstancia(dataSource);
+        gimnasioDAOImplementacion = GimnasioDAOImplementacion.getInstancia(dataSource);
     }
 
     public static TorneosServicio getInstancia (DataSource dataSource) {
@@ -38,7 +38,7 @@ public class TorneosServicio {
         return instancia;
     }
 
-    public void crearTorneo (TorneoDTO torneo) {
+    public void crearTorneo (TorneoDTO torneo, GimnasioEntidad gimnasioEntidad) {
         String codigoTorneo = String.valueOf(torneo.getCodRegion());
         TorneoEntidad torneoEntidad = new TorneoEntidad(torneo.getId(), torneo.getNombre(), codigoTorneo, torneo.getPuntosVictoria());
         TorneoAdminEntidad torneoAdminEntidad = mapearTorneoDTOATorneoAdminEntidad(torneo);
@@ -48,6 +48,7 @@ public class TorneosServicio {
             CombateDTO combate = torneo.getCombatesDelTorneo().get(i);
             combateServicio.crearCombate(combate);
         }
+        gimnasioDAOImplementacion.crearGimnasio(gimnasioEntidad);
     }
 
     public TorneoDTO obtenerTorneoPorId (int id) {
@@ -57,6 +58,11 @@ public class TorneosServicio {
         float puntosTorneo = (float) torneoEntidad.getPuntosVictoriaTorneo();
         int idAdminTorneo = torneoAdminDAOImplementacion.obtenerAdminTorneoPorId(id);
         return new TorneoDTO(torneoEntidad.getIdTorneo(), torneoEntidad.getNombreTorneo(), codigoTorneo, puntosTorneo, combatesDelTorneo, idAdminTorneo);
+    }
+
+    public GimnasioDTO obtenerGimnasioPorId (int id) {
+        GimnasioEntidad gimnasioEntidad = gimnasioDAOImplementacion.obtenerGimnasioPorId(id);
+        return mapearGimnasioEntidadADto(gimnasioEntidad);
     }
 
     public List<TorneoDTO> obtenerTodosLosTorneos () {
@@ -78,7 +84,7 @@ public class TorneosServicio {
     }
 
     public TorneoDTO actualizarTorneo (int id, TorneoDTO torneo) {
-        TorneoEntidad torneoEntidad = mapearDtoAEntidad(torneo);
+        TorneoEntidad torneoEntidad = mapearGimnasioDtoAEntidad(torneo);
         torneoDAOImplementacion.actualizarTorneo(torneoEntidad, id);
         return null;
     }
@@ -112,7 +118,16 @@ public class TorneosServicio {
         }
     }
 
-    public TorneoEntidad mapearDtoAEntidad (TorneoDTO torneo) {
+    public GimnasioEntidad mapearGimnasioDtoAEntidad(GimnasioDTO gimnasio) {
+        return new GimnasioEntidad(gimnasio.getIdGimnasio(), gimnasio.getNombreGimnasio(), gimnasio.getTipoGimnasio(), gimnasio.getNivelGimnasio());
+    }
+
+    public GimnasioDTO mapearGimnasioEntidadADto(GimnasioEntidad gimnasioEntidad) {
+        TorneoDTO torneoDTO = obtenerTorneoPorId(gimnasioEntidad.getIdGimnasio());
+        return new GimnasioDTO(gimnasioEntidad.getIdGimnasio(), gimnasioEntidad.getNombreGimnasio(), gimnasioEntidad.getTipoGimnasio(), gimnasioEntidad.getNivelGimnasio(), torneoDTO);
+    }
+
+    public TorneoEntidad mapearGimnasioDtoAEntidad(TorneoDTO torneo) {
         String idTorneo = String.valueOf(torneo.getCodRegion());
         return new TorneoEntidad(torneo.getId(), torneo.getNombre(),idTorneo, torneo.getPuntosVictoria());
     }
