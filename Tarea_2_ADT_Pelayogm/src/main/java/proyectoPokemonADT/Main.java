@@ -33,8 +33,6 @@ public class Main {
 //ESTRUCTURAR EN PAQUETES (SEMI-COMPLETADO)
 //Hacer flush en el exportar
 
-
-
 //TAREA 2
 //TorneoDTO lleva una ListaDeCombates que se tiene que hacer en torneoServices (COMPLETADA)
 //ESTRUCTURA DAO (COMPLETADA)

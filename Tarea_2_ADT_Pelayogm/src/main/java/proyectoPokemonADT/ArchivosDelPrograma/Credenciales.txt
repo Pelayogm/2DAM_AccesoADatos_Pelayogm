@@ -4,11 +4,3 @@ jorge jorge Entrenador 5
 gus gus Entrenador 6
 fran fran Entrenador 7
 paco paco Entrenador 8
-garonda garonda AdministradorTorneos 9
-pol pol AdministradorTorneos 10
-opi opi Entrenador 11
-tom tom Entrenador 12
-ramon ramon Entrenador 13
-paquito paco Entrenador 14
-alberto alberto Entrenador 15
-donald donald Entrenador 16
