@@ -8,7 +8,6 @@ import java.time.LocalDate;
 public class Carnet {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private final Long idCarnet;
 
     @Column(name = "fechaExpedicion", nullable = false)
@@ -20,8 +19,8 @@ public class Carnet {
     @Column(name = "numeroVictorias", nullable = false)
     private Integer numeroVictorias;
 
-    @OneToOne(mappedBy = "entrenador")
-    private Entrenador entrenador;
+    //@OneToOne(mappedBy = "entrenador")
+    //private Entrenador entrenador;
 
     public Carnet(Long idCarnet, LocalDate fechaExpedicion, Float puntosCarnet, Integer numeroVictorias) {
         this.idCarnet = idCarnet;

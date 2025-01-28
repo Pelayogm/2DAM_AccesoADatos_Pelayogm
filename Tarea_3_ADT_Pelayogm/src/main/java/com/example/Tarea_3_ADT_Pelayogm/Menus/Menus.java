@@ -1,12 +1,19 @@
 package com.example.Tarea_3_ADT_Pelayogm.Menus;
 
+import com.example.Tarea_3_ADT_Pelayogm.Administradores.Admin;
 import com.example.Tarea_3_ADT_Pelayogm.Entidades.Entrenador;
 import com.example.Tarea_3_ADT_Pelayogm.Entidades.Usuario;
+import com.example.Tarea_3_ADT_Pelayogm.Repositorios.TorneoRepositorio;
+import com.example.Tarea_3_ADT_Pelayogm.Servicios.TorneoServiciosImplementacion;
 import com.example.Tarea_3_ADT_Pelayogm.XML.LectorXML;
 
 import java.util.Scanner;
 
 public class Menus {
+
+    static TorneoRepositorio torneoRepositorio;
+    static TorneoServiciosImplementacion torneoServiciosImplementacion = new TorneoServiciosImplementacion(torneoRepositorio);
+
 
     public static void menuInicial() {
         Scanner scanner = new Scanner(System.in);
@@ -56,7 +63,8 @@ public class Menus {
             } else {
                 if (LectorXML.comprobarNacionalidadConXML(nacionalidadEntrenador)){
                     Entrenador entrenador = new Entrenador(idUsuario, nombreUsuario, nacionalidadEntrenador);
-                    //Implementar los torneos
+                    //MOSTRAR TORNEOS
+
                     return entrenador;
                 } else {
                     System.out.println("El país introducido no es valido.");
@@ -90,6 +98,29 @@ public class Menus {
             }
             System.out.println("1. Iniciar Sesión | 2. Registrarse | 3. Salir ");
             opcionUsuario = scanner.nextInt();
+        }
+
+    }
+
+    public static void menuAdministrador(Admin admin) {
+        Scanner entrada = new Scanner(System.in);
+        System.out.println("Bienvenido Administrador");
+        System.out.println("1. Crear un Nuevo Torneo | 2. Cerrar Sesión");
+        try {
+            int opcionAdmin = entrada.nextInt();
+            while (opcionAdmin < 4) {
+                switch (opcionAdmin) {
+                    case 1: Funciones.CrearTorneo(admin);
+                    case 2: Funciones.CerrarSesion(admin);
+                    case 3:
+                        System.out.println("Texto de prueba");
+                }
+                opcionAdmin = entrada.nextInt();
+            }
+
+        } catch (Exception e) {
+            System.out.println("Dato no valido, vuelva a iniciar sesion");
+            Sesion.IniciarSesion();
         }
 
     }

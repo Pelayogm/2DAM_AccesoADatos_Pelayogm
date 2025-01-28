@@ -6,8 +6,7 @@ import jakarta.persistence.*;
 @Table(name = "entrenador")
 public class Entrenador {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private final Long idEntrenador;
+    private final long idEntrenador;
 
     @Column(name = "nombreEntrenador", nullable = false)
     private final String nombreEntrenador;
@@ -15,8 +14,8 @@ public class Entrenador {
     @Column(name = "nacionalidadEntrenador", nullable = false)
     private final String nacionalidadEntrenador;
 
-    @OneToOne(mappedBy = "entrenador")
-    private Carnet carnetEntrenador;
+    //@OneToOne(mappedBy = "entrenador")
+    //private Carnet carnetEntrenador;
 
     public Entrenador(Long idEntrenador, String nombreEntrenador, String nacionalidadEntrenador) {
         this.idEntrenador = idEntrenador;

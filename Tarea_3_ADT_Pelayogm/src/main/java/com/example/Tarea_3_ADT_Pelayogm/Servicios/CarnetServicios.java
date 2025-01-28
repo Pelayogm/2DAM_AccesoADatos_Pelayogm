@@ -1,4 +1,18 @@
 package com.example.Tarea_3_ADT_Pelayogm.Servicios;
 
-public class CarnetServicios {
+import com.example.Tarea_3_ADT_Pelayogm.Entidades.Carnet;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Optional;
+
+@Service
+public interface CarnetServicios {
+
+    void insertarCarnet(Carnet carnet);
+    public List<Carnet> obtenerTodosLosCarnets();
+    Optional<Carnet> obtenerCarnetPorId(long id);
+    void actualizarCarnet(Carnet carnet);
+    void eliminarCarnet(long id);
+
 }
