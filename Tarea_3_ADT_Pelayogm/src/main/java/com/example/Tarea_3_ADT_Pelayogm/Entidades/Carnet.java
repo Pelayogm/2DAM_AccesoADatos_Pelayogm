@@ -19,8 +19,9 @@ public class Carnet {
     @Column(name = "numeroVictorias", nullable = false)
     private Integer numeroVictorias;
 
-    //@OneToOne(mappedBy = "entrenador")
-    //private Entrenador entrenador;
+    @OneToOne
+    @JoinColumn(name = "idCarnet", nullable = false)
+    private Entrenador entrenador;
 
     public Carnet(Long idCarnet, LocalDate fechaExpedicion, Float puntosCarnet, Integer numeroVictorias) {
         this.idCarnet = idCarnet;

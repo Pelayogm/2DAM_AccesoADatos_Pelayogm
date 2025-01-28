@@ -11,10 +11,10 @@ public class Sesion {
 
     public static void IniciarSesion() {
         Scanner entrada = new Scanner(System.in);
-        ArrayList<String> listaContrasenas = new ArrayList<>();
+        ArrayList<String> listaContrasenas;
         File file;
 
-        System.out.println("Iniciar sesión en el sistema");
+        System.out.println("Iniciar sesión en el sistema.");
         try {
             System.out.println("¿Usuario?");
                 String nombreUsuario = entrada.nextLine();
@@ -38,14 +38,12 @@ public class Sesion {
                            if (nombreUsuario.equals(listaContrasenas.get(i)) && contrasenaUsuario.equals(listaContrasenas.get(i + 1)) && listaContrasenas.get(i + 2).equals("Administrador")) {
                                Admin admin = new Admin(1);
                                Menus.menuAdministrador(admin);
-                               //Menu admin
                            }
 
                            if (nombreUsuario.equals(listaContrasenas.get(i)) && contrasenaUsuario.equals(listaContrasenas.get(i + 1)) && listaContrasenas.get(i + 2).equals("AdministradorTorneos")) {
                                int idAdminTorneos = Integer.parseInt(listaContrasenas.get(i + 3));
-                               AdminTorneos adminTorneos = new AdminTorneos(idAdminTorneos);
-                               Menus.menuEntrenador(adminTorneos);
-                               //Menu adminTorneos
+                               AdminTorneos adminTorneos = new AdminTorneos(nombreUsuario, idAdminTorneos);
+                               Menus.menuAdminTorneos(adminTorneos);
                            }
 
                            if (nombreUsuario.equals(listaContrasenas.get(i)) && contrasenaUsuario.equals(listaContrasenas.get(i + 1)) && listaContrasenas.get(i + 2).equals("Entrenador")) {
@@ -54,26 +52,38 @@ public class Sesion {
                                    Menus.menuInicial();
                                    //Menu Entrenador
                                } catch (Exception e) {
-                                   System.out.println("Problemas aqui");
+                                   System.out.println("Problemas aquí.");
                                }
                            }
                        }
+                   } else {
+                       System.out.println("Las credenciales aportadas no están registradas.");
+                       System.out.println("¿Quieres registrarte? 1. Sí | 2. No");
+                       try {
+                           int eleccionUsuario = entrada.nextInt();
+                           if (eleccionUsuario == 1) {
+                               Sesion.IniciarSesion();
+                           } else {
+                               Menus.menuInicial();
+                           }
+                       } catch (Exception e) {
+                           System.out.println("La entrada no es correcta. Volviendo al menú inicial...");
+                           Menus.menuInicial();
+                       }
                    }
                } catch (Exception e) {
-                   System.out.println("Error interno (Problemas con el fichero de contraseñas)");
+                   System.out.println("Error interno (Problemas con el fichero de contraseñas).");
                }
-
-
         } catch (Exception e) {
-            System.out.println("Por favor vuelve a iniciar sesión, los datos introducidos no son validos");
+            System.out.println("Por favor vuelve a iniciar sesión, los datos introducidos no son validos.");
             Sesion.IniciarSesion();
         }
     }
 
     public static void CrearCuenta() {
-        System.out.println("Registro en el sistema");
+        System.out.println("Registro en el sistema.");
         Scanner entrada = new Scanner(System.in);
-        ArrayList<String> listaContrasenas = new ArrayList<>();
+        ArrayList<String> listaContrasenas;
         File file;
 
         try {
@@ -92,13 +102,30 @@ public class Sesion {
                     String rolUsuario = "Entrenador";
                     String idUsuarioString = Long.toString(idUsuario);
                     Menus.crearEntrenador(nombreUsuario, idUsuario);
+                    Credenciales.escribirFichero(file,nombreUsuario, contrasenaUsuario,rolUsuario, idUsuarioString);
+                } else {
+                    System.out.println("Estas credenciales ya se encuentran registradas en el sistema");
+                    System.out.println("¿Desea iniciar sesión? 1. Si | 2. No");
+                    try {
+                        int eleccionUsuario = entrada.nextInt();
+                        if (eleccionUsuario == 1) {
+                           Sesion.IniciarSesion();
+                        } else {
+                            Menus.menuInicial();
+                        }
+                    } catch (Exception e) {
+                        System.out.println("Dato no valido, volviendo al menu incial");
+                        Menus.menuInicial();
+                    }
                 }
             } catch (Exception e) {
-                e.printStackTrace();
+                System.out.println("Error en la comprobacion de credenciales");
+                Menus.menuInicial();
             }
 
         } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println("Datos no valido");
+            Sesion.CrearCuenta();
         }
     }
 

@@ -1,8 +1,11 @@
 package com.example.Tarea_3_ADT_Pelayogm.Menus;
 
 import com.example.Tarea_3_ADT_Pelayogm.Administradores.Admin;
+import com.example.Tarea_3_ADT_Pelayogm.Administradores.AdminTorneos;
 import com.example.Tarea_3_ADT_Pelayogm.Entidades.Entrenador;
 import com.example.Tarea_3_ADT_Pelayogm.Entidades.Usuario;
+import com.example.Tarea_3_ADT_Pelayogm.Funciones.Exportar;
+import com.example.Tarea_3_ADT_Pelayogm.Funciones.GestionTorneos;
 import com.example.Tarea_3_ADT_Pelayogm.Repositorios.TorneoRepositorio;
 import com.example.Tarea_3_ADT_Pelayogm.Servicios.TorneoServiciosImplementacion;
 import com.example.Tarea_3_ADT_Pelayogm.XML.LectorXML;
@@ -118,6 +121,30 @@ public class Menus {
                 opcionAdmin = entrada.nextInt();
             }
 
+        } catch (Exception e) {
+            System.out.println("Dato no valido, vuelva a iniciar sesion");
+            Sesion.IniciarSesion();
+        }
+
+    }
+
+    public static void menuAdminTorneos (AdminTorneos adminTorneos) {
+        Scanner entrada = new Scanner(System.in);
+        System.out.println("Bienvenido " +  adminTorneos.getNombreAdminTorneo());
+        System.out.println("1. Exportar Torneo | 2. Inscribir entrenador | 3. Pelear | 4. Salir");
+        try {
+            int opcionAdmin = entrada.nextInt();
+            while (opcionAdmin < 6) {
+                switch (opcionAdmin) {
+                    case 1: Exportar.ExportarTorneo(adminTorneos);
+                    case 2: GestionTorneos.inscribirEntrenador();
+                    case 3: GestionTorneos.pelear();
+                    case 4: Funciones.CerrarSesion(adminTorneos);
+                    case 5:
+                        System.out.println("Texto de prueba");
+                }
+                opcionAdmin = entrada.nextInt();
+            }
         } catch (Exception e) {
             System.out.println("Dato no valido, vuelva a iniciar sesion");
             Sesion.IniciarSesion();

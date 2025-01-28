@@ -20,7 +20,7 @@ public class Tarea3AdtPelayogmApplication {
 // - Añadir idEntrenador1 e idEntrenador2
 
 //Clase Sesion
-// - Hacer el metodo IniciarSesion() y si no hay cuenta notificar
+// - Hacer el metodo IniciarSesion() y si no hay cuenta notificar (COMPLETADO)
 
 //Clase Menus
 // - Acabar el metodo crearEntrenador()
@@ -29,13 +29,11 @@ public class Tarea3AdtPelayogmApplication {
 
 //Clase Funciones
 // - Hacer el exportarCarnet()
+// - Hacer el exportarTorneo()
 
 //Repositorios
 // - Hacer el metodo buscarCombatePorIdTorneo()
 
 //Entidades
 //Hacer las relaciones (ManyToMany, ManyToOne...)
-// Da error el mapeo de EntrenadorYCarnet
-
-//Clase Exportar
-// - Hacer el metodo ExportarCarnet()
+// Da error el mapeo de EntrenadorYCarnet (CORREGIDO)

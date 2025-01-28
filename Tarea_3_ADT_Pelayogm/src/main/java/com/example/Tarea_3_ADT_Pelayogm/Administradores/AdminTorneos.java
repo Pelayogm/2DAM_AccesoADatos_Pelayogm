@@ -14,8 +14,10 @@ public class AdminTorneos extends Usuario implements Serializable {
         setEstadoSesion(true);
     }
 
-    public AdminTorneos(long idUsuario) {
+    public AdminTorneos(String nombreAdminTorneo, int idUsuario) {
+        this.nombreAdminTorneo = nombreAdminTorneo;
         this.idUsuario = idUsuario;
+        setEstadoSesion(true);
     }
 
     public AdminTorneos(String contrasenaAdminTorneo, String nombreAdminTorneo, long idUsuario) {
@@ -33,5 +35,9 @@ public class AdminTorneos extends Usuario implements Serializable {
 
     public long getIdUsuario() {
         return idUsuario;
+    }
+
+    public String getNombreAdminTorneo() {
+        return nombreAdminTorneo;
     }
 }

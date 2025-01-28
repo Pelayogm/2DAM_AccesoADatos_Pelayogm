@@ -1,2 +1,3 @@
 admin admin Administrador 1
 aniceto aniceto AdministradorTorneos 2
+gus gus Entrenador 3

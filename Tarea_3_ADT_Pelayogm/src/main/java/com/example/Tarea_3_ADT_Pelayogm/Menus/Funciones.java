@@ -20,7 +20,7 @@ public class Funciones {
                     usuario.setEstadoSesion(false);
                     Sesion.IniciarSesion();
                 } else {
-                    Menus.menuInicial();
+                    System.exit(0);
                     return false;
                 }
             } catch (Exception e) {
