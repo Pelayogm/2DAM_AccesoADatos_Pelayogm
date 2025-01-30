@@ -105,7 +105,6 @@ public class Menus {
                 } else {
                     System.out.println("Cerrando Sesión");
                     funciones.CerrarSesion(usuario);
-                    break;
                 }
             } catch (Exception e) {
                 System.out.println("Opción Invalida, cerrando sesión");

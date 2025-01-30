@@ -29,6 +29,7 @@ public class Entrenador extends Usuario {
     private List<Torneo> listaTorneos;
 
     public Entrenador(Long idEntrenador, String nombreEntrenador, String nacionalidadEntrenador, Carnet carnet) {
+        super.setEstadoSesion(true);
         this.idEntrenador = idEntrenador;
         this.nombreEntrenador = nombreEntrenador;
         this.nacionalidadEntrenador = nacionalidadEntrenador;
@@ -36,7 +37,7 @@ public class Entrenador extends Usuario {
     }
 
     public Entrenador() {
-
+        setEstadoSesion(true);
     }
 
     public Long getIdEntrenador() {
