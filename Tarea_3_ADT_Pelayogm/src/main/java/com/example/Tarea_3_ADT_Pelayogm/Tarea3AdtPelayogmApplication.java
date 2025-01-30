@@ -22,6 +22,8 @@ public class Tarea3AdtPelayogmApplication implements CommandLineRunner {
 
 }
 
+//En clase root- y en casa root-root
+
 //NOTAS.
 
 //Clase Combate
@@ -50,4 +52,4 @@ public class Tarea3AdtPelayogmApplication implements CommandLineRunner {
 // - Tabla Torneo-Combate / Torneo-Entrenador
 
 //DUDAS
-// HACER SINGLETON PARA LA CONEXION E INTERCAMBIO CON LA BASE DE DATOS
+// HACER SINGLETON PARA LA CONEXION E INTERCAMBIO CON LA BASE DE DATOS (SOLUCIONADO)

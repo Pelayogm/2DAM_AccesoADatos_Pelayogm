@@ -1,6 +1,7 @@
 package com.example.Tarea_3_ADT_Pelayogm.Menus;
 
 import com.example.Tarea_3_ADT_Pelayogm.Administradores.Admin;
+import com.example.Tarea_3_ADT_Pelayogm.Credenciales.Credenciales;
 import com.example.Tarea_3_ADT_Pelayogm.Entidades.Usuario;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -68,6 +69,13 @@ public class Funciones {
                             if (confirmacionUsuario == 2) {
                                 CrearTorneo(usuario);
                             }
+                            file = new File("src/main/java/com/example/Tarea_3_ADT_Pelayogm/ArchivosDelPrograma", "Credenciales.txt");
+                            if (!Credenciales.comprobarCredenciales(usuarioAdminTorneos, contrasenaAdminTorneos)) {
+                            //HACER SI NO HAY ADMINISTRADOR-TORNEOS Y CREAR TORNEO
+                            } else {
+
+                            }
+
                             //FICHERO CREDENCIALES ADMIN TORNEOS
 
                         } catch (Exception e) {

@@ -5,6 +5,7 @@ import com.example.Tarea_3_ADT_Pelayogm.Administradores.AdminTorneos;
 import com.example.Tarea_3_ADT_Pelayogm.Entidades.Carnet;
 import com.example.Tarea_3_ADT_Pelayogm.Entidades.Entrenador;
 import com.example.Tarea_3_ADT_Pelayogm.Entidades.Usuario;
+import com.example.Tarea_3_ADT_Pelayogm.Funciones.Exportar;
 import com.example.Tarea_3_ADT_Pelayogm.Servicios.CarnetServiciosImplementacion;
 import com.example.Tarea_3_ADT_Pelayogm.Servicios.EntrenadorServiciosImplementacion;
 import com.example.Tarea_3_ADT_Pelayogm.XML.LectorXML;
@@ -21,6 +22,8 @@ public class Menus {
     public Sesion sesion;
     @Autowired
     public Funciones funciones;
+    @Autowired
+    public Exportar exportar;
     @Autowired
     public EntrenadorServiciosImplementacion entrenadorServiciosImplementacion;
     @Autowired
@@ -77,7 +80,8 @@ public class Menus {
                     Entrenador entrenador = new Entrenador(idUsuario, nombreUsuario, nacionalidadEntrenador, carnet);
                     carnetServiciosImplementacion.insertarCarnet(carnet);
                     entrenadorServiciosImplementacion.insertarEntrenador(entrenador);
-                    //MOSTRAR TORNEOS
+
+                    //MOSTRAR TORNEOS DISPONIBLES
                     return entrenador;
                 } else {
                     System.out.println("El país introducido no es valido.");
@@ -99,9 +103,9 @@ public class Menus {
         while (opcionUsuario < 4) {
             try {
                 if (opcionUsuario == 1) {
-                    sesion.IniciarSesion();
+                    System.out.println("Opción deshabilitada");
                 } else if (opcionUsuario == 2) {
-                    sesion.CrearCuenta();
+                    exportar.ExportarCarnet(usuario);
                 } else {
                     System.out.println("Cerrando Sesión");
                     funciones.CerrarSesion(usuario);

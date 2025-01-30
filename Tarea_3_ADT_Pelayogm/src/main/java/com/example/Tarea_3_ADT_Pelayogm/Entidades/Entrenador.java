@@ -19,7 +19,6 @@ public class Entrenador extends Usuario {
     @OneToOne
     private Carnet carnetEntrenador;
 
-
     @ManyToMany
     @JoinTable(
             name = "entrenador_torneo",

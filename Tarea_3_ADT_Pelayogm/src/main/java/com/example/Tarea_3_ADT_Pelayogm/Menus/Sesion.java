@@ -82,7 +82,7 @@ public class Sesion {
                        try {
                            int eleccionUsuario = entrada.nextInt();
                            if (eleccionUsuario == 1) {
-                               IniciarSesion();
+                               CrearCuenta();
                            } else {
                                menus.menuInicial();
                            }
@@ -117,12 +117,17 @@ public class Sesion {
             listaContrasenas = Credenciales.getCredenciales();
             try {
                 if (!Credenciales.comprobarCredenciales(nombreUsuario, contrasenaUsuario)) {
+                    //Creación del usuario, para el fichero de credenciales.
                     int ultimoId = Integer.parseInt(listaContrasenas.get(listaContrasenas.size() - 1));
                     long idUsuario = ultimoId + 1;
                     String rolUsuario = "Entrenador";
                     String idUsuarioString = Long.toString(idUsuario);
+                    //Llamada al método para crear un objeto entrenador.
                     menus.crearEntrenador(nombreUsuario, idUsuario);
+                    //Registrar al entrenador en el fichero de credenciales.
                     Credenciales.escribirFichero(file,nombreUsuario, contrasenaUsuario,rolUsuario, idUsuarioString);
+
+                    System.out.println("Entrenador creado con éxito");
                 } else {
                     System.out.println("Estas credenciales ya se encuentran registradas en el sistema");
                     System.out.println("¿Desea iniciar sesión? 1. Si | 2. No");

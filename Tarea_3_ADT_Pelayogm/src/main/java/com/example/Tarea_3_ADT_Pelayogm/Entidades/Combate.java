@@ -9,13 +9,13 @@ public class Combate {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private final int idCombate;
+    private int idCombate;
 
     @Column(name = "fechaCombate")
-    private final Date fechaCombate;
+    private Date fechaCombate;
 
     @Column(name = "idTorneo")
-    private final int idTorneo;
+    private int idTorneo;
 
     @ManyToOne
     private Torneo torneo;
@@ -24,6 +24,10 @@ public class Combate {
         this.idCombate = idCombate;
         this.fechaCombate = fechaCombate;
         this.idTorneo = idTorneo;
+    }
+
+    public Combate() {
+
     }
 
     public int getIdCombate() {
@@ -36,5 +40,9 @@ public class Combate {
 
     public int getIdTorneo() {
         return idTorneo;
+    }
+
+    public Torneo getTorneo() {
+        return torneo;
     }
 }

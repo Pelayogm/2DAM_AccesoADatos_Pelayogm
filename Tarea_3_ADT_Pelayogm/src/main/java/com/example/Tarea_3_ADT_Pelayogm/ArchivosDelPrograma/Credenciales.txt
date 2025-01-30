@@ -2,3 +2,5 @@ admin admin Administrador 1
 aniceto aniceto AdministradorTorneos 2
 moris moris Entrenador 3
 younchimi modelito Entrenador 4
+jose jose Entrenador 5
+rodrigo rodrigo Entrenador 6
