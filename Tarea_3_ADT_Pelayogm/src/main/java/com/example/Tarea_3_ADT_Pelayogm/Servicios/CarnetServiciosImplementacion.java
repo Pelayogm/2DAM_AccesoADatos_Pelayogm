@@ -30,8 +30,8 @@ public class CarnetServiciosImplementacion implements CarnetServicios {
     }
 
     @Override
-    public Optional<Carnet> obtenerCarnetPorId(long id) {
-        return carnetRepositorio.findById(id);
+    public Carnet obtenerCarnetPorId(long id) {
+        return carnetRepositorio.findById(id).get();
     }
 
     @Override

@@ -8,10 +8,13 @@ import java.time.LocalDate;
 public class Carnet {
 
     @Id
-    private final Long idCarnet;
+    private Long idCarnet;
+
+    @OneToOne(mappedBy = "carnetEntrenador")
+    private Entrenador entrenador;
 
     @Column(name = "fechaExpedicion", nullable = false)
-    private final LocalDate fechaExpedicion;
+    private LocalDate fechaExpedicion;
 
     @Column(name = "puntosCarnet", nullable = false)
     private Float puntosCarnet;
@@ -19,15 +22,16 @@ public class Carnet {
     @Column(name = "numeroVictorias", nullable = false)
     private Integer numeroVictorias;
 
-    @OneToOne
-    @JoinColumn(name = "idCarnet", nullable = false)
-    private Entrenador entrenador;
 
     public Carnet(Long idCarnet, LocalDate fechaExpedicion, Float puntosCarnet, Integer numeroVictorias) {
         this.idCarnet = idCarnet;
         this.fechaExpedicion = fechaExpedicion;
         this.puntosCarnet = puntosCarnet;
         this.numeroVictorias = numeroVictorias;
+    }
+
+    public Carnet() {
+
     }
 
     public Long getIdCarnet() {

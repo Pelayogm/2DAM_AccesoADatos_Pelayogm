@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class EntrenadorServiciosImplementacion implements EntrenadorServicios{
+public class EntrenadorServiciosImplementacion implements EntrenadorServicios {
 
     @Autowired
     private final EntrenadorRepositorio entrenadorRepositorio;
@@ -20,7 +20,7 @@ public class EntrenadorServiciosImplementacion implements EntrenadorServicios{
 
     @Override
     public void insertarEntrenador(Entrenador entrenador) {
-        entrenadorRepositorio.save(entrenador);
+        entrenadorRepositorio.saveAndFlush(entrenador);
     }
 
     @Override
@@ -29,8 +29,8 @@ public class EntrenadorServiciosImplementacion implements EntrenadorServicios{
     }
 
     @Override
-    public Optional<Entrenador> obtenerEntrenadorPorId(Long idEntrenador) {
-        return entrenadorRepositorio.findById(idEntrenador);
+    public Entrenador obtenerEntrenadorPorId(long idEntrenador) {
+        return entrenadorRepositorio.findById(idEntrenador).get();
     }
 
     @Override

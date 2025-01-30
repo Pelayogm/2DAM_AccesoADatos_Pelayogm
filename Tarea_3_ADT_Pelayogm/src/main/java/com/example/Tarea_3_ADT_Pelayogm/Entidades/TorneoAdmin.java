@@ -10,14 +10,17 @@ import jakarta.persistence.Table;
 public class TorneoAdmin {
 
     @Id
-    private final int idTorneo;
+    private int idTorneo;
 
     @Column(name = "idAdminTorneos")
-    private final int idAdminTorneos;
+    private int idAdminTorneos;
 
     public TorneoAdmin(int idTorneo, int idAdminTorneos) {
         this.idTorneo = idTorneo;
         this.idAdminTorneos = idAdminTorneos;
+    }
+
+    public TorneoAdmin() {
     }
 
     public int getIdTorneo() {

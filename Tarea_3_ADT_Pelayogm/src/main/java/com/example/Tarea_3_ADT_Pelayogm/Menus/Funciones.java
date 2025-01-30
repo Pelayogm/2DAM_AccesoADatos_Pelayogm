@@ -2,13 +2,21 @@ package com.example.Tarea_3_ADT_Pelayogm.Menus;
 
 import com.example.Tarea_3_ADT_Pelayogm.Administradores.Admin;
 import com.example.Tarea_3_ADT_Pelayogm.Entidades.Usuario;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.io.File;
 import java.util.Scanner;
 
+@Component
 public class Funciones {
 
-    public static boolean CerrarSesion (Usuario usuario) {
+    @Autowired
+    public Menus menus;
+    @Autowired
+    public Sesion sesion;
+
+    public boolean CerrarSesion (Usuario usuario) {
         Scanner scanner = new Scanner(System.in);
         if (usuario.isEstadoSesion()) {
             System.out.println("SALIENDO DE LA SESIÓN...");
@@ -18,7 +26,7 @@ public class Funciones {
 
                 if (opcionUsuario == 1) {
                     usuario.setEstadoSesion(false);
-                    Sesion.IniciarSesion();
+                    sesion.IniciarSesion();
                 } else {
                     System.exit(0);
                     return false;
@@ -30,12 +38,11 @@ public class Funciones {
         } else {
             System.out.println("No hay ninguna sesión iniciada");
             return false;
-
         }
         return false;
     }
 
-    public static void CrearTorneo (Usuario usuario) {
+    public void CrearTorneo (Usuario usuario) {
         if (usuario.isUsuario()) {
             Scanner entrada = new Scanner(System.in);
             File file;
@@ -43,7 +50,7 @@ public class Funciones {
             System.out.println("1. Sí | 2. No");
                 int opcionUsuario = entrada.nextInt();
             if (opcionUsuario == 2) {
-                Menus.menuAdministrador((Admin) usuario);
+                menus.menuAdministrador((Admin) usuario);
             } else {
                 try {
                     System.out.println("¿Nombre del torneo?");
@@ -59,7 +66,7 @@ public class Funciones {
                         try {
                             int confirmacionUsuario = entrada.nextInt();
                             if (confirmacionUsuario == 2) {
-                                Funciones.CrearTorneo(usuario);
+                                CrearTorneo(usuario);
                             }
                             //FICHERO CREDENCIALES ADMIN TORNEOS
 
@@ -68,12 +75,12 @@ public class Funciones {
                         }
                 } catch (Exception e) {
                     System.out.println("Datos no validos");
-                    Funciones.CrearTorneo(usuario);
+                    CrearTorneo(usuario);
                 }
             }
         } else {
             System.out.println("No tienes los permisos para acceder a este menu");
-            Funciones.CerrarSesion(usuario);
+            CerrarSesion(usuario);
         }
     }
 

@@ -1,15 +1,23 @@
 package com.example.Tarea_3_ADT_Pelayogm;
 
 import com.example.Tarea_3_ADT_Pelayogm.Menus.Menus;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class Tarea3AdtPelayogmApplication {
+public class Tarea3AdtPelayogmApplication implements CommandLineRunner {
+	@Autowired
+	Menus menus;
 
 	public static void main(String[] args) {
 		SpringApplication.run(Tarea3AdtPelayogmApplication.class, args);
-		Menus.menuInicial();
+	}
+
+	@Override
+	public void run (String... arg0) {
+		menus.menuInicial();
 	}
 
 }
@@ -35,5 +43,11 @@ public class Tarea3AdtPelayogmApplication {
 // - Hacer el metodo buscarCombatePorIdTorneo()
 
 //Entidades
-//Hacer las relaciones (ManyToMany, ManyToOne...)
-// Da error el mapeo de EntrenadorYCarnet (CORREGIDO)
+// - Hacer las relaciones (ManyToMany, ManyToOne...)
+// - Da error el mapeo de EntrenadorYCarnet (CORREGIDO)
+// - Poner ganador del combate (idEntrenador)
+// - Poner ganador del torneo
+// - Tabla Torneo-Combate / Torneo-Entrenador
+
+//DUDAS
+// HACER SINGLETON PARA LA CONEXION E INTERCAMBIO CON LA BASE DE DATOS

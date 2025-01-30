@@ -17,6 +17,9 @@ public class Combate {
     @Column(name = "idTorneo")
     private final int idTorneo;
 
+    @ManyToOne
+    private Torneo torneo;
+
     public Combate(int idCombate, Date fechaCombate, int idTorneo) {
         this.idCombate = idCombate;
         this.fechaCombate = fechaCombate;

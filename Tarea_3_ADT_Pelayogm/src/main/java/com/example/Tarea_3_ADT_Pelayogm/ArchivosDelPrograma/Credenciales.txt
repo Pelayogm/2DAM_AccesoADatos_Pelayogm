@@ -1,3 +1,4 @@
 admin admin Administrador 1
 aniceto aniceto AdministradorTorneos 2
-gus gus Entrenador 3
+moris moris Entrenador 3
+younchimi modelito Entrenador 4

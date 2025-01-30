@@ -2,23 +2,31 @@ package com.example.Tarea_3_ADT_Pelayogm.Menus;
 
 import com.example.Tarea_3_ADT_Pelayogm.Administradores.Admin;
 import com.example.Tarea_3_ADT_Pelayogm.Administradores.AdminTorneos;
+import com.example.Tarea_3_ADT_Pelayogm.Entidades.Carnet;
 import com.example.Tarea_3_ADT_Pelayogm.Entidades.Entrenador;
 import com.example.Tarea_3_ADT_Pelayogm.Entidades.Usuario;
-import com.example.Tarea_3_ADT_Pelayogm.Funciones.Exportar;
-import com.example.Tarea_3_ADT_Pelayogm.Funciones.GestionTorneos;
-import com.example.Tarea_3_ADT_Pelayogm.Repositorios.TorneoRepositorio;
-import com.example.Tarea_3_ADT_Pelayogm.Servicios.TorneoServiciosImplementacion;
+import com.example.Tarea_3_ADT_Pelayogm.Servicios.CarnetServiciosImplementacion;
+import com.example.Tarea_3_ADT_Pelayogm.Servicios.EntrenadorServiciosImplementacion;
 import com.example.Tarea_3_ADT_Pelayogm.XML.LectorXML;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
+import java.time.LocalDate;
 import java.util.Scanner;
 
+@Component
 public class Menus {
 
-    static TorneoRepositorio torneoRepositorio;
-    static TorneoServiciosImplementacion torneoServiciosImplementacion = new TorneoServiciosImplementacion(torneoRepositorio);
+    @Autowired
+    public Sesion sesion;
+    @Autowired
+    public Funciones funciones;
+    @Autowired
+    public EntrenadorServiciosImplementacion entrenadorServiciosImplementacion;
+    @Autowired
+    public CarnetServiciosImplementacion carnetServiciosImplementacion;
 
-
-    public static void menuInicial() {
+    public void menuInicial() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Bienvenido Invitado.");
         System.out.println("¿Que desea hacer?");
@@ -28,27 +36,27 @@ public class Menus {
             while (opcionUsuario < 4) {
                 try {
                     if (opcionUsuario == 1) {
-                        Sesion.IniciarSesion();
+                        sesion.IniciarSesion();
                     } else if (opcionUsuario == 2) {
-                        Sesion.CrearCuenta();
+                        sesion.CrearCuenta();
                     } else {
                         System.out.println("Hasta la vista!");
                         System.exit(0);
                     }
                 } catch (Exception e) {
                     System.out.println("Opción Invalida");
-                    Menus.menuInicial();
+                    menuInicial();
                 }
                 System.out.println("1. Iniciar Sesión | 2. Registrarse | 3. Salir ");
                 opcionUsuario = scanner.nextInt();
             }
         } catch (Exception e) {
             System.out.println("Dato invalido");
-            Menus.menuInicial();
+            menuInicial();
         }
     }
 
-    public static Entrenador crearEntrenador(String nombreUsuario, long idUsuario) {
+    public Entrenador crearEntrenador(String nombreUsuario, long idUsuario) {
         Scanner entradaEntrenador = new Scanner(System.in);
         System.out.println("Registro en el sistema");
         System.out.println("Nombre elegido: " + nombreUsuario);
@@ -62,16 +70,18 @@ public class Menus {
 
         try {
             if (confirmacionUsuario == 2) {
-                Menus.crearEntrenador(nombreUsuario, idUsuario);
+                crearEntrenador(nombreUsuario, idUsuario);
             } else {
                 if (LectorXML.comprobarNacionalidadConXML(nacionalidadEntrenador)){
-                    Entrenador entrenador = new Entrenador(idUsuario, nombreUsuario, nacionalidadEntrenador);
+                    Carnet carnet = new Carnet(idUsuario, LocalDate.now(), 0F,0);
+                    Entrenador entrenador = new Entrenador(idUsuario, nombreUsuario, nacionalidadEntrenador, carnet);
+                    carnetServiciosImplementacion.insertarCarnet(carnet);
+                    entrenadorServiciosImplementacion.insertarEntrenador(entrenador);
                     //MOSTRAR TORNEOS
-
                     return entrenador;
                 } else {
                     System.out.println("El país introducido no es valido.");
-                    Menus.crearEntrenador(nombreUsuario, idUsuario);
+                    crearEntrenador(nombreUsuario, idUsuario);
                 }
             }
         } catch (Exception e) {
@@ -80,32 +90,34 @@ public class Menus {
         return null;
     }
 
-    public static void menuEntrenador(Usuario usuario) {
+    public void menuEntrenador(Entrenador usuario) {
         Scanner scanner = new Scanner(System.in);
+        System.out.println("Bienvenido " + usuario.getNombreEntrenador() + "!");
+        System.out.println("¿Que quieres hacer?");
+        System.out.println("1. Unirse a un torneo | 2. Exportar Carnet | 3. Cerrar Sesión");
         int opcionUsuario = scanner.nextInt();
-        System.out.println("¿Que desea hacer?");
-        System.out.println("1. Unirse a un torneo | 2. Exportar Carnet | 3. Cerrar Sesión ");
         while (opcionUsuario < 4) {
             try {
                 if (opcionUsuario == 1) {
-                    Sesion.IniciarSesion();
+                    sesion.IniciarSesion();
                 } else if (opcionUsuario == 2) {
-                    Sesion.CrearCuenta();
+                    sesion.CrearCuenta();
                 } else {
-                    System.out.println("Cerrando Sesion");
-                    Funciones.CerrarSesion(usuario);
+                    System.out.println("Cerrando Sesión");
+                    funciones.CerrarSesion(usuario);
+                    break;
                 }
             } catch (Exception e) {
-                System.out.println("Opción Invalida");
-                Menus.menuInicial();
+                System.out.println("Opción Invalida, cerrando sesión");
+                menuInicial();
             }
-            System.out.println("1. Iniciar Sesión | 2. Registrarse | 3. Salir ");
+            System.out.println("1. Unirse a un torneo | 2. Exportar Carnet | 3. Cerrar Sesión");
             opcionUsuario = scanner.nextInt();
         }
 
     }
 
-    public static void menuAdministrador(Admin admin) {
+    public void menuAdministrador(Admin admin) {
         Scanner entrada = new Scanner(System.in);
         System.out.println("Bienvenido Administrador");
         System.out.println("1. Crear un Nuevo Torneo | 2. Cerrar Sesión");
@@ -113,8 +125,8 @@ public class Menus {
             int opcionAdmin = entrada.nextInt();
             while (opcionAdmin < 4) {
                 switch (opcionAdmin) {
-                    case 1: Funciones.CrearTorneo(admin);
-                    case 2: Funciones.CerrarSesion(admin);
+                    case 1: funciones.CrearTorneo(admin);
+                    case 2: funciones.CerrarSesion(admin);
                     case 3:
                         System.out.println("Texto de prueba");
                 }
@@ -123,12 +135,12 @@ public class Menus {
 
         } catch (Exception e) {
             System.out.println("Dato no valido, vuelva a iniciar sesion");
-            Sesion.IniciarSesion();
+            sesion.IniciarSesion();
         }
 
     }
 
-    public static void menuAdminTorneos (AdminTorneos adminTorneos) {
+    public void menuAdminTorneos (AdminTorneos adminTorneos) {
         Scanner entrada = new Scanner(System.in);
         System.out.println("Bienvenido " +  adminTorneos.getNombreAdminTorneo());
         System.out.println("1. Exportar Torneo | 2. Inscribir entrenador | 3. Pelear | 4. Salir");
@@ -136,10 +148,10 @@ public class Menus {
             int opcionAdmin = entrada.nextInt();
             while (opcionAdmin < 6) {
                 switch (opcionAdmin) {
-                    case 1: Exportar.ExportarTorneo(adminTorneos);
-                    case 2: GestionTorneos.inscribirEntrenador();
-                    case 3: GestionTorneos.pelear();
-                    case 4: Funciones.CerrarSesion(adminTorneos);
+                    case 1: //Exportar.ExportarTorneo(adminTorneos);
+                    case 2: //GestionTorneos.inscribirEntrenador();
+                    case 3: //GestionTorneos.pelear();
+                    case 4: funciones.CerrarSesion(adminTorneos);
                     case 5:
                         System.out.println("Texto de prueba");
                 }
@@ -147,7 +159,7 @@ public class Menus {
             }
         } catch (Exception e) {
             System.out.println("Dato no valido, vuelva a iniciar sesion");
-            Sesion.IniciarSesion();
+            sesion.IniciarSesion();
         }
 
     }

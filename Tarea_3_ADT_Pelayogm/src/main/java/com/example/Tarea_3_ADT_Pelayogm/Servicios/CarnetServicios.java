@@ -11,7 +11,7 @@ public interface CarnetServicios {
 
     void insertarCarnet(Carnet carnet);
     public List<Carnet> obtenerTodosLosCarnets();
-    Optional<Carnet> obtenerCarnetPorId(long id);
+    Carnet obtenerCarnetPorId(long id);
     void actualizarCarnet(Carnet carnet);
     void eliminarCarnet(long id);
 

@@ -2,28 +2,40 @@ package com.example.Tarea_3_ADT_Pelayogm.Entidades;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Table(name = "torneo")
 public class Torneo {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private final Integer idTorneo;
+    private Integer idTorneo;
 
     @Column(name = "nombreTorneo")
-    private final String nombreTorneo;
+    private String nombreTorneo;
 
     @Column(name = "codigoTorneo")
-    private final String codigoTorneo;
+    private String codigoTorneo;
 
     @Column(name = "puntosTorneo")
-    private final double puntosVictoriaTorneo;
+    private double puntosVictoriaTorneo;
+
+    @OneToMany(mappedBy = "torneo")
+    private ArrayList<Combate> combates;
+
+    @ManyToMany(mappedBy = "listaTorneos")
+    private List<Entrenador> listaEntrenadores;
 
     public Torneo(Integer idTorneo, String nombreTorneo, String codigoTorneo, double puntosVictoriaTorneo) {
         this.idTorneo = idTorneo;
         this.nombreTorneo = nombreTorneo;
         this.codigoTorneo = codigoTorneo;
         this.puntosVictoriaTorneo = puntosVictoriaTorneo;
+    }
+
+    public Torneo() {
     }
 
     public Integer getIdTorneo() {
