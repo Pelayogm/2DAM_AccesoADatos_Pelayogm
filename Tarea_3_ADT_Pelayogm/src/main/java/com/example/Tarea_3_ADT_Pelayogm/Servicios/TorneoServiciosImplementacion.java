@@ -1,10 +1,13 @@
 package com.example.Tarea_3_ADT_Pelayogm.Servicios;
 
 import com.example.Tarea_3_ADT_Pelayogm.Entidades.Torneo;
+import com.example.Tarea_3_ADT_Pelayogm.Entidades.TorneoAdmin;
+import com.example.Tarea_3_ADT_Pelayogm.Repositorios.TorneoAdminRepositorio;
 import com.example.Tarea_3_ADT_Pelayogm.Repositorios.TorneoRepositorio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -12,10 +15,11 @@ import java.util.Optional;
 public class TorneoServiciosImplementacion implements TorneoServicios {
 
     @Autowired
-    private final TorneoRepositorio torneoRepositorio;
+    private TorneoRepositorio torneoRepositorio;
+    @Autowired
+    TorneoAdminRepositorio torneoAdminRepositorio;
 
-    public TorneoServiciosImplementacion(TorneoRepositorio torneoRepositorio) {
-        this.torneoRepositorio = torneoRepositorio;
+    public TorneoServiciosImplementacion() {
     }
 
     @Override
@@ -29,8 +33,8 @@ public class TorneoServiciosImplementacion implements TorneoServicios {
     }
 
     @Override
-    public Optional<Torneo> obtenerTorneoPorId(long idTorneo) {
-        return torneoRepositorio.findById(idTorneo);
+    public Torneo obtenerTorneoPorId(long idTorneo) {
+        return torneoRepositorio.findById(idTorneo).get();
     }
 
     @Override
@@ -42,4 +46,19 @@ public class TorneoServiciosImplementacion implements TorneoServicios {
     public void eliminarTorneo(long idTorneo) {
         torneoRepositorio.deleteById(idTorneo);
     }
+
+    //public List<TorneoAdmin> obtenerTorneosDelAdmin(int idAdminTorneos) {
+       //return torneoAdminRepositorio.listaTorneosAdmin(idAdminTorneos);
+    //}
+
+    /**
+       public List<Torneo> obtenerListaTorneosPorId(List<TorneoAdmin> idTorneo) {
+        List<Torneo> listaTorneos = new ArrayList<>();
+        for (int i = 0; i < idTorneo.size(); i++) {
+            Torneo torneoActual = obtenerTorneoPorId(idTorneo.get(i).getIdTorneo());
+            listaTorneos.add(torneoActual);
+        }
+        return listaTorneos;
+    }**/
+
 }

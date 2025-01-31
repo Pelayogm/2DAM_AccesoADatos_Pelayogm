@@ -128,11 +128,12 @@ public class Menus {
             int opcionAdmin = entrada.nextInt();
             while (opcionAdmin < 4) {
                 switch (opcionAdmin) {
-                    case 1: funciones.CrearTorneo(admin);
-                    case 2: funciones.CerrarSesion(admin);
+                    case 1: {funciones.CrearTorneo(admin); break;}
+                    case 2: {funciones.CerrarSesion(admin); break;}
                     case 3:
                         System.out.println("Texto de prueba");
                 }
+                System.out.println("1. Crear un Nuevo Torneo | 2. Cerrar Sesión");
                 opcionAdmin = entrada.nextInt();
             }
 
@@ -151,13 +152,14 @@ public class Menus {
             int opcionAdmin = entrada.nextInt();
             while (opcionAdmin < 6) {
                 switch (opcionAdmin) {
-                    case 1: //Exportar.ExportarTorneo(adminTorneos);
+                    case 1: //exportar.ExportarTorneo(adminTorneos);
                     case 2: //GestionTorneos.inscribirEntrenador();
                     case 3: //GestionTorneos.pelear();
-                    case 4: funciones.CerrarSesion(adminTorneos);
+                    case 4: {funciones.CerrarSesion(adminTorneos); break;}
                     case 5:
                         System.out.println("Texto de prueba");
                 }
+                System.out.println("1. Exportar Torneo | 2. Inscribir entrenador | 3. Pelear | 4. Salir");
                 opcionAdmin = entrada.nextInt();
             }
         } catch (Exception e) {

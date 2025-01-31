@@ -14,5 +14,6 @@ public interface CombateServicios {
     Optional<Combate> obtenerCombatePorId(long idCombate);
     void actualizarCombate(Combate combate);
     void eliminarCombate(long idCombate);
+    List<Combate> obtenerTodosLosCombates();
 
 }

@@ -20,7 +20,7 @@ public class CombateServiciosImplementacion implements CombateServicios{
 
     @Override
     public void insertarCombate(Combate combate) {
-        combateRepositorio.save(combate);
+        combateRepositorio.saveAndFlush(combate);
     }
 
     @Override
@@ -42,5 +42,10 @@ public class CombateServiciosImplementacion implements CombateServicios{
     @Override
     public void eliminarCombate(long idCombate) {
         combateRepositorio.deleteById(idCombate);
+    }
+
+    @Override
+    public List<Combate> obtenerTodosLosCombates() {
+        return combateRepositorio.findAll();
     }
 }

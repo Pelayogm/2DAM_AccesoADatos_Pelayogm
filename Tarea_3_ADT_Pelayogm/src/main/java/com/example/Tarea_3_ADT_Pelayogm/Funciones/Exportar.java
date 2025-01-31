@@ -2,8 +2,12 @@ package com.example.Tarea_3_ADT_Pelayogm.Funciones;
 
 import com.example.Tarea_3_ADT_Pelayogm.Administradores.AdminTorneos;
 import com.example.Tarea_3_ADT_Pelayogm.Entidades.Entrenador;
+import com.example.Tarea_3_ADT_Pelayogm.Entidades.Torneo;
+import com.example.Tarea_3_ADT_Pelayogm.Entidades.TorneoAdmin;
 import com.example.Tarea_3_ADT_Pelayogm.Entidades.Usuario;
 import com.example.Tarea_3_ADT_Pelayogm.Menus.Menus;
+import com.example.Tarea_3_ADT_Pelayogm.Servicios.TorneoAdminServiciosImplementacion;
+import com.example.Tarea_3_ADT_Pelayogm.Servicios.TorneoServiciosImplementacion;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.w3c.dom.DOMImplementation;
@@ -21,16 +25,38 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 
 @Component
 public class Exportar {
 
     @Autowired
     Menus menu;
+    @Autowired
+    TorneoAdminServiciosImplementacion torneoAdminServiciosImplementacion;
+    @Autowired
+    TorneoServiciosImplementacion torneoServiciosImplementacion;
 
     public void ExportarTorneo (Usuario usuario) {
         if (usuario instanceof AdminTorneos) {
             AdminTorneos adminTorneos = (AdminTorneos) usuario;
+            List<TorneoAdmin> listaTorneoAdmin = torneoAdminServiciosImplementacion.obtenerTorneosPorIdAdmin(adminTorneos.getIdUsuario());
+            List<Torneo> listaTorneos = new ArrayList<>();
+            int contador = 0;
+
+            /*
+            * if (!listaTorneoAdmin.isEmpty()) {
+                listaTorneos = torneoServiciosImplementacion.obtenerListaTorneosPorId(listaTorneoAdmin);
+            }*/
+
+            if (!listaTorneos.isEmpty()) {
+                for (int i = 0; i < listaTorneos.size(); i++) {
+                        System.out.println(contador + " " + listaTorneos.get(i).getNombreTorneo());
+                        contador++;
+                    }
+            }
+
         } else {
             System.out.println("No dispones de los permisos necesarios para acceder a este menú.");
             menu.menuInicial();

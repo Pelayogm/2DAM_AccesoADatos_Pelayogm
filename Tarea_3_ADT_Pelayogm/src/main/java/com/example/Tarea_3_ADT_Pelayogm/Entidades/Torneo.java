@@ -10,7 +10,6 @@ import java.util.List;
 public class Torneo {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idTorneo;
 
     @Column(name = "nombreTorneo")
@@ -23,7 +22,7 @@ public class Torneo {
     private double puntosVictoriaTorneo;
 
     @OneToMany(mappedBy = "torneo")
-    private ArrayList<Combate> combates;
+    private List<Combate> combates;
 
     @ManyToMany(mappedBy = "listaTorneos")
     private List<Entrenador> listaEntrenadores;
@@ -52,5 +51,12 @@ public class Torneo {
 
     public double getPuntosVictoriaTorneo() {
         return puntosVictoriaTorneo;
+    }
+    public List<Combate> getCombates() {
+        return combates;
+    }
+
+    public void setCombates(List<Combate> combates) {
+        this.combates = combates;
     }
 }

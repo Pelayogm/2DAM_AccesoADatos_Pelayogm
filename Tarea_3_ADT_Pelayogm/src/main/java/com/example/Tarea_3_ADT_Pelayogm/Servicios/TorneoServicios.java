@@ -11,7 +11,7 @@ public interface TorneoServicios {
 
     void insertarTorneo(Torneo torneo);
     List<Torneo> obtenerTodosLosTorneos();
-    Optional<Torneo> obtenerTorneoPorId(long idTorneo);
+    Torneo obtenerTorneoPorId(long idTorneo);
     void actualizarTorneo(Torneo torneo);
     void eliminarTorneo(long idTorneo);
 

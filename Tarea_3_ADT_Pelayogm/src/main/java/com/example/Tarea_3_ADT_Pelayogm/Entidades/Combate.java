@@ -8,7 +8,6 @@ import java.sql.Date;
 public class Combate {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idCombate;
 
     @Column(name = "fechaCombate")

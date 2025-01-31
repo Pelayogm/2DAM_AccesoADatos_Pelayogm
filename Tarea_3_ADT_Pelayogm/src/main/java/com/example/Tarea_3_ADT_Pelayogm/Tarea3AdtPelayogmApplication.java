@@ -23,7 +23,8 @@ public class Tarea3AdtPelayogmApplication implements CommandLineRunner {
 }
 
 //En clase root- y en casa root-root
-
+//Acabar relaciones BBDD
+//EXCEPCION POR LAS QUERY PARA SACAR LOS TORNEOS ADMIN y por las query
 //NOTAS.
 
 //Clase Combate
@@ -38,7 +39,7 @@ public class Tarea3AdtPelayogmApplication implements CommandLineRunner {
 // - Hacer el metodo menuAdministradorGeneral()
 
 //Clase Funciones
-// - Hacer el exportarCarnet()
+// - Hacer el exportarCarnet() (COMPLETADO)
 // - Hacer el exportarTorneo()
 
 //Repositorios
