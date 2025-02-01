@@ -11,6 +11,6 @@ import java.util.List;
 @Repository
 public interface TorneoAdminRepositorio extends JpaRepository<TorneoAdmin, Long> {
 
-    //@Query("SELECT t FROM torneoAdmin t where t.idAdminTorneos = ?1")
-    //List<TorneoAdmin> listaTorneosAdmin(int idAdminTorneo);
+    @Query("SELECT t FROM TorneoAdmin t WHERE t.idAdminTorneos = ?1")
+    List<TorneoAdmin> listaTorneosAdmin(Long idAdminTorneo);
 }

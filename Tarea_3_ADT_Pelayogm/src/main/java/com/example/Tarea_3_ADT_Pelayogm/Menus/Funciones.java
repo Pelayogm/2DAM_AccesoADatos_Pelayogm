@@ -125,13 +125,15 @@ public class Funciones {
                                 idCombate = listaDeCombates.size();
                             }
 
-                            Torneo torneo = new Torneo(idTorneo, nombreTorneo, regionTorneo, 100F);
+                            Torneo torneo = new Torneo(idTorneo, nombreTorneo, regionTorneo, 100F, idAdminTorneos);
                             List<Combate> listaCombatesTorneo = new ArrayList<>();
+                            torneo.setCombates(listaCombatesTorneo);
+                            torneoServiciosImplementacion.insertarTorneo(torneo);
 
                             for (int i = 1; i < 4; i++) {
                                 LocalDate localDate = LocalDate.now();
                                 Date fechaCombate = Date.valueOf(localDate);
-                                Combate combate = new Combate(idCombate, fechaCombate, idTorneo);
+                                Combate combate = new Combate(idCombate, fechaCombate, torneo);
                                 combateServiciosImplementacion.insertarCombate(combate);
                                 listaCombatesTorneo.add(combate);
                                 idCombate += 1;
@@ -140,9 +142,6 @@ public class Funciones {
                             torneo.setCombates(listaCombatesTorneo);
                             torneoServiciosImplementacion.insertarTorneo(torneo);
                         System.out.println("Torneo insertado en la base de datos con éxito!");
-                        TorneoAdmin torneoAdmin = new TorneoAdmin(idTorneo, idAdminTorneos);
-                        torneoAdminServiciosImplementacion.insertarTorneoAdmin(torneoAdmin);
-                        System.out.println("Torneo-admin insertado con éxito!");
                             //FICHERO CREDENCIALES ADMIN TORNEOS
 
                         } catch (Exception e) {

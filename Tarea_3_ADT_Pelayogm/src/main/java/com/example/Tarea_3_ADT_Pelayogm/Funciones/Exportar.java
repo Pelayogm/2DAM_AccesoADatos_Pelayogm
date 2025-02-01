@@ -27,6 +27,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 @Component
 public class Exportar {
@@ -37,26 +38,34 @@ public class Exportar {
     TorneoAdminServiciosImplementacion torneoAdminServiciosImplementacion;
     @Autowired
     TorneoServiciosImplementacion torneoServiciosImplementacion;
+    @Autowired
+    GestionTorneos gestionTorneos;
 
     public void ExportarTorneo (Usuario usuario) {
         if (usuario instanceof AdminTorneos) {
+            Scanner entrada = new Scanner(System.in);
             AdminTorneos adminTorneos = (AdminTorneos) usuario;
-            List<TorneoAdmin> listaTorneoAdmin = torneoAdminServiciosImplementacion.obtenerTorneosPorIdAdmin(adminTorneos.getIdUsuario());
-            List<Torneo> listaTorneos = new ArrayList<>();
+            int idAdminTorneos = (int) ((AdminTorneos) usuario).getIdUsuario();
+            List<Torneo> listaTorneos =torneoServiciosImplementacion.torneosDelAdministrador(idAdminTorneos);
             int contador = 0;
 
-            /*
-            * if (!listaTorneoAdmin.isEmpty()) {
-                listaTorneos = torneoServiciosImplementacion.obtenerListaTorneosPorId(listaTorneoAdmin);
-            }*/
-
             if (!listaTorneos.isEmpty()) {
+                System.out.println("Torneos de " + ((AdminTorneos) usuario).getNombreAdminTorneo());
                 for (int i = 0; i < listaTorneos.size(); i++) {
-                        System.out.println(contador + " " + listaTorneos.get(i).getNombreTorneo());
+                        System.out.println(contador + " - " + listaTorneos.get(i).getNombreTorneo());
                         contador++;
                     }
-            }
 
+                System.out.println("Selecciona el torneo que quieras exportar.");
+                int opcionUsuario = entrada.nextInt();
+                try {
+                    gestionTorneos.crearFichero(listaTorneos.get(opcionUsuario));
+                } catch (Exception e) {
+                    System.out.println("No se ha podido exportar el torneo. Intentalo de nuevo más tarde");
+                }
+            } else {
+                System.out.println("No tienes ningún torneo asignado");
+            }
         } else {
             System.out.println("No dispones de los permisos necesarios para acceder a este menú.");
             menu.menuInicial();

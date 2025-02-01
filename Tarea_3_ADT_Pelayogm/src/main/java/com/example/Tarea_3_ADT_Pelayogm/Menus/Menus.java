@@ -152,7 +152,7 @@ public class Menus {
             int opcionAdmin = entrada.nextInt();
             while (opcionAdmin < 6) {
                 switch (opcionAdmin) {
-                    case 1: //exportar.ExportarTorneo(adminTorneos);
+                    case 1: {exportar.ExportarTorneo(adminTorneos); break;}
                     case 2: //GestionTorneos.inscribirEntrenador();
                     case 3: //GestionTorneos.pelear();
                     case 4: {funciones.CerrarSesion(adminTorneos); break;}

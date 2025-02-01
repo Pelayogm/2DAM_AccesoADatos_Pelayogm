@@ -13,16 +13,14 @@ public class Combate {
     @Column(name = "fechaCombate")
     private Date fechaCombate;
 
-    @Column(name = "idTorneo")
-    private int idTorneo;
-
     @ManyToOne
+    @JoinColumn(name = "idTorneo", nullable = false)
     private Torneo torneo;
 
-    public Combate(int idCombate, Date fechaCombate, int idTorneo) {
+    public Combate(int idCombate, Date fechaCombate, Torneo idTorneo) {
         this.idCombate = idCombate;
         this.fechaCombate = fechaCombate;
-        this.idTorneo = idTorneo;
+        this.torneo = idTorneo;
     }
 
     public Combate() {
@@ -37,8 +35,8 @@ public class Combate {
         return fechaCombate;
     }
 
-    public int getIdTorneo() {
-        return idTorneo;
+    public Torneo getIdTorneo() {
+        return torneo;
     }
 
     public Torneo getTorneo() {

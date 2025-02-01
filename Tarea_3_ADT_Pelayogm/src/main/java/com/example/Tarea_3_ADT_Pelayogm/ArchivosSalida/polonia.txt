@@ -1,0 +1,4 @@
+Nombre Torneo: polonia
+Region Torneo: e
+Combates del torneo
+Puntos del torneo: 100.0

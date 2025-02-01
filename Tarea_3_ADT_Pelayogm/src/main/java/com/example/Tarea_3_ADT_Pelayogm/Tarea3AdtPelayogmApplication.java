@@ -25,6 +25,7 @@ public class Tarea3AdtPelayogmApplication implements CommandLineRunner {
 //En clase root- y en casa root-root
 //Acabar relaciones BBDD
 //EXCEPCION POR LAS QUERY PARA SACAR LOS TORNEOS ADMIN y por las query
+//Error porque no coge los combates de la base de datos
 //NOTAS.
 
 //Clase Combate
@@ -34,16 +35,16 @@ public class Tarea3AdtPelayogmApplication implements CommandLineRunner {
 // - Hacer el metodo IniciarSesion() y si no hay cuenta notificar (COMPLETADO)
 
 //Clase Menus
-// - Acabar el metodo crearEntrenador()
-// - Hacer el metodo menuAdminTorneos()
-// - Hacer el metodo menuAdministradorGeneral()
+// - Acabar el metodo crearEntrenador() (COMPLETADO)
+// - Hacer el metodo menuAdminTorneos() (COMPLETADO)
+// - Hacer el metodo menuAdministradorGeneral() (COMPLETADO)
 
 //Clase Funciones
 // - Hacer el exportarCarnet() (COMPLETADO)
-// - Hacer el exportarTorneo()
+// - Hacer el exportarTorneo() (SEMI-COMPLETADO)
 
 //Repositorios
-// - Hacer el metodo buscarCombatePorIdTorneo()
+// - Hacer el metodo buscarCombatePorIdTorneo() (COMPLETADO)
 
 //Entidades
 // - Hacer las relaciones (ManyToMany, ManyToOne...)

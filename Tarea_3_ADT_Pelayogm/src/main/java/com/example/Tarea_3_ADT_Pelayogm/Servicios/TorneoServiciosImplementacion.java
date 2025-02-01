@@ -47,9 +47,9 @@ public class TorneoServiciosImplementacion implements TorneoServicios {
         torneoRepositorio.deleteById(idTorneo);
     }
 
-    //public List<TorneoAdmin> obtenerTorneosDelAdmin(int idAdminTorneos) {
-       //return torneoAdminRepositorio.listaTorneosAdmin(idAdminTorneos);
-    //}
+    public List<Torneo> torneosDelAdministrador(int idAdminTorneos) {
+        return torneoRepositorio.listaDeTorneos(idAdminTorneos);
+    }
 
     /**
        public List<Torneo> obtenerListaTorneosPorId(List<TorneoAdmin> idTorneo) {

@@ -10,8 +10,7 @@ import java.util.Optional;
 public interface CombateServicios {
 
     void insertarCombate(Combate combate);
-    List<Combate> obtenerTodosLosCombatesPorIdTorneo(long idTorneo);
-    Optional<Combate> obtenerCombatePorId(long idCombate);
+    Combate obtenerCombatePorId(long idCombate);
     void actualizarCombate(Combate combate);
     void eliminarCombate(long idCombate);
     List<Combate> obtenerTodosLosCombates();

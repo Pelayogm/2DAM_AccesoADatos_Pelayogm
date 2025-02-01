@@ -22,8 +22,8 @@ public class Entrenador extends Usuario {
     @ManyToMany
     @JoinTable(
             name = "entrenador_torneo",
-            joinColumns = @JoinColumn(name = "idTorneo"),
-            inverseJoinColumns = @JoinColumn(name = "idEntrenador")
+            inverseJoinColumns = @JoinColumn(name = "idTorneo"),
+            joinColumns = @JoinColumn(name = "idEntrenador")
     )
     private List<Torneo> listaTorneos;
 

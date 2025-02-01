@@ -24,14 +24,8 @@ public class CombateServiciosImplementacion implements CombateServicios{
     }
 
     @Override
-    public List<Combate> obtenerTodosLosCombatesPorIdTorneo(long idTorneo) {
-        return null;
-        //HACER METODO EN EL COMBATE-REPOSITORIO
-    }
-
-    @Override
-    public Optional<Combate> obtenerCombatePorId(long idCombate) {
-        return combateRepositorio.findById(idCombate);
+    public Combate obtenerCombatePorId(long idCombate) {
+        return combateRepositorio.findById(idCombate).get();
     }
 
     @Override
@@ -47,5 +41,9 @@ public class CombateServiciosImplementacion implements CombateServicios{
     @Override
     public List<Combate> obtenerTodosLosCombates() {
         return combateRepositorio.findAll();
+    }
+
+    public List<Combate> obtenerTodosLosCombatesPorIdTorneo(int idTorneo) {
+        return combateRepositorio.obtenerTodosLosCombatesPorIdTorneo(idTorneo);
     }
 }
