@@ -24,7 +24,7 @@ public class Torneo {
     @Column(name = "idAdminTorneo")
     private int idAdminTorneo;
 
-    @OneToMany(mappedBy = "torneo")
+    @OneToMany(mappedBy = "torneo", fetch = FetchType.EAGER)
     private List<Combate> combates;
 
     @ManyToMany(mappedBy = "listaTorneos", fetch = FetchType.EAGER)

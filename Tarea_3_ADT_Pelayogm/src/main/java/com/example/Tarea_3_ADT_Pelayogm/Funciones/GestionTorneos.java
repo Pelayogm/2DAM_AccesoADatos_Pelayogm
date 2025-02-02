@@ -44,11 +44,11 @@ public class GestionTorneos {
                 fileWriter.write("Nombre Torneo: " + torneo.getNombreTorneo() + "\n");
                 fileWriter.write("Region Torneo: " + torneo.getCodigoTorneo() + "\n");
                 fileWriter.write("Combates del torneo" + "\n");
-                    /*if (!torneo.getCombates().isEmpty()) {
+                    if (!torneo.getCombates().isEmpty()) {
                         for (int i = 0; i < torneo.getCombates().size(); i++) {
                             fileWriter.write("Combate " + i + ": " + torneo.getCombates().get(i).getFechaCombate() + " | " + torneo.getCombates().get(i).getIdCombate() + "\n");
                         }
-                    }*/
+                    }
                 fileWriter.write("Puntos del torneo: " + torneo.getPuntosVictoriaTorneo());
                 fileWriter.close();
             } catch (Exception e) {

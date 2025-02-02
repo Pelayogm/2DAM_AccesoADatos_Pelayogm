@@ -26,6 +26,7 @@ public class Tarea3AdtPelayogmApplication implements CommandLineRunner {
 //Acabar relaciones BBDD
 //EXCEPCION POR LAS QUERY PARA SACAR LOS TORNEOS ADMIN y por las query
 //Error porque no coge los combates de la base de datos
+//Añadir ganador en el fichero al exportar
 //NOTAS.
 
 //Clase Combate

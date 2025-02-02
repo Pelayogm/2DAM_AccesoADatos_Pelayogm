@@ -4,15 +4,17 @@ import com.example.Tarea_3_ADT_Pelayogm.Administradores.Admin;
 import com.example.Tarea_3_ADT_Pelayogm.Administradores.AdminTorneos;
 import com.example.Tarea_3_ADT_Pelayogm.Entidades.Carnet;
 import com.example.Tarea_3_ADT_Pelayogm.Entidades.Entrenador;
-import com.example.Tarea_3_ADT_Pelayogm.Entidades.Usuario;
+import com.example.Tarea_3_ADT_Pelayogm.Entidades.Torneo;
 import com.example.Tarea_3_ADT_Pelayogm.Funciones.Exportar;
 import com.example.Tarea_3_ADT_Pelayogm.Servicios.CarnetServiciosImplementacion;
 import com.example.Tarea_3_ADT_Pelayogm.Servicios.EntrenadorServiciosImplementacion;
+import com.example.Tarea_3_ADT_Pelayogm.Servicios.TorneoServiciosImplementacion;
 import com.example.Tarea_3_ADT_Pelayogm.XML.LectorXML;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Scanner;
 
 @Component
@@ -28,6 +30,8 @@ public class Menus {
     public EntrenadorServiciosImplementacion entrenadorServiciosImplementacion;
     @Autowired
     public CarnetServiciosImplementacion carnetServiciosImplementacion;
+    @Autowired
+    public TorneoServiciosImplementacion torneoServiciosImplementacion;
 
     public void menuInicial() {
         Scanner scanner = new Scanner(System.in);
@@ -78,10 +82,25 @@ public class Menus {
                 if (LectorXML.comprobarNacionalidadConXML(nacionalidadEntrenador)){
                     Carnet carnet = new Carnet(idUsuario, LocalDate.now(), 0F,0);
                     Entrenador entrenador = new Entrenador(idUsuario, nombreUsuario, nacionalidadEntrenador, carnet);
-                    carnetServiciosImplementacion.insertarCarnet(carnet);
-                    entrenadorServiciosImplementacion.insertarEntrenador(entrenador);
+                    List<Torneo> listaTorneos = torneoServiciosImplementacion.obtenerTodosLosTorneos();
 
-                    //MOSTRAR TORNEOS DISPONIBLES
+                    if (!listaTorneos.isEmpty()) {
+                        System.out.println("Torneos disponibles:");
+                        int contador = 0;
+                        for (int i = 0; i < listaTorneos.size(); i++) {
+                            System.out.println(contador + " - " + "Nombre del torneo: " + listaTorneos.get(i).getNombreTorneo());
+                            System.out.println("Regíon del torneo: " + listaTorneos.get(i).getCodigoTorneo());
+                            System.out.println("Puntos del torneo: " + listaTorneos.get(i).getPuntosVictoriaTorneo());
+                            contador += 1;
+                        }
+                        System.out.println("Escoge el torneo al que quieras inscribirte.");
+                        carnetServiciosImplementacion.insertarCarnet(carnet);
+                        entrenadorServiciosImplementacion.insertarEntrenador(entrenador);
+                        //MOSTRAR TORNEOS DISPONIBLES
+                    } else {
+                        System.out.println("No hay ningún torneo disponible en estos momentos, informate de los próximos torneos.");
+                        funciones.CerrarSesion(entrenador);
+                    }
                     return entrenador;
                 } else {
                     System.out.println("El país introducido no es valido.");
