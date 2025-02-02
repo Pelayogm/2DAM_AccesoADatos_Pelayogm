@@ -1,12 +1,9 @@
 package com.example.Tarea_3_ADT_Pelayogm.Menus;
 
 import com.example.Tarea_3_ADT_Pelayogm.Administradores.Admin;
-import com.example.Tarea_3_ADT_Pelayogm.Administradores.AdminTorneos;
 import com.example.Tarea_3_ADT_Pelayogm.Credenciales.Credenciales;
-import com.example.Tarea_3_ADT_Pelayogm.Entidades.Combate;
-import com.example.Tarea_3_ADT_Pelayogm.Entidades.Torneo;
-import com.example.Tarea_3_ADT_Pelayogm.Entidades.TorneoAdmin;
-import com.example.Tarea_3_ADT_Pelayogm.Entidades.Usuario;
+import com.example.Tarea_3_ADT_Pelayogm.Entidades.*;
+import com.example.Tarea_3_ADT_Pelayogm.Servicios.CombateEntrenadorServiciosImplementacion;
 import com.example.Tarea_3_ADT_Pelayogm.Servicios.CombateServiciosImplementacion;
 import com.example.Tarea_3_ADT_Pelayogm.Servicios.TorneoAdminServiciosImplementacion;
 import com.example.Tarea_3_ADT_Pelayogm.Servicios.TorneoServiciosImplementacion;
@@ -16,7 +13,6 @@ import org.springframework.stereotype.Component;
 import java.io.File;
 import java.sql.Date;
 import java.time.LocalDate;
-import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -34,6 +30,8 @@ public class Funciones {
     public CombateServiciosImplementacion combateServiciosImplementacion;
     @Autowired
     public TorneoAdminServiciosImplementacion torneoAdminServiciosImplementacion;
+    @Autowired
+    public CombateEntrenadorServiciosImplementacion combateEntrenadorServiciosImplementacion;
 
     public boolean CerrarSesion (Usuario usuario) {
         Scanner scanner = new Scanner(System.in);
@@ -122,10 +120,31 @@ public class Funciones {
                             if (listaDeCombates.isEmpty()) {
                                 idCombate = 1;
                             } else {
-                                idCombate = listaDeCombates.size();
+                                idCombate = listaDeCombates.size() + 1;
+                            }
+                            //Creamos el torneo para comparar con los que hay en la base de datos
+                            Torneo torneo = new Torneo(idTorneo, nombreTorneo, regionTorneo, 100F, idAdminTorneos);
+                            boolean validado = false;
+                            //Si la lista no está vacía significa que hay torneos con los que podemos comparar y se usa validado para asegurarse de que solo se hace una vez
+                            if (!listaDeTorneos.isEmpty() && !validado) {
+                                for (int i = 0; i < listaDeTorneos.size(); i++) {
+                                    Torneo torneoActual = listaDeTorneos.get(i);
+                                    //Si ya hay un torneo que se llame igual te manda crear otro.
+                                    if (torneoActual.getNombreTorneo().equals(torneo.getNombreTorneo())) {
+                                        System.out.println("No puede haber 2 torneos que se llamen igual.");
+                                        System.out.println("Volviendo al menú de creación de torneo...");
+                                        CrearTorneo(usuario);
+                                    //Si no se llaman igual pero están en la misma región te manda crear otro igualmente.
+                                    } else if (torneoActual.getCodigoTorneo().equals(torneo.getCodigoTorneo())) {
+                                        System.out.println("Ya existe un torneo en esta región.");
+                                        System.out.println("Volviendo al menú de creación de torneo...");
+                                        CrearTorneo(usuario);
+                                    }
+                                }
+                                System.out.println("Datos del torneo validados.");
+                                validado = true;
                             }
 
-                            Torneo torneo = new Torneo(idTorneo, nombreTorneo, regionTorneo, 100F, idAdminTorneos);
                             List<Combate> listaCombatesTorneo = new ArrayList<>();
                             torneo.setCombates(listaCombatesTorneo);
                             torneoServiciosImplementacion.insertarTorneo(torneo);
@@ -133,8 +152,11 @@ public class Funciones {
                             for (int i = 1; i < 4; i++) {
                                 LocalDate localDate = LocalDate.now();
                                 Date fechaCombate = Date.valueOf(localDate);
-                                Combate combate = new Combate(idCombate, fechaCombate, torneo);
+                                Combate combate = new Combate(idCombate, fechaCombate, torneo, null);
+                                CombateEntrenador combateEntrenador = new CombateEntrenador(idCombate, combate, 0, 0, 0);
+                                combate.setCombateEntrenador(combateEntrenador);
                                 combateServiciosImplementacion.insertarCombate(combate);
+                                combateEntrenadorServiciosImplementacion.insertarCombateEntrenador(combateEntrenador);
                                 listaCombatesTorneo.add(combate);
                                 idCombate += 1;
                             }
@@ -142,7 +164,6 @@ public class Funciones {
                             torneo.setCombates(listaCombatesTorneo);
                             torneoServiciosImplementacion.insertarTorneo(torneo);
                         System.out.println("Torneo insertado en la base de datos con éxito!");
-                            //FICHERO CREDENCIALES ADMIN TORNEOS
 
                         } catch (Exception e) {
                             System.out.println("La confirmación no es válida");

@@ -17,10 +17,14 @@ public class Combate {
     @JoinColumn(name = "idTorneo", nullable = false)
     private Torneo torneo;
 
-    public Combate(int idCombate, Date fechaCombate, Torneo idTorneo) {
+    @OneToOne(mappedBy = "combate")
+    private CombateEntrenador combateEntrenador;
+
+    public Combate(int idCombate, Date fechaCombate, Torneo idTorneo, CombateEntrenador combateEntrenador) {
         this.idCombate = idCombate;
         this.fechaCombate = fechaCombate;
         this.torneo = idTorneo;
+        this.combateEntrenador = combateEntrenador;
     }
 
     public Combate() {
@@ -41,5 +45,13 @@ public class Combate {
 
     public Torneo getTorneo() {
         return torneo;
+    }
+
+    public CombateEntrenador getCombateEntrenador() {
+        return combateEntrenador;
+    }
+
+    public void setCombateEntrenador(CombateEntrenador combateEntrenador) {
+        this.combateEntrenador = combateEntrenador;
     }
 }

@@ -25,8 +25,13 @@ public class Tarea3AdtPelayogmApplication implements CommandLineRunner {
 //En clase root- y en casa root-root
 //Acabar relaciones BBDD
 //EXCEPCION POR LAS QUERY PARA SACAR LOS TORNEOS ADMIN y por las query
+//EXCEPCION AL INSERTAR COMBATEENTRENADOR (COMPLETADO)
+//COMPROBAR TORNEOS DUPLICADOS (COMPLETADO)
 //Error porque no coge los combates de la base de datos
 //Añadir ganador en el fichero al exportar
+//EXPORTAR TORNEOS DEL ENTRENADOR EN SU CARNET Y QUE EL ENTRENADOR ESCOJA SU TORNEO INICIAL
+//BUG EL PRIMER TORNEO CREA 2 COMBATES PERO APARTIR SIEMPRE 3
+//Revisar el exportar torneo a txt por que se añadio lo del ganador del combate
 //NOTAS.
 
 //Clase Combate

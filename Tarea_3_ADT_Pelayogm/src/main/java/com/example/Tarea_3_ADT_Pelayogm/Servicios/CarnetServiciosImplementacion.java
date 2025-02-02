@@ -18,7 +18,6 @@ public class CarnetServiciosImplementacion implements CarnetServicios {
         this.carnetRepositorio = carnetRepositorio;
     }
 
-
     @Override
     public void insertarCarnet(Carnet carnet) {
         carnetRepositorio.saveAndFlush(carnet);
