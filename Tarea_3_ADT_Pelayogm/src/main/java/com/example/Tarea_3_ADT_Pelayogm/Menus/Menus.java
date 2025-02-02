@@ -173,7 +173,7 @@ public class Menus {
                 switch (opcionAdmin) {
                     case 1: {exportar.ExportarTorneo(adminTorneos); break;}
                     case 2: {gestionTorneos.inscribirEntrenador(adminTorneos); break;}
-                    case 3: //GestionTorneos.pelear();
+                    case 3: {gestionTorneos.pelear(adminTorneos); break;}
                     case 4: {funciones.CerrarSesion(adminTorneos); break;}
                     case 5:
                         System.out.println("Texto de prueba");

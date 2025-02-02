@@ -23,6 +23,7 @@ public class Tarea3AdtPelayogmApplication implements CommandLineRunner {
 }
 
 //En clase root- y en casa root-root
+//Inscribir entrenador (sale un torneo lleno y no deberia no pone el id -1)
 //Acabar relaciones BBDD
 //EXCEPCION POR LAS QUERY PARA SACAR LOS TORNEOS ADMIN y por las query
 //EXCEPCION AL INSERTAR COMBATEENTRENADOR (COMPLETADO)

@@ -55,4 +55,8 @@ public class TorneoServiciosImplementacion implements TorneoServicios {
         return torneoRepositorio.listaDeTorneosSinGanador();
     }
 
+    public List<Torneo> listaDeTorneosParaCombatir() {
+        return torneoRepositorio.listaDeTorneosParaCombatir();
+    }
+
 }
