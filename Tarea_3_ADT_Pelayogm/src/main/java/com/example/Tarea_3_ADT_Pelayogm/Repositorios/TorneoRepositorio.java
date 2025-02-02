@@ -13,4 +13,7 @@ public interface TorneoRepositorio extends JpaRepository<Torneo, Long> {
     @Query("SELECT t FROM Torneo t WHERE t.idAdminTorneo = ?1")
     public List<Torneo> listaDeTorneos(int idAdminTorneo);
 
+    @Query("SELECT t FROM Torneo t WHERE t.idGanador = 0")
+    public List<Torneo> listaDeTorneosSinGanador();
+
 }

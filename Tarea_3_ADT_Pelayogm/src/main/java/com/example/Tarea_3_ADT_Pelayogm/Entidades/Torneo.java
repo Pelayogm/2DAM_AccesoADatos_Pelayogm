@@ -24,18 +24,22 @@ public class Torneo {
     @Column(name = "idAdminTorneo")
     private int idAdminTorneo;
 
+    @Column(name = "idGanadorTorneo")
+    private int idGanador;
+
     @OneToMany(mappedBy = "torneo", fetch = FetchType.EAGER)
     private List<Combate> combates;
 
     @ManyToMany(mappedBy = "listaTorneos", fetch = FetchType.EAGER)
     private List<Entrenador> listaEntrenadores;
 
-    public Torneo(Integer idTorneo, String nombreTorneo, String codigoTorneo, double puntosVictoriaTorneo, int idAdminTorneo) {
+    public Torneo(Integer idTorneo, String nombreTorneo, String codigoTorneo, double puntosVictoriaTorneo, int idAdminTorneo, int idGanador) {
         this.idTorneo = idTorneo;
         this.nombreTorneo = nombreTorneo;
         this.codigoTorneo = codigoTorneo;
         this.puntosVictoriaTorneo = puntosVictoriaTorneo;
         this.idAdminTorneo = idAdminTorneo;
+        this.idGanador = idGanador;
         }
 
     public Torneo() {
@@ -66,5 +70,13 @@ public class Torneo {
 
     public void setCombates(List<Combate> combates) {
         this.combates = combates;
+    }
+
+    public int getIdGanador() {
+        return idGanador;
+    }
+
+    public void setIdGanador(int idGanador) {
+        this.idGanador = idGanador;
     }
 }

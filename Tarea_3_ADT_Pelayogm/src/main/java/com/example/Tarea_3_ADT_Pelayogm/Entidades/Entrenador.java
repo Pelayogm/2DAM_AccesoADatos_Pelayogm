@@ -27,12 +27,13 @@ public class Entrenador extends Usuario {
     )
     private List<Torneo> listaTorneos;
 
-    public Entrenador(Long idEntrenador, String nombreEntrenador, String nacionalidadEntrenador, Carnet carnet) {
+    public Entrenador(long idEntrenador, String nombreEntrenador, String nacionalidadEntrenador, Carnet carnet) {
         super.setEstadoSesion(true);
         this.idEntrenador = idEntrenador;
         this.nombreEntrenador = nombreEntrenador;
         this.nacionalidadEntrenador = nacionalidadEntrenador;
         this.carnetEntrenador = carnet;
+        setIdUsuarioInterfaz((int) idEntrenador);
     }
 
     public Entrenador() {

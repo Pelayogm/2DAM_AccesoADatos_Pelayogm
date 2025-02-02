@@ -6,6 +6,7 @@ import com.example.Tarea_3_ADT_Pelayogm.Entidades.Carnet;
 import com.example.Tarea_3_ADT_Pelayogm.Entidades.Entrenador;
 import com.example.Tarea_3_ADT_Pelayogm.Entidades.Torneo;
 import com.example.Tarea_3_ADT_Pelayogm.Funciones.Exportar;
+import com.example.Tarea_3_ADT_Pelayogm.Funciones.GestionTorneos;
 import com.example.Tarea_3_ADT_Pelayogm.Servicios.CarnetServiciosImplementacion;
 import com.example.Tarea_3_ADT_Pelayogm.Servicios.EntrenadorServiciosImplementacion;
 import com.example.Tarea_3_ADT_Pelayogm.Servicios.TorneoServiciosImplementacion;
@@ -32,6 +33,8 @@ public class Menus {
     public CarnetServiciosImplementacion carnetServiciosImplementacion;
     @Autowired
     public TorneoServiciosImplementacion torneoServiciosImplementacion;
+    @Autowired
+    public GestionTorneos gestionTorneos;
 
     public void menuInicial() {
         Scanner scanner = new Scanner(System.in);
@@ -85,17 +88,14 @@ public class Menus {
                     List<Torneo> listaTorneos = torneoServiciosImplementacion.obtenerTodosLosTorneos();
 
                     if (!listaTorneos.isEmpty()) {
-                        System.out.println("Torneos disponibles:");
-                        int contador = 0;
-                        for (int i = 0; i < listaTorneos.size(); i++) {
-                            System.out.println(contador + " - " + "Nombre del torneo: " + listaTorneos.get(i).getNombreTorneo());
-                            System.out.println("Regíon del torneo: " + listaTorneos.get(i).getCodigoTorneo());
-                            System.out.println("Puntos del torneo: " + listaTorneos.get(i).getPuntosVictoriaTorneo());
-                            contador += 1;
+                        System.out.println("Escoge tu torneo inicial:");
+                        if (gestionTorneos.inscribirEntrenador(entrenador)) {
+                            carnetServiciosImplementacion.insertarCarnet(carnet);
+                            entrenadorServiciosImplementacion.insertarEntrenador(entrenador);
+                        } else {
+                            System.out.println("No se ha podido inscribir al torneo.");
+                            crearEntrenador(nombreUsuario, idUsuario);
                         }
-                        System.out.println("Escoge el torneo al que quieras inscribirte.");
-                        carnetServiciosImplementacion.insertarCarnet(carnet);
-                        entrenadorServiciosImplementacion.insertarEntrenador(entrenador);
                         //MOSTRAR TORNEOS DISPONIBLES
                     } else {
                         System.out.println("No hay ningún torneo disponible en estos momentos, informate de los próximos torneos.");
@@ -172,7 +172,7 @@ public class Menus {
             while (opcionAdmin < 6) {
                 switch (opcionAdmin) {
                     case 1: {exportar.ExportarTorneo(adminTorneos); break;}
-                    case 2: //GestionTorneos.inscribirEntrenador();
+                    case 2: {gestionTorneos.inscribirEntrenador(adminTorneos); break;}
                     case 3: //GestionTorneos.pelear();
                     case 4: {funciones.CerrarSesion(adminTorneos); break;}
                     case 5:

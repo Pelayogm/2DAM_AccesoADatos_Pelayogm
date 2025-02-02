@@ -1,0 +1,7 @@
+Nombre Torneo: guadiana
+Region Torneo: a
+Combates del torneo
+Combate 0: 2025-02-02 | 1 | Ganador: 0
+Combate 1: 2025-02-02 | 2 | Ganador: 0
+Combate 2: 2025-02-02 | 3 | Ganador: 0
+Puntos del torneo: 100.0

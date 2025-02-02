@@ -1,6 +1,8 @@
 package com.example.Tarea_3_ADT_Pelayogm.Servicios;
 
+import com.example.Tarea_3_ADT_Pelayogm.Entidades.CombateEntrenador;
 import com.example.Tarea_3_ADT_Pelayogm.Entidades.Entrenador;
+import com.example.Tarea_3_ADT_Pelayogm.Repositorios.CombateEntrenadorRepositorio;
 import com.example.Tarea_3_ADT_Pelayogm.Repositorios.EntrenadorRepositorio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,6 +15,8 @@ public class EntrenadorServiciosImplementacion implements EntrenadorServicios {
 
     @Autowired
     private final EntrenadorRepositorio entrenadorRepositorio;
+    @Autowired
+    private CombateEntrenadorRepositorio combateEntrenadorRepositorio;
 
     public EntrenadorServiciosImplementacion(EntrenadorRepositorio entrenadorRepositorio) {
         this.entrenadorRepositorio = entrenadorRepositorio;
@@ -42,4 +46,8 @@ public class EntrenadorServiciosImplementacion implements EntrenadorServicios {
     public void eliminarEntrenador(long idEntrenador) {
         entrenadorRepositorio.deleteById(idEntrenador);
     }
+
+    /*public List<Entrenador> listaDeEntrenadoresQueNoEstanInscritos(int idEntrenador) {
+        return null;
+    }*/
 }

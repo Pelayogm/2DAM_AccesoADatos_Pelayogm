@@ -1,2 +1,4 @@
 admin admin Administrador 1
 aniceto aniceto AdministradorTorneos 2
+ernesto ernesto Entrenador 3
+pol pol Entrenador 4

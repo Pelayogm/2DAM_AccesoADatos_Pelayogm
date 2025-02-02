@@ -123,7 +123,7 @@ public class Funciones {
                                 idCombate = listaDeCombates.size() + 1;
                             }
                             //Creamos el torneo para comparar con los que hay en la base de datos
-                            Torneo torneo = new Torneo(idTorneo, nombreTorneo, regionTorneo, 100F, idAdminTorneos);
+                            Torneo torneo = new Torneo(idTorneo, nombreTorneo, regionTorneo, 100F, idAdminTorneos, 0);
                             boolean validado = false;
                             //Si la lista no está vacía significa que hay torneos con los que podemos comparar y se usa validado para asegurarse de que solo se hace una vez
                             if (!listaDeTorneos.isEmpty() && !validado) {

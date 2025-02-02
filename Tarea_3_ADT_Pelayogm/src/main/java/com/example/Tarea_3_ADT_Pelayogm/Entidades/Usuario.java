@@ -6,6 +6,7 @@ public abstract class Usuario implements Serializable {
     private boolean usuario;
     private boolean estadoSesion;
     private String nombreUsuario;
+    private int idUsuarioInterfaz;
 
     public boolean isEstadoSesion() {
         return estadoSesion;
@@ -29,5 +30,13 @@ public abstract class Usuario implements Serializable {
 
     public void setNombreUsuario(String nombreUsuario) {
         this.nombreUsuario = nombreUsuario;
+    }
+
+    public int getIdUsuarioInterfaz() {
+        return idUsuarioInterfaz;
+    }
+
+    public void setIdUsuarioInterfaz(int idUsuarioInterfaz) {
+        this.idUsuarioInterfaz = idUsuarioInterfaz;
     }
 }

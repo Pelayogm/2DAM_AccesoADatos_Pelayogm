@@ -51,14 +51,8 @@ public class TorneoServiciosImplementacion implements TorneoServicios {
         return torneoRepositorio.listaDeTorneos(idAdminTorneos);
     }
 
-    /**
-       public List<Torneo> obtenerListaTorneosPorId(List<TorneoAdmin> idTorneo) {
-        List<Torneo> listaTorneos = new ArrayList<>();
-        for (int i = 0; i < idTorneo.size(); i++) {
-            Torneo torneoActual = obtenerTorneoPorId(idTorneo.get(i).getIdTorneo());
-            listaTorneos.add(torneoActual);
-        }
-        return listaTorneos;
-    }**/
+    public List<Torneo> listaDeTorneosSinGanador() {
+        return torneoRepositorio.listaDeTorneosSinGanador();
+    }
 
 }
