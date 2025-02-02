@@ -109,10 +109,10 @@ public class GestionTorneos {
                                 combateEntrenador.setIdEntrenador2(usuario.getIdUsuarioInterfaz());
                                 combateEntrenadorServiciosImplementacion.insertarCombateEntrenador(combateEntrenador);
                                 System.out.println("Inscrito con éxito");
-                                //Si es la última vuelta y es el último hueco se crea un nuevo torneo para ponerle el idGanador a -1 indicando que esta lleno
-                                if (combateEntrenador.getCombate().getIdCombate() == combatesDelTorneo.size() - 1) {
-                                    //Se crea el torneo para insertarlo
-                                    Torneo torneo = torneoServiciosImplementacion.obtenerTorneoPorId(combatesDelTorneo.get(i).getTorneo().getIdTorneo());
+                                // Si es el último combate, se marca el torneo como lleno
+                                if (i == combatesDelTorneo.size() - 2) {
+                                    Torneo torneo = torneoServiciosImplementacion.obtenerTorneoPorId(
+                                            combatesDelTorneo.get(i).getTorneo().getIdTorneo());
                                     torneo.setIdGanador(-1);
                                     torneoServiciosImplementacion.insertarTorneo(torneo);
                                 }

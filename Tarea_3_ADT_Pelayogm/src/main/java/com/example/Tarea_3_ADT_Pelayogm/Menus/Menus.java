@@ -141,26 +141,29 @@ public class Menus {
 
     public void menuAdministrador(Admin admin) {
         Scanner entrada = new Scanner(System.in);
-        System.out.println("Bienvenido Administrador");
-        System.out.println("1. Crear un Nuevo Torneo | 2. Cerrar Sesión");
-        try {
-            int opcionAdmin = entrada.nextInt();
-            while (opcionAdmin < 4) {
-                switch (opcionAdmin) {
-                    case 1: {funciones.CrearTorneo(admin); break;}
-                    case 2: {funciones.CerrarSesion(admin); break;}
-                    case 3:
-                        System.out.println("Texto de prueba");
+        if (admin instanceof Admin) {
+            System.out.println("Bienvenido Administrador");
+            System.out.println("1. Crear un Nuevo Torneo | 2. Cerrar Sesión");
+            try {
+                int opcionAdmin = entrada.nextInt();
+                while (opcionAdmin < 4) {
+                    switch (opcionAdmin) {
+                        case 1: {funciones.CrearTorneo(admin); break;}
+                        case 2: {funciones.CerrarSesion(admin); break;}
+                        case 3:
+                            System.out.println("Texto de prueba");
+                    }
+                    System.out.println("1. Crear un Nuevo Torneo | 2. Cerrar Sesión");
+                    opcionAdmin = entrada.nextInt();
                 }
-                System.out.println("1. Crear un Nuevo Torneo | 2. Cerrar Sesión");
-                opcionAdmin = entrada.nextInt();
+
+            } catch (Exception e) {
+                System.out.println("Dato no valido, vuelva a iniciar sesion");
+                sesion.IniciarSesion();
             }
-
-        } catch (Exception e) {
-            System.out.println("Dato no valido, vuelva a iniciar sesion");
-            sesion.IniciarSesion();
+        } else {
+            menuInicial();
         }
-
     }
 
     public void menuAdminTorneos (AdminTorneos adminTorneos) {

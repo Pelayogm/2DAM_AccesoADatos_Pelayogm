@@ -38,12 +38,12 @@ public class Funciones {
         if (usuario.isEstadoSesion()) {
             System.out.println("SALIENDO DE LA SESIÓN...");
             try {
-                System.out.println("1. Iniciar Sesión | 2. Salir");
+                System.out.println("1. Menú inicial | 2. Salir");
                 int opcionUsuario = scanner.nextInt();
 
                 if (opcionUsuario == 1) {
                     usuario.setEstadoSesion(false);
-                    sesion.IniciarSesion();
+                    menus.menuInicial();
                 } else {
                     System.exit(0);
                     return false;

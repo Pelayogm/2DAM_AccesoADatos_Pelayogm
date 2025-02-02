@@ -23,7 +23,8 @@ public class Tarea3AdtPelayogmApplication implements CommandLineRunner {
 }
 
 //En clase root- y en casa root-root
-//Inscribir entrenador (sale un torneo lleno y no deberia no pone el id -1)
+//Inscribir entrenador (sale un torneo lleno y no deberia no pone el id -1) (SOLUCIONADO(REVISAR))
+//ARREGLAR BUG ADDMIN - AL CREAR UN ENTRENADOR DESDE SALIR TE METE A MENU ADMIN (SOLUCIONADO(REVISAR))
 //Acabar relaciones BBDD
 //EXCEPCION POR LAS QUERY PARA SACAR LOS TORNEOS ADMIN y por las query
 //EXCEPCION AL INSERTAR COMBATEENTRENADOR (COMPLETADO)
