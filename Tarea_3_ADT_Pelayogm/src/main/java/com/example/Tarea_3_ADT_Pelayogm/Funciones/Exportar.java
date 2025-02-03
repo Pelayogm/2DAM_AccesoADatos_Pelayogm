@@ -1,10 +1,7 @@
 package com.example.Tarea_3_ADT_Pelayogm.Funciones;
 
 import com.example.Tarea_3_ADT_Pelayogm.Administradores.AdminTorneos;
-import com.example.Tarea_3_ADT_Pelayogm.Entidades.Entrenador;
-import com.example.Tarea_3_ADT_Pelayogm.Entidades.Torneo;
-import com.example.Tarea_3_ADT_Pelayogm.Entidades.TorneoAdmin;
-import com.example.Tarea_3_ADT_Pelayogm.Entidades.Usuario;
+import com.example.Tarea_3_ADT_Pelayogm.Entidades.*;
 import com.example.Tarea_3_ADT_Pelayogm.Menus.Menus;
 import com.example.Tarea_3_ADT_Pelayogm.Servicios.TorneoAdminServiciosImplementacion;
 import com.example.Tarea_3_ADT_Pelayogm.Servicios.TorneoServiciosImplementacion;
@@ -97,6 +94,50 @@ public class Exportar {
                     CrearElementoXML("hoy", fechaActualString, document, document.getDocumentElement());
                 document.getDocumentElement().appendChild(elementoEntrenador);
                 //TORNEOS ENTRENADOR
+                Element elementTorneos = document.createElement("Torneos");
+
+                document.getDocumentElement().appendChild(elementTorneos);
+                for (int i = 0; i < entrenador.getListaTorneos().size(); i++) {
+                    //ETIQUETA TORNEO POR CADA TORNEO DE LA LISTA QUE TIENE EL OBJETO ENTRENADOR
+                    Element elementTorneo = document.createElement("torneo");
+                    CrearElementoXML("nombre", entrenador.getListaTorneos().get(i).getNombreTorneo(), document, elementTorneo);
+                    CrearElementoXML("region", entrenador.getListaTorneos().get(i).getCodigoTorneo(), document, elementTorneo);
+                    if (entrenador.getListaTorneos().get(i).getIdGanador() == 0 || entrenador.getListaTorneos().get(i).getIdGanador() == -1) {
+                        CrearElementoXML("victoria", "No Finalizado", document, elementTorneo);
+                    } else if (entrenador.getListaTorneos().get(i).getIdGanador() == entrenador.getIdEntrenador()) {
+                        CrearElementoXML("victoria", "true", document, elementTorneo);
+                    }
+
+                    Element elementCombates = document.createElement("Combates");
+                    //Cogemos el torneo actual y recorremos su lista de combates
+                    Torneo torneo = entrenador.getListaTorneos().get(i);
+                    for (int x = 0; x < torneo.getCombates().size(); x++) {
+                        Combate combateActual = torneo.getCombates().get(x);
+
+                        Element elementCombate = document.createElement("combate");
+                        String idCombate = String.valueOf(combateActual.getIdCombate());
+                        String fechaCombate = String.valueOf(combateActual.getFechaCombate());
+
+                        CrearElementoXML("id", idCombate, document, elementCombate);
+                        CrearElementoXML("fecha", fechaCombate, document, elementCombate);
+                        if (combateActual.getCombateEntrenador().getIdGanador() == entrenador.getIdEntrenador()) {
+                            CrearElementoXML("victoria","true", document, elementCombate);
+                        } else {
+                            if (combateActual.getCombateEntrenador().getIdGanador() == 0 ) {
+                                CrearElementoXML("victoria","No participado", document, elementCombate);
+                            } else {
+                                CrearElementoXML("victoria","false", document, elementCombate);
+                            }
+                        }
+
+                        elementCombates.appendChild(elementCombate);
+                    }
+                    elementTorneo.appendChild(elementCombates);
+
+                    //APPEND A CADA ELEMENTO AL PADRE, LA ETIQUETA TORNEOS
+                    elementTorneos.appendChild(elementTorneo);
+                }
+                //Fin de los torneos del Entrenador
 
                 //Exportación del archivo
                 Source source = new DOMSource(document);

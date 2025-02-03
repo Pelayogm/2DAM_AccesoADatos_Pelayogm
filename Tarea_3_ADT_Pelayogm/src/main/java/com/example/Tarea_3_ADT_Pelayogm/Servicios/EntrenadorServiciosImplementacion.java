@@ -47,7 +47,7 @@ public class EntrenadorServiciosImplementacion implements EntrenadorServicios {
         entrenadorRepositorio.deleteById(idEntrenador);
     }
 
-    /*public List<Entrenador> listaDeEntrenadoresQueNoEstanInscritos(int idEntrenador) {
-        return null;
-    }*/
+    public List<Entrenador> entrenadoresQueNoEstanElTorneo(int idTorneo) {
+        return entrenadorRepositorio.entrenadoresQueNoEstanEnElTorneo(idTorneo);
+    }
 }

@@ -23,6 +23,8 @@ public class Tarea3AdtPelayogmApplication implements CommandLineRunner {
 }
 
 //En clase root- y en casa root-root
+
+//La lista de torneos del entrenador es null y da no deja guardar torneo pero lo inscribe igual en inscribir() (CORREGIDO)
 //Inscribir entrenador (sale un torneo lleno y no deberia no pone el id -1) (SOLUCIONADO(REVISAR))
 //ARREGLAR BUG ADDMIN - AL CREAR UN ENTRENADOR DESDE SALIR TE METE A MENU ADMIN (SOLUCIONADO(REVISAR))
 //Acabar relaciones BBDD

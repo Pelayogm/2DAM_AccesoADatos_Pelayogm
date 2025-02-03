@@ -1,6 +1,7 @@
 package com.example.Tarea_3_ADT_Pelayogm.Servicios;
 
 import com.example.Tarea_3_ADT_Pelayogm.Entidades.CombateEntrenador;
+import com.example.Tarea_3_ADT_Pelayogm.Entidades.Entrenador;
 import com.example.Tarea_3_ADT_Pelayogm.Repositorios.CombateEntrenadorRepositorio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

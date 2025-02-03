@@ -10,9 +10,5 @@ import java.util.List;
 
 @Repository
 public interface CombateEntrenadorRepositorio extends JpaRepository<CombateEntrenador, Long> {
-    /*
-    @Query("SELECT t FROM Entrenador t WHERE t.id NOT IN (SELECT c.idEntrenador1 FROM CombateEntrenador c) AND t.id NOT IN (SELECT c.idEntrenador2 FROM CombateEntrenador c)")
-    List<Entrenador> listaDeEntrenadoresQueNoEstan(int idEntrenador);
-    */
 
 }

@@ -8,3 +8,8 @@ selva selva Entrenador 7
 Ignacio ignacio Entrenador 8
 josejavier jose Entrenador 9
 yundai yundai Entrenador 10
+garonda garonda Entrenador 11
+rodrigo rodrigo Entrenador 12
+gamero gamero Entrenador 13
+joan joan Entrenador 14
+charo charo Entrenador 15

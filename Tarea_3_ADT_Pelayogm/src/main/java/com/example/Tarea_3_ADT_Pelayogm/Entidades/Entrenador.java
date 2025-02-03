@@ -2,6 +2,7 @@ package com.example.Tarea_3_ADT_Pelayogm.Entidades;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -19,7 +20,7 @@ public class Entrenador extends Usuario {
     @OneToOne
     private Carnet carnetEntrenador;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "entrenador_torneo",
             inverseJoinColumns = @JoinColumn(name = "idTorneo"),
@@ -34,6 +35,7 @@ public class Entrenador extends Usuario {
         this.nacionalidadEntrenador = nacionalidadEntrenador;
         this.carnetEntrenador = carnet;
         setIdUsuarioInterfaz((int) idEntrenador);
+        listaTorneos = new ArrayList<>();
     }
 
     public Entrenador() {
