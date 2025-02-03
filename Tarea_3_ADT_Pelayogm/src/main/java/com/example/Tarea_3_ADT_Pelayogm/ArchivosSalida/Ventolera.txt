@@ -1,0 +1,8 @@
+Nombre Torneo: Ventolera
+Region Torneo: 0
+Ganador Torneo: 5 | luis
+Combates del torneo
+Combate 0: 2025-02-03 | ID: 13 | Ganador: 5
+Combate 1: 2025-02-03 | ID: 14 | Ganador: 7
+Combate 2: 2025-02-03 | ID: 15 | Ganador: 5
+Puntos del torneo: 100.0
