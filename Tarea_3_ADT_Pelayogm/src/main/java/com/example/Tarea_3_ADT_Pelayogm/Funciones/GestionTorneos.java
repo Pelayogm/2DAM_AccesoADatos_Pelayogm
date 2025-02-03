@@ -54,6 +54,7 @@ public class GestionTorneos {
             }
 
             if (contador == 0) {
+                //Si contador es 0 entonces esto es la escapatoria para evitar que se quede en un bucle.
                 System.out.println("No hay torneos disponibles");
                 System.out.println("Volviendo...");
                 if (usuario instanceof AdminTorneos) {
@@ -67,11 +68,13 @@ public class GestionTorneos {
             try {
                 int opcionUsuario = entrada.nextInt();
                 try {
+                    //Al torneo escogido se le coge la lista de combates que tiene y se itera sobre ella
                     System.out.println("Torneo escogido: " + torneosDisponibles.get(opcionUsuario).getNombreTorneo());
                     List<Combate> combatesDelTorneo = torneosDisponibles.get(opcionUsuario).getCombates();
                     for (int i = 0; i < combatesDelTorneo.size(); i++) {
                         CombateEntrenador combateEntrenador = combatesDelTorneo.get(i).getCombateEntrenador();
                         Combate combate = combatesDelTorneo.get(i);
+                        //Por cada combate se sacan los CombateEntrenador para sacar el ID y buscar el entrenador por ID. Y así poner su nombre
                         String nombreEntrenador1 = "plazaLibre";
                         String nombreEntrenador2 = "plazaLibre";
                             if (combateEntrenador.getIdEntrenador1() != 0) {
@@ -83,6 +86,7 @@ public class GestionTorneos {
                                 Entrenador entrenador2 = entrenadorServiciosImplementacion.obtenerEntrenadorPorId(combateEntrenador.getIdEntrenador2());
                                 nombreEntrenador2 = entrenador2.getNombreEntrenador();
                             }
+                            //Si están vacíos los huecos se pone plazaLibre
                         System.out.println("Combate " + combate.getIdCombate() + " | " + nombreEntrenador1 + " Contra " + nombreEntrenador2 + " | "
                             + "Fecha: " + combate.getFechaCombate());
                     }
@@ -98,6 +102,8 @@ public class GestionTorneos {
                             inscribirEntrenador(usuario);
                         }
                     } else {
+                        //Esta sección es para el entrenador que escoge este torneo como su torneo inicial
+                        //Se le muestran todos los combates menos el último (el último es el combate final).
                         for (int i = 0; i < combatesDelTorneo.size() - 1; i++) {
                             CombateEntrenador combateEntrenador = combatesDelTorneo.get(i).getCombateEntrenador();
                             if (combateEntrenador.getIdEntrenador1() == 0) {
@@ -109,16 +115,20 @@ public class GestionTorneos {
                                 combateEntrenador.setIdEntrenador2(usuario.getIdUsuarioInterfaz());
                                 combateEntrenadorServiciosImplementacion.insertarCombateEntrenador(combateEntrenador);
                                 System.out.println("Inscrito con éxito");
-                                // Si es el último combate, se marca el torneo como lleno
+                                // La lista tiene 3 huecos, pero solo se recorre el primer y segundo hueco, por tanto, se tiene que hacer "-2" porque "i" empieza en 0
+                                // y solo se dará como máximo 2 vueltas (0 y 1)
                                 if (i == combatesDelTorneo.size() - 2) {
+                                    //Esto sirve para poner el torneo a "-1" indicando que el torneo ya está lleno.
                                     Torneo torneo = torneoServiciosImplementacion.obtenerTorneoPorId(
                                             combatesDelTorneo.get(i).getTorneo().getIdTorneo());
                                     torneo.setIdGanador(-1);
+                                    //Con los datos actualizados lo insertamos en la base de datos para que se guarden los cambios.
                                     torneoServiciosImplementacion.insertarTorneo(torneo);
                                 }
                                 return true;
                             }
                         }
+                        //Esto informa al usuario de que el torneo está lleno en caso de que el "-1" no se inserte y evitar la excepción.
                         System.out.println("El torneo esta lleno");
                         return false;
                     }
@@ -206,7 +216,7 @@ public class GestionTorneos {
 
                         Entrenador entrenadorGanador = entrenadorServiciosImplementacion.obtenerEntrenadorPorId(idGanador);
 
-                        //Esto sirve para saber si es el último combate y evitar
+                        //Esto sirve para saber si es o no el último combate y evitar duplicados o que se reinicie el combate final.
                         if (!combateFinalBoolean) {
                             CombateEntrenador combateFinal = combatesDelTorneo.get(combatesDelTorneo.size() - 1).getCombateEntrenador();
                             if (combateFinal.getIdEntrenador1() == 0) {
@@ -219,6 +229,7 @@ public class GestionTorneos {
                             combateEntrenadorServiciosImplementacion.insertarCombateEntrenador(combateFinal);
                         }
 
+                        //Si el último combate fue el final, entonces esta condición establece la victoria y le actualiza su carnet de Entrenador.
                         if (combateFinalBoolean) {
                             System.out.println(entrenadorGanador.getNombreEntrenador() + " es el ganador del torneo " + torneoSeleccionado.getNombreTorneo());
                             Carnet carnetEntrenadorGanador = carnetServiciosImplementacion.obtenerCarnetPorId(entrenadorGanador.getIdEntrenador());
@@ -279,6 +290,10 @@ public class GestionTorneos {
             try {
                 fileWriter.write("Nombre Torneo: " + torneo.getNombreTorneo() + "\n");
                 fileWriter.write("Region Torneo: " + torneo.getCodigoTorneo() + "\n");
+                if (torneo.getIdGanador() != 0 && torneo.getIdGanador() != - 1) {
+                    Entrenador ganador = entrenadorServiciosImplementacion.obtenerEntrenadorPorId(torneo.getIdGanador());
+                    fileWriter.write("Ganador Torneo: " + torneo.getIdGanador() + " | " + ganador.getNombreEntrenador() + "\n");
+                }
                 fileWriter.write("Combates del torneo" + "\n");
                     if (!torneo.getCombates().isEmpty()) {
                         for (int i = 0; i < torneo.getCombates().size(); i++) {

@@ -30,14 +30,14 @@ public class Tarea3AdtPelayogmApplication implements CommandLineRunner {
 //EXCEPCION AL INSERTAR COMBATEENTRENADOR (COMPLETADO)
 //COMPROBAR TORNEOS DUPLICADOS (COMPLETADO)
 //Error porque no coge los combates de la base de datos
-//Añadir ganador en el fichero al exportar
+//Añadir ganador en el fichero al exportar (COMPLETADO)
 //EXPORTAR TORNEOS DEL ENTRENADOR EN SU CARNET Y QUE EL ENTRENADOR ESCOJA SU TORNEO INICIAL
-//BUG EL PRIMER TORNEO CREA 2 COMBATES PERO APARTIR SIEMPRE 3
-//Revisar el exportar torneo a txt por que se añadio lo del ganador del combate
+//BUG EL PRIMER TORNEO CREA 2 COMBATES PERO APARTIR SIEMPRE 3 (SOLUCIONADO)
+//Revisar el exportar torneo a txt porque se añadio lo del ganador del combate (COMPLETADO)
 //NOTAS.
 
 //Clase Combate
-// - Añadir idEntrenador1 e idEntrenador2
+// - Añadir idEntrenador1 e idEntrenador2 (SOLUCIONADO MEDIANTE COMBATE-ENTRENADOR)
 
 //Clase Sesion
 // - Hacer el metodo IniciarSesion() y si no hay cuenta notificar (COMPLETADO)
@@ -48,8 +48,8 @@ public class Tarea3AdtPelayogmApplication implements CommandLineRunner {
 // - Hacer el metodo menuAdministradorGeneral() (COMPLETADO)
 
 //Clase Funciones
-// - Hacer el exportarCarnet() (COMPLETADO)
-// - Hacer el exportarTorneo() (SEMI-COMPLETADO)
+// - Hacer el exportarCarnet() (SEMI-COMPLETADO)
+// - Hacer el exportarTorneo() (COMPLETADO)
 
 //Repositorios
 // - Hacer el metodo buscarCombatePorIdTorneo() (COMPLETADO)
@@ -57,8 +57,8 @@ public class Tarea3AdtPelayogmApplication implements CommandLineRunner {
 //Entidades
 // - Hacer las relaciones (ManyToMany, ManyToOne...)
 // - Da error el mapeo de EntrenadorYCarnet (CORREGIDO)
-// - Poner ganador del combate (idEntrenador)
-// - Poner ganador del torneo
+// - Poner ganador del combate (idEntrenador) (COMPLETADO)
+// - Poner ganador del torneo (COMPLETADO)
 // - Tabla Torneo-Combate / Torneo-Entrenador
 
 //DUDAS

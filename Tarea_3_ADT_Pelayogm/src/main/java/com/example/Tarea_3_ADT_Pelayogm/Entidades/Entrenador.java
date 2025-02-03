@@ -55,4 +55,12 @@ public class Entrenador extends Usuario {
     public Carnet getCarnetEntrenador() {
         return carnetEntrenador;
     }
+
+    public List<Torneo> getListaTorneos() {
+        return listaTorneos;
+    }
+
+    public void setListaTorneos(List<Torneo> listaTorneos) {
+        this.listaTorneos = listaTorneos;
+    }
 }

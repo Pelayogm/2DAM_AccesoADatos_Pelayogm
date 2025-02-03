@@ -1,0 +1,8 @@
+Nombre Torneo: Tramuntana
+Region Torneo: Y
+Ganador Torneo: 8 | Ignacio
+Combates del torneo
+Combate 0: 2025-02-03 | ID: 4 | Ganador: 8
+Combate 1: 2025-02-03 | ID: 5 | Ganador: 9
+Combate 2: 2025-02-03 | ID: 6 | Ganador: 8
+Puntos del torneo: 100.0
