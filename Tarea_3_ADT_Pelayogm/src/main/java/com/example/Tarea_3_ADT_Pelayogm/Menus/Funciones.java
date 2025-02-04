@@ -86,7 +86,7 @@ public class Funciones {
                     try {
                             int confirmacionUsuario = entrada.nextInt();
                             if (confirmacionUsuario == 2) {
-                                CrearTorneo(usuario);
+                                menus.menuAdministrador((Admin) usuario);
                             }
                             int idAdminTorneos = 0;
                             file = new File("src/main/java/com/example/Tarea_3_ADT_Pelayogm/ArchivosDelPrograma", "Credenciales.txt");

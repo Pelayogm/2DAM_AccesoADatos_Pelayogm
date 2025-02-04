@@ -1,7 +1,2 @@
 admin admin Administrador 1
 aniceto aniceto AdministradorTorneos 2
-garonda garonda Entrenador 3
-pablo pablo Entrenador 4
-luis luis Entrenador 5
-alfredo alfredo Entrenador 6
-samu samu Entrenador 7
