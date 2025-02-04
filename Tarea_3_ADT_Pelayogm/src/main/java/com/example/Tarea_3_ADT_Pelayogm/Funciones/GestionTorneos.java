@@ -274,79 +274,63 @@ public class GestionTorneos {
                             }
                         }
                     }
-                    //Se escoge el combate y los datos se pasan a las variables
-                System.out.println("Escoge el combate...");
-                    int opcionUsuarioCombate = entrada.nextInt();
-                    CombateEntrenador combateEntrenadorEscogido = combatesDelTorneo.get(opcionUsuarioCombate).getCombateEntrenador();
-                    entrenador1 = entrenadorServiciosImplementacion.obtenerEntrenadorPorId(combateEntrenadorEscogido.getIdEntrenador1());
-                    entrenador2 = entrenadorServiciosImplementacion.obtenerEntrenadorPorId(combateEntrenadorEscogido.getIdEntrenador2());
-                    //Si es el último combate de la lista entonces es el combate final, activamos el booleano para activar el menú.
-                    if (combateEntrenadorEscogido.getIdCombateEntrenador() == combatesDelTorneo.get(combatesDelTorneo.size() - 1).getCombateEntrenador().getIdCombateEntrenador()) {
-                        System.out.println("- COMBATE FINAL -");
-                        combateFinalBoolean = true;
-                    }
-                    //Se pregunta al administrador quien es el ganador.
-                System.out.println("¿Quien gana? 1. " + entrenador1.getNombreEntrenador() + " O 2. " + entrenador2.getNombreEntrenador());
+
+                System.out.println("¿Iniciar Torneo? 1. Sí | 2. No");
                     try {
-                        int entrenadorGanadorScanner = entrada.nextInt();
-                        int idGanador;
-                        if (entrenadorGanadorScanner <= 1) {
-                            System.out.println("Ha ganado " + entrenador1.getNombreEntrenador());
-                            idGanador = entrenador1.getIdEntrenador().intValue();
+
+                        int iniciarTorneoScanner = entrada.nextInt();
+                        if (iniciarTorneoScanner == 1) {
+                            Entrenador entrenadorGanador = new Entrenador();
+                            //Hacer contadores de victoria
+
+                            for (int i = 0; i < combatesDelTorneo.size(); i++) {
+                                CombateEntrenador combateEntrenadorActual = combatesDelTorneo.get(i).getCombateEntrenador();
+                                entrenador1 = entrenadorServiciosImplementacion.obtenerEntrenadorPorId(combateEntrenadorActual.getIdEntrenador1());
+                                entrenador2 = entrenadorServiciosImplementacion.obtenerEntrenadorPorId(combateEntrenadorActual.getIdEntrenador2());
+                                int idGanador;
+
+                                if (combateEntrenadorActual.getIdCombateEntrenador() == combatesDelTorneo.get(combatesDelTorneo.size() - 1).getCombateEntrenador().getIdCombateEntrenador()) {
+                                    System.out.println("- ÚLTIMO COMBATE -");
+                                    combateFinalBoolean = true;
+                                }
+
+                                if (combateEntrenadorActual.getIdEntrenador1() + 1 >= combateEntrenadorActual.getIdEntrenador2()) {
+                                    System.out.println("Ha ganado " + entrenador1.getNombreEntrenador());
+                                    idGanador = entrenador1.getIdEntrenador().intValue();
+                                    combateEntrenadorActual.setIdGanador(idGanador);
+                                    combateEntrenadorServiciosImplementacion.insertarCombateEntrenador(combateEntrenadorActual);
+
+                                } else {
+                                    System.out.println("Ha ganado " + entrenador2.getNombreEntrenador());
+                                    idGanador = entrenador1.getIdEntrenador().intValue();
+                                    combateEntrenadorActual.setIdGanador(idGanador);
+                                    combateEntrenadorServiciosImplementacion.insertarCombateEntrenador(combateEntrenadorActual);
+                                }
+
+                                if (combateFinalBoolean) {
+                                    //Si es el último combate se busca el combate final
+                                    Torneo torneo = torneoServiciosImplementacion.obtenerTorneoPorId(torneoSeleccionado.getIdTorneo());
+                                    torneo.setIdGanador(idGanador);
+                                    //Se inserta el torneo para actualizar el torneo
+                                    torneoServiciosImplementacion.insertarTorneo(torneo);
+                                    //Anunciamos el ganador
+                                    System.out.println(entrenadorGanador.getNombreEntrenador() + " es el ganador del torneo " + torneoSeleccionado.getNombreTorneo());
+                                    //Buscamos su carnet y le añadimos los puntos nuevos y le aumentamos el numero de victorias
+                                    Carnet carnetEntrenadorGanador = carnetServiciosImplementacion.obtenerCarnetPorId(entrenadorGanador.getIdEntrenador());
+                                    carnetEntrenadorGanador.setPuntosCarnet((float) (carnetEntrenadorGanador.getPuntosCarnet() + torneoSeleccionado.getPuntosVictoriaTorneo()));
+                                    carnetEntrenadorGanador.setNumeroVictorias(carnetEntrenadorGanador.getNumeroVictorias() + 1);
+                                    //Insertamos de nuevo el carnet actualizado
+                                    carnetServiciosImplementacion.insertarCarnet(carnetEntrenadorGanador);
+                                }
+
+                            }
                         } else {
-                            System.out.println("Ha ganado " + entrenador2.getNombreEntrenador());
-                            idGanador = entrenador2.getIdEntrenador().intValue();
-                        }
-                        //El ganador del combate se establece en el objeto CombateEntrenador
-                        combateEntrenadorEscogido.setIdGanador(idGanador);
-                        //Se inserta en la base de datos para actualizar los registros
-                        combateEntrenadorServiciosImplementacion.insertarCombateEntrenador(combateEntrenadorEscogido);
-                        if (combateFinalBoolean) {
-                            //Si es el último combate se busca el combate final
-                            Torneo torneo = torneoServiciosImplementacion.obtenerTorneoPorId(torneoSeleccionado.getIdTorneo());
-                            torneo.setIdGanador(idGanador);
-                            //Se inserta el torneo para actualizar el torneo
-                            torneoServiciosImplementacion.insertarTorneo(torneo);
+                            System.out.println("Volviendo atrás...");
+                            pelear(usuario);
                         }
 
-                        Entrenador entrenadorGanador = entrenadorServiciosImplementacion.obtenerEntrenadorPorId(idGanador);
-
-                        //Esto sirve para saber si es o no el último combate y evitar duplicados o que se reinicie el combate final.
-                        if (!combateFinalBoolean) {
-                            CombateEntrenador combateFinal = combatesDelTorneo.get(combatesDelTorneo.size() - 1).getCombateEntrenador();
-                            if (combateFinal.getIdEntrenador1() == 0) {
-                                combateFinal.setIdEntrenador1(idGanador);
-                                System.out.println(entrenadorGanador.getNombreEntrenador() + " pasa al combate final");
-                            } else if (combateFinal.getIdEntrenador2() == 0) {
-                                combateFinal.setIdEntrenador2(idGanador);
-                                System.out.println(entrenadorGanador.getNombreEntrenador() + " pasa al combate final");
-                            }
-                            combateEntrenadorServiciosImplementacion.insertarCombateEntrenador(combateFinal);
-                        }
-
-                        //Si el último combate fue el final, entonces esta condición establece la victoria y le actualiza su carnet de Entrenador.
-                        if (combateFinalBoolean) {
-                            System.out.println(entrenadorGanador.getNombreEntrenador() + " es el ganador del torneo " + torneoSeleccionado.getNombreTorneo());
-                            Carnet carnetEntrenadorGanador = carnetServiciosImplementacion.obtenerCarnetPorId(entrenadorGanador.getIdEntrenador());
-                            carnetEntrenadorGanador.setPuntosCarnet((float) (carnetEntrenadorGanador.getPuntosCarnet() + torneoSeleccionado.getPuntosVictoriaTorneo()));
-                            carnetEntrenadorGanador.setNumeroVictorias(carnetEntrenadorGanador.getNumeroVictorias() + 1);
-                            carnetServiciosImplementacion.insertarCarnet(carnetEntrenadorGanador);
-                        }
-
-                        System.out.println("¿Quieres continuar? 1. Si | 2. No");
-                        try {
-                            int confirmacion = entrada.nextInt();
-                            if (confirmacion == 1) {
-                                pelear(usuario);
-                            } else {
-                                menus.menuAdminTorneos((AdminTorneos) usuario);
-                            }
-                        } catch (Exception e) {
-                            System.out.println("Volviendo al menú");
-                            menus.menuAdminTorneos((AdminTorneos) usuario);
-                        }
                     } catch (Exception e) {
-                        System.out.println("Entrada no reconocida, volviendo...");
+                        System.out.println("Volviendo...");
                         pelear(usuario);
                     }
             } catch (Exception e) {
