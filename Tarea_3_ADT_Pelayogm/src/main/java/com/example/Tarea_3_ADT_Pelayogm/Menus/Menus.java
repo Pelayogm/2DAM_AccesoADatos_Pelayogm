@@ -93,8 +93,8 @@ public class Menus {
                             carnetServiciosImplementacion.insertarCarnet(carnet);
                             entrenadorServiciosImplementacion.insertarEntrenador(entrenador);
                         } else {
-                            System.out.println("No se ha podido inscribir al torneo.");
-                            crearEntrenador(nombreUsuario, idUsuario);
+                            System.out.println("No se ha podido inscribir al torneo. Volviendo al menú");
+                            menuInicial();
                         }
                         //MOSTRAR TORNEOS DISPONIBLES
                     } else {

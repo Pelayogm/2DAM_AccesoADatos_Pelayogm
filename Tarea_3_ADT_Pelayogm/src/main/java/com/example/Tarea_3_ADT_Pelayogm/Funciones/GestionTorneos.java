@@ -112,8 +112,6 @@ public class GestionTorneos {
                                 }
                                 //Este contador sirve para cuantas veces se ha inscrito si son 2 veces, se sale del bucle
                                 int contadorCombates = 0;
-                                //Este booleano evita que se inserte 2 veces en la tabla entrenador_torneo
-                                boolean insertadoEnLaTabla = false;
                                 //Esta sección es para el entrenador que escoge este torneo como su torneo inicial
                                 //Se le muestran todos los combates menos el último (el último es el combate final).
                                 for (int i = 0; i < combatesDelTorneo.size(); i++) {
@@ -286,41 +284,51 @@ public class GestionTorneos {
                         int iniciarTorneoScanner = entrada.nextInt();
                         if (iniciarTorneoScanner == 1) {
                             Entrenador entrenadorGanador = new Entrenador();
-                            //Hacer contadores de victoria y revisar en casa
+                            int idGanador;
 
                             for (int i = 0; i < combatesDelTorneo.size(); i++) {
                                 CombateEntrenador combateEntrenadorActual = combatesDelTorneo.get(i).getCombateEntrenador();
                                 entrenador1 = entrenadorServiciosImplementacion.obtenerEntrenadorPorId(combateEntrenadorActual.getIdEntrenador1());
                                 entrenador2 = entrenadorServiciosImplementacion.obtenerEntrenadorPorId(combateEntrenadorActual.getIdEntrenador2());
-                                int idGanador;
 
                                 if (combateEntrenadorActual.getIdCombateEntrenador() == combatesDelTorneo.get(combatesDelTorneo.size() - 1).getCombateEntrenador().getIdCombateEntrenador()) {
                                     System.out.println("- ÚLTIMO COMBATE -");
                                     combateFinalBoolean = true;
                                 }
 
+                                //Si el idEntrenador1 + 1 es mayor que el del entrenador 2 gana entrenador 1
                                 if (combateEntrenadorActual.getIdEntrenador1() + 1 >= combateEntrenadorActual.getIdEntrenador2()) {
                                     System.out.println("Ha ganado " + entrenador1.getNombreEntrenador());
                                     idGanador = entrenador1.getIdEntrenador().intValue();
                                     combateEntrenadorActual.setIdGanador(idGanador);
                                     combateEntrenadorServiciosImplementacion.insertarCombateEntrenador(combateEntrenadorActual);
-                                    if (combateEntrenadorActual.equals(combatesDelTorneo.get(combatesDelTorneo.size() - 2))) {
+                                    if (combateEntrenadorActual.getIdCombateEntrenador() == combatesDelTorneo.get(0).getCombateEntrenador().getIdCombateEntrenador()) {
+                                        contadorV1++;
+                                        System.out.println(entrenador1.getNombreEntrenador() + " lleva " + contadorV1 + " victorias");
+                                    } else if (combateEntrenadorActual.getIdCombateEntrenador() == combatesDelTorneo.get(combatesDelTorneo.size() - 2).getCombateEntrenador().getIdCombateEntrenador()){
                                         contadorV2++;
-                                        idEntrenador2 = entrenador2.getIdEntrenador().intValue();
+                                        System.out.println(entrenador1.getNombreEntrenador() + " lleva " + contadorV2 + " victorias");
+                                        idEntrenador2 = entrenador1.getIdEntrenador().intValue();
                                     } else {
                                         contadorV1++;
+                                        System.out.println(entrenador1.getNombreEntrenador() + " lleva " + contadorV1 + " victorias");
                                     }
 
                                 } else {
                                     System.out.println("Ha ganado " + entrenador2.getNombreEntrenador());
-                                    idGanador = entrenador1.getIdEntrenador().intValue();
+                                    idGanador = entrenador2.getIdEntrenador().intValue();
                                     combateEntrenadorActual.setIdGanador(idGanador);
                                     combateEntrenadorServiciosImplementacion.insertarCombateEntrenador(combateEntrenadorActual);
-                                    if (combateEntrenadorActual.equals(combatesDelTorneo.get(0))) {
+                                    if (combateEntrenadorActual.getIdCombateEntrenador() == combatesDelTorneo.get(0).getCombateEntrenador().getIdCombateEntrenador()) {
                                         contadorV2++;
+                                        System.out.println(entrenador2.getNombreEntrenador() + " lleva " + contadorV2 + " victorias");
                                         idEntrenador2 = entrenador2.getIdEntrenador().intValue();
+                                    } else if (combateEntrenadorActual.getIdCombateEntrenador() == combatesDelTorneo.get(combatesDelTorneo.size() - 2).getCombateEntrenador().getIdCombateEntrenador()){
+                                        contadorV3++;
+                                        System.out.println(entrenador2.getNombreEntrenador() + " lleva " + contadorV3 + " victorias");
                                     } else {
                                         contadorV3++;
+                                        System.out.println(entrenador2.getNombreEntrenador() + " lleva " + contadorV3 + " victorias");
                                     }
                                 }
 
@@ -340,6 +348,7 @@ public class GestionTorneos {
                                     torneo.setIdGanador(idGanador);
                                     //Se inserta el torneo para actualizar el torneo
                                     torneoServiciosImplementacion.insertarTorneo(torneo);
+                                    entrenadorGanador = entrenadorServiciosImplementacion.obtenerEntrenadorPorId(idGanador);
                                     //Anunciamos el ganador
                                     System.out.println(entrenadorGanador.getNombreEntrenador() + " es el ganador del torneo " + torneoSeleccionado.getNombreTorneo());
                                     //Buscamos su carnet y le añadimos los puntos nuevos y le aumentamos el numero de victorias
