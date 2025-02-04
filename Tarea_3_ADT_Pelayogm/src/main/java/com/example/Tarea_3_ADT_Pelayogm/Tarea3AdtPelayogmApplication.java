@@ -23,17 +23,19 @@ public class Tarea3AdtPelayogmApplication implements CommandLineRunner {
 }
 
 //En clase root- y en casa root-root
-
+//Se inserta 2 veces un entrenador en la tabla entrenador_torneo (SOLUCIONADO)
+//Corregir el metodo combatir, el ultimo combate es el que importa y se deberia usar un contador de victorias o hacerlo aleatorio
+//En un torneo 3 entreneadores y 2 combates por entrenador (SOLUCIONADO)
 //La lista de torneos del entrenador es null y da no deja guardar torneo pero lo inscribe igual en inscribir() (CORREGIDO)
 //Inscribir entrenador (sale un torneo lleno y no deberia no pone el id -1) (SOLUCIONADO(REVISAR))
 //ARREGLAR BUG ADDMIN - AL CREAR UN ENTRENADOR DESDE SALIR TE METE A MENU ADMIN (SOLUCIONADO(REVISAR))
 //Acabar relaciones BBDD
-//EXCEPCION POR LAS QUERY PARA SACAR LOS TORNEOS ADMIN y por las query
+//EXCEPCION POR LAS QUERY PARA SACAR LOS TORNEOS ADMIN y por las query (SOLUCIONADO)
 //EXCEPCION AL INSERTAR COMBATEENTRENADOR (COMPLETADO)
 //COMPROBAR TORNEOS DUPLICADOS (COMPLETADO)
-//Error porque no coge los combates de la base de datos
+//Error porque no coge los combates de la base de datos (SOLUCIONADO)
 //Añadir ganador en el fichero al exportar (COMPLETADO)
-//EXPORTAR TORNEOS DEL ENTRENADOR EN SU CARNET Y QUE EL ENTRENADOR ESCOJA SU TORNEO INICIAL
+//EXPORTAR TORNEOS DEL ENTRENADOR EN SU CARNET Y QUE EL ENTRENADOR ESCOJA SU TORNEO INICIAL (SOLUCIONADO)
 //BUG EL PRIMER TORNEO CREA 2 COMBATES PERO APARTIR SIEMPRE 3 (SOLUCIONADO)
 //Revisar el exportar torneo a txt porque se añadio lo del ganador del combate (COMPLETADO)
 //NOTAS.

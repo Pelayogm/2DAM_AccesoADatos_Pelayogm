@@ -110,30 +110,32 @@ public class GestionTorneos {
                                     System.out.println("Entendido, no se inscribirá en el torneo");
                                     inscribirEntrenador(usuario);
                                 }
-                                //Mismo método de inscripción que para un entrenador
-                                for (int i = 0; i < combatesDelTorneo.size() - 1; i++) {
+                                //Este contador sirve para cuantas veces se ha inscrito si son 2 veces, se sale del bucle
+                                int contadorCombates = 0;
+                                //Este booleano evita que se inserte 2 veces en la tabla entrenador_torneo
+                                boolean insertadoEnLaTabla = false;
+                                //Esta sección es para el entrenador que escoge este torneo como su torneo inicial
+                                //Se le muestran todos los combates menos el último (el último es el combate final).
+                                for (int i = 0; i < combatesDelTorneo.size(); i++) {
                                     CombateEntrenador combateEntrenador = combatesDelTorneo.get(i).getCombateEntrenador();
+                                    CombateEntrenador ultimoCombate = combatesDelTorneo.get(combatesDelTorneo.size() - 1).getCombateEntrenador();
+
                                     if (combateEntrenador.getIdEntrenador1() == 0) {
                                         combateEntrenador.setIdEntrenador1(entrenadorElegido.getIdEntrenador().intValue());
                                         combateEntrenadorServiciosImplementacion.insertarCombateEntrenador(combateEntrenador);
-                                        System.out.println("Se ha inscrito a " + entrenadorElegido.getNombreEntrenador() + " al torneo");
-                                        Torneo torneoEscogido = torneoServiciosImplementacion.obtenerTorneoPorId(combatesDelTorneo.get(i).getTorneo().getIdTorneo());
-                                        entrenadorElegido.getListaTorneos().add(torneoEscogido);
-                                        //Se actualizan los datos del entrenador para la tabla entrenador_torneo que refleje que ya está en el torneo y no salga más en la lista
-                                        entrenadorServiciosImplementacion.insertarEntrenador(entrenadorElegido);
-                                        break;
-                                        //Se usa el break para evitar que se siga iterando.
-                                    } else if (combateEntrenador.getIdEntrenador2() == 0) {
+                                        contadorCombates++;
+                                        //Esto sirve para poner al el entrenador en el último combate y evitar combinaciones sin fin.
+                                        if (ultimoCombate.getIdEntrenador1() == 0) {
+                                            ultimoCombate.setIdEntrenador1(entrenadorElegido.getIdEntrenador().intValue());
+                                            combateEntrenadorServiciosImplementacion.insertarCombateEntrenador(ultimoCombate);
+                                            contadorCombates++;
+                                        }
+                                    } else if (combateEntrenador.getIdEntrenador2() == 0 && combateEntrenador.getIdEntrenador1() != entrenadorElegido.getIdEntrenador()) {
                                         combateEntrenador.setIdEntrenador2(entrenadorElegido.getIdEntrenador().intValue());
                                         combateEntrenadorServiciosImplementacion.insertarCombateEntrenador(combateEntrenador);
-                                        Torneo torneoEscogido = torneoServiciosImplementacion.obtenerTorneoPorId(combatesDelTorneo.get(i).getTorneo().getIdTorneo());
-                                        entrenadorElegido.getListaTorneos().add(torneoEscogido);
-                                        System.out.println("Se ha inscrito a " + entrenadorElegido.getNombreEntrenador() + " al torneo");
-                                        //Se actualizan los datos del entrenador para la tabla entrenador_torneo que refleje que ya está en el torneo y no salga más en la lista
-                                        entrenadorServiciosImplementacion.insertarEntrenador(entrenadorElegido);
                                         // La lista tiene 3 huecos, pero solo se recorre el primer y segundo hueco, por tanto, se tiene que hacer "-2" porque "i" empieza en 0
-                                        // y solo se dará como máximo 2 vueltas (0 y 1)
-                                        if (i == combatesDelTorneo.size() - 2) {
+                                        // y solo se dará como máximo 2 vueltas (0, 1 y 2)
+                                        if (i == combatesDelTorneo.size() - 1) {
                                             //Esto sirve para poner el torneo a "-1" indicando que el torneo ya está lleno.
                                             Torneo torneo = torneoServiciosImplementacion.obtenerTorneoPorId(
                                                     combatesDelTorneo.get(i).getTorneo().getIdTorneo());
@@ -141,11 +143,18 @@ public class GestionTorneos {
                                             //Con los datos actualizados lo insertamos en la base de datos para que se guarden los cambios.
                                             torneoServiciosImplementacion.insertarTorneo(torneo);
                                         }
-                                        break;
-                                        //Se usa el break para evitar que se siga iterando.
+                                        contadorCombates++;
+                                    }
+
+                                    if (contadorCombates == 2) {
+                                        System.out.println("Se ha inscrito a " + entrenadorElegido.getNombreEntrenador() + " al torneo");
+                                        //Se actualizan los datos del entrenador para la tabla entrenador_torneo que refleje que ya está en el torneo y no salga más en la lista
+                                        Torneo torneoEscogido = torneoServiciosImplementacion.obtenerTorneoPorId(combatesDelTorneo.get(i).getTorneo().getIdTorneo());
+                                        entrenadorElegido.getListaTorneos().add(torneoEscogido);
+                                        entrenadorServiciosImplementacion.insertarEntrenador(entrenadorElegido);
+                                        return true;
                                     }
                                 }
-
                                 System.out.println("¿Quieres volver a iniciar el proceso de inscripción? 1. Si | 2. No");
                                 try {
                                     int confirmacionFinal = entrada.nextInt();
@@ -173,27 +182,30 @@ public class GestionTorneos {
                         if (usuario instanceof Entrenador) {
                              entrenador = (Entrenador) usuario;
                         }
+                        //Este contador sirve para cuantas veces se ha inscrito si son 2 veces, se sale del bucle
+                        int contadorCombates = 0;
                         //Esta sección es para el entrenador que escoge este torneo como su torneo inicial
                         //Se le muestran todos los combates menos el último (el último es el combate final).
-                        for (int i = 0; i < combatesDelTorneo.size() - 1; i++) {
+                        for (int i = 0; i < combatesDelTorneo.size(); i++) {
                             CombateEntrenador combateEntrenador = combatesDelTorneo.get(i).getCombateEntrenador();
+                            CombateEntrenador ultimoCombate = combatesDelTorneo.get(combatesDelTorneo.size() - 1).getCombateEntrenador();
+
                             if (combateEntrenador.getIdEntrenador1() == 0) {
                                 combateEntrenador.setIdEntrenador1(usuario.getIdUsuarioInterfaz());
                                 combateEntrenadorServiciosImplementacion.insertarCombateEntrenador(combateEntrenador);
-                                System.out.println("Inscrito con éxito");
-                                Torneo torneoEscogido = torneoServiciosImplementacion.obtenerTorneoPorId(combatesDelTorneo.get(i).getTorneo().getIdTorneo());
-                                entrenador.getListaTorneos().add(torneoEscogido);
-
-                                return true;
-                            } else if (combateEntrenador.getIdEntrenador2() == 0) {
+                                contadorCombates++;
+                                //Esto sirve para poner al el entrenador en el último combate y evitar combinaciones sin fin.
+                                if (ultimoCombate.getIdEntrenador1() == 0) {
+                                    ultimoCombate.setIdEntrenador1(usuario.getIdUsuarioInterfaz());
+                                    combateEntrenadorServiciosImplementacion.insertarCombateEntrenador(ultimoCombate);
+                                    contadorCombates++;
+                                }
+                            } else if (combateEntrenador.getIdEntrenador2() == 0 && combateEntrenador.getIdEntrenador1() != entrenador.getIdEntrenador()) {
                                 combateEntrenador.setIdEntrenador2(usuario.getIdUsuarioInterfaz());
                                 combateEntrenadorServiciosImplementacion.insertarCombateEntrenador(combateEntrenador);
-                                Torneo torneoEscogido = torneoServiciosImplementacion.obtenerTorneoPorId(combatesDelTorneo.get(i).getTorneo().getIdTorneo());
-                                entrenador.getListaTorneos().add(torneoEscogido);
-                                System.out.println("Inscrito con éxito");
                                 // La lista tiene 3 huecos, pero solo se recorre el primer y segundo hueco, por tanto, se tiene que hacer "-2" porque "i" empieza en 0
-                                // y solo se dará como máximo 2 vueltas (0 y 1)
-                                if (i == combatesDelTorneo.size() - 2) {
+                                // y solo se dará como máximo 2 vueltas (0, 1 y 2)
+                                if (i == combatesDelTorneo.size() - 1) {
                                     //Esto sirve para poner el torneo a "-1" indicando que el torneo ya está lleno.
                                     Torneo torneo = torneoServiciosImplementacion.obtenerTorneoPorId(
                                             combatesDelTorneo.get(i).getTorneo().getIdTorneo());
@@ -201,6 +213,13 @@ public class GestionTorneos {
                                     //Con los datos actualizados lo insertamos en la base de datos para que se guarden los cambios.
                                     torneoServiciosImplementacion.insertarTorneo(torneo);
                                 }
+                                contadorCombates++;
+                            }
+
+                            if (contadorCombates == 2) {
+                                Torneo torneoEscogido = torneoServiciosImplementacion.obtenerTorneoPorId(combatesDelTorneo.get(i).getTorneo().getIdTorneo());
+                                entrenador.getListaTorneos().add(torneoEscogido);
+                                System.out.println("Inscrito con éxito");
                                 return true;
                             }
                         }
