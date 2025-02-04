@@ -277,11 +277,16 @@ public class GestionTorneos {
 
                 System.out.println("¿Iniciar Torneo? 1. Sí | 2. No");
                     try {
+                        int contadorV1 = 0;
+                        int contadorV2 = 0;
+                        int contadorV3 = 0;
+
+                        int idEntrenador2 = 0;
 
                         int iniciarTorneoScanner = entrada.nextInt();
                         if (iniciarTorneoScanner == 1) {
                             Entrenador entrenadorGanador = new Entrenador();
-                            //Hacer contadores de victoria
+                            //Hacer contadores de victoria y revisar en casa
 
                             for (int i = 0; i < combatesDelTorneo.size(); i++) {
                                 CombateEntrenador combateEntrenadorActual = combatesDelTorneo.get(i).getCombateEntrenador();
@@ -299,15 +304,37 @@ public class GestionTorneos {
                                     idGanador = entrenador1.getIdEntrenador().intValue();
                                     combateEntrenadorActual.setIdGanador(idGanador);
                                     combateEntrenadorServiciosImplementacion.insertarCombateEntrenador(combateEntrenadorActual);
+                                    if (combateEntrenadorActual.equals(combatesDelTorneo.get(combatesDelTorneo.size() - 2))) {
+                                        contadorV2++;
+                                        idEntrenador2 = entrenador2.getIdEntrenador().intValue();
+                                    } else {
+                                        contadorV1++;
+                                    }
 
                                 } else {
                                     System.out.println("Ha ganado " + entrenador2.getNombreEntrenador());
                                     idGanador = entrenador1.getIdEntrenador().intValue();
                                     combateEntrenadorActual.setIdGanador(idGanador);
                                     combateEntrenadorServiciosImplementacion.insertarCombateEntrenador(combateEntrenadorActual);
+                                    if (combateEntrenadorActual.equals(combatesDelTorneo.get(0))) {
+                                        contadorV2++;
+                                        idEntrenador2 = entrenador2.getIdEntrenador().intValue();
+                                    } else {
+                                        contadorV3++;
+                                    }
                                 }
 
                                 if (combateFinalBoolean) {
+                                    if (contadorV3 > contadorV2 && contadorV3 > contadorV1) {
+                                        idGanador = entrenador2.getIdEntrenador().intValue();
+                                    } else if (contadorV2 > contadorV1 && contadorV2 > contadorV3) {
+                                        idGanador = idEntrenador2;
+                                    } else if (contadorV1 > contadorV2 && contadorV1 > contadorV3) {
+                                        idGanador = entrenador1.getIdEntrenador().intValue();
+                                    } else {
+                                        idGanador = entrenador2.getIdEntrenador().intValue();
+                                    }
+
                                     //Si es el último combate se busca el combate final
                                     Torneo torneo = torneoServiciosImplementacion.obtenerTorneoPorId(torneoSeleccionado.getIdTorneo());
                                     torneo.setIdGanador(idGanador);
