@@ -1,0 +1,8 @@
+Nombre Torneo: gas
+Region Torneo: g
+Ganador Torneo: 4 | pablo
+Combates del torneo
+Combate 0: 2025-02-05 | ID: 10 | Ganador: 4
+Combate 1: 2025-02-05 | ID: 11 | Ganador: 5
+Combate 2: 2025-02-05 | ID: 12 | Ganador: 4
+Puntos del torneo: 100.0
