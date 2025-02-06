@@ -1,2 +1,6 @@
 admin admin Administrador 1
 aniceto aniceto AdministradorTorneos 2
+alfonso alfonso AdministradorTorneos 3
+fran fran Entrenador 4
+tomas tomas Entrenador 5
+samu samu Entrenador 6

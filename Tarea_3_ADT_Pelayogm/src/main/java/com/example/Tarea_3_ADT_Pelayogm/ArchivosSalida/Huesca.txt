@@ -1,0 +1,7 @@
+Nombre Torneo: Huesca
+Region Torneo: alfonso
+Combates del torneo
+Combate 0: 2025-02-06 | ID: 4 | Ganador: 0
+Combate 1: 2025-02-06 | ID: 5 | Ganador: 0
+Combate 2: 2025-02-06 | ID: 6 | Ganador: 0
+Puntos del torneo: 100.0

@@ -23,6 +23,8 @@ public class Tarea3AdtPelayogmApplication implements CommandLineRunner {
 }
 
 //En clase root- y en casa root-root
+//Mostrar puntos del carnet y preguntar que puntos del carnet
+//Borrar torneo-admin
 //Se inserta 2 veces un entrenador en la tabla entrenador_torneo (SOLUCIONADO)
 //Corregir el metodo combatir, el ultimo combate es el que importa y se deberia usar un contador de victorias o hacerlo aleatorio
 //En un torneo 3 entreneadores y 2 combates por entrenador (SOLUCIONADO)
