@@ -5,7 +5,6 @@ import com.example.Tarea_3_ADT_Pelayogm.Credenciales.Credenciales;
 import com.example.Tarea_3_ADT_Pelayogm.Entidades.*;
 import com.example.Tarea_3_ADT_Pelayogm.Servicios.CombateEntrenadorServiciosImplementacion;
 import com.example.Tarea_3_ADT_Pelayogm.Servicios.CombateServiciosImplementacion;
-import com.example.Tarea_3_ADT_Pelayogm.Servicios.TorneoAdminServiciosImplementacion;
 import com.example.Tarea_3_ADT_Pelayogm.Servicios.TorneoServiciosImplementacion;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -28,8 +27,6 @@ public class Funciones {
     public TorneoServiciosImplementacion torneoServiciosImplementacion;
     @Autowired
     public CombateServiciosImplementacion combateServiciosImplementacion;
-    @Autowired
-    public TorneoAdminServiciosImplementacion torneoAdminServiciosImplementacion;
     @Autowired
     public CombateEntrenadorServiciosImplementacion combateEntrenadorServiciosImplementacion;
 
@@ -78,6 +75,8 @@ public class Funciones {
                     System.out.println("¿Código de region del torneo?");
                         String regionTorneo = entrada.next();
                         char regionTorneoChar = regionTorneo.charAt(0);
+                    System.out.println("¿Cuántos puntos de victoria da el torneo?");
+                        Float puntosVictoria = entrada.nextFloat();
                     System.out.println("¿Usuario del administrador del torneo?");
                         String usuarioAdminTorneos = entrada.next();
                     System.out.println("¿Contraseña del administrador del torneo?");
@@ -123,7 +122,7 @@ public class Funciones {
                                 idCombate = listaDeCombates.size() + 1;
                             }
                             //Creamos el torneo para comparar con los que hay en la base de datos
-                            Torneo torneo = new Torneo(idTorneo, nombreTorneo, regionTorneo, 100F, idAdminTorneos, 0);
+                            Torneo torneo = new Torneo(idTorneo, nombreTorneo, regionTorneo, puntosVictoria, idAdminTorneos, 0);
                             boolean validado = false;
                             //Si la lista no está vacía significa que hay torneos con los que podemos comparar y se usa validado para asegurarse de que solo se hace una vez
                             if (!listaDeTorneos.isEmpty() && !validado) {

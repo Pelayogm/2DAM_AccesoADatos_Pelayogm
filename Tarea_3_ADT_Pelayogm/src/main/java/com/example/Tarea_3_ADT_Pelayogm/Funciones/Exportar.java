@@ -3,7 +3,6 @@ package com.example.Tarea_3_ADT_Pelayogm.Funciones;
 import com.example.Tarea_3_ADT_Pelayogm.Administradores.AdminTorneos;
 import com.example.Tarea_3_ADT_Pelayogm.Entidades.*;
 import com.example.Tarea_3_ADT_Pelayogm.Menus.Menus;
-import com.example.Tarea_3_ADT_Pelayogm.Servicios.TorneoAdminServiciosImplementacion;
 import com.example.Tarea_3_ADT_Pelayogm.Servicios.TorneoServiciosImplementacion;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -22,7 +21,6 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -31,8 +29,6 @@ public class Exportar {
 
     @Autowired
     Menus menu;
-    @Autowired
-    TorneoAdminServiciosImplementacion torneoAdminServiciosImplementacion;
     @Autowired
     TorneoServiciosImplementacion torneoServiciosImplementacion;
     @Autowired
@@ -93,6 +89,7 @@ public class Exportar {
                         String fechaActualString = fechaActual.format(dateTimeFormatter);
                     CrearElementoXML("hoy", fechaActualString, document, document.getDocumentElement());
                 document.getDocumentElement().appendChild(elementoEntrenador);
+                CrearElementoXML("puntos_carnet", entrenador.getCarnetEntrenador().getPuntosCarnet().toString(), document, document.getDocumentElement());
                 //TORNEOS ENTRENADOR
                 Element elementTorneos = document.createElement("Torneos");
 
