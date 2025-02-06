@@ -1,0 +1,8 @@
+Nombre Torneo: Huelva
+Region Torneo: H
+Ganador Torneo: 9 | nacho
+Combates del torneo
+Combate 0: 2025-02-06 | ID: 1 | Ganador: 7
+Combate 1: 2025-02-06 | ID: 2 | Ganador: 8
+Combate 2: 2025-02-06 | ID: 3 | Ganador: 9
+Puntos del torneo: 300.0
