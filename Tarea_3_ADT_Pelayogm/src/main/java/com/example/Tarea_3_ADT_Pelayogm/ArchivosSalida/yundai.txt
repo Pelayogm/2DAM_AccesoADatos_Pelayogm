@@ -1,6 +1,0 @@
-Nombre Torneo: yundai
-Region Torneo: s
-Combates del torneo
-Combate 0: 2025-02-01 | 1
-Combate 1: 2025-02-01 | 2
-Puntos del torneo: 100.0

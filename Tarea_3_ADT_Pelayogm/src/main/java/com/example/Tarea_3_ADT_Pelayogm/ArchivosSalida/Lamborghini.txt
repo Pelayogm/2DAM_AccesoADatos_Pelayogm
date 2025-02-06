@@ -1,7 +1,0 @@
-Nombre Torneo: Lamborghini
-Region Torneo: 7
-Combates del torneo
-Combate 0: 2025-02-03 | ID: 7 | Ganador: 0
-Combate 1: 2025-02-03 | ID: 8 | Ganador: 0
-Combate 2: 2025-02-03 | ID: 9 | Ganador: 0
-Puntos del torneo: 100.0

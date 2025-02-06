@@ -1,7 +1,0 @@
-Nombre Torneo: Ferrero
-Region Torneo: B
-Combates del torneo
-Combate 0: 2025-02-03 | ID: 16 | Ganador: 0
-Combate 1: 2025-02-03 | ID: 17 | Ganador: 0
-Combate 2: 2025-02-03 | ID: 18 | Ganador: 0
-Puntos del torneo: 100.0
