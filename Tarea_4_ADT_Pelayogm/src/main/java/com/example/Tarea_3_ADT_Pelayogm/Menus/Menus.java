@@ -150,7 +150,7 @@ public class Menus {
                     switch (opcionAdmin) {
                         case 1: {funciones.CrearTorneo(admin); break;}
                         case 2: {funciones.gestionarUsuarios(admin); break;}
-                        case 3: {funciones.consultarDatosDeUnTorneo(); break;}
+                        case 3: {funciones.consultarDatosDeUnTorneo(admin); break;}
                         case 4: {funciones.CerrarSesion(admin); break;}
                     }
                     System.out.println("1. Crear un Nuevo Torneo | 2. Gestionar usuarios | 3. Consultar información de un torneo | 4. Cerrar Sesión");

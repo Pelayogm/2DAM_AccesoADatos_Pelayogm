@@ -8,6 +8,7 @@ import com.example.Tarea_3_ADT_Pelayogm.Credenciales.Credenciales;
 import com.example.Tarea_3_ADT_Pelayogm.Entidades.*;
 import com.example.Tarea_3_ADT_Pelayogm.Servicios.CombateEntrenadorServiciosImplementacion;
 import com.example.Tarea_3_ADT_Pelayogm.Servicios.CombateServiciosImplementacion;
+import com.example.Tarea_3_ADT_Pelayogm.Servicios.EntrenadorServiciosImplementacion;
 import com.example.Tarea_3_ADT_Pelayogm.Servicios.TorneoServiciosImplementacion;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -32,6 +33,8 @@ public class Funciones {
     public CombateServiciosImplementacion combateServiciosImplementacion;
     @Autowired
     public CombateEntrenadorServiciosImplementacion combateEntrenadorServiciosImplementacion;
+    @Autowired
+    public EntrenadorServiciosImplementacion entrenadorServiciosImplementacion;
 
     public boolean CerrarSesion (Usuario usuario) {
         Scanner scanner = new Scanner(System.in);
@@ -180,9 +183,75 @@ public class Funciones {
         }
     }
 
-    public void consultarDatosDeUnTorneo() {
+    public void consultarDatosDeUnTorneo(Usuario usuario) {
+        if (usuario.isUsuario()) {
+            Scanner entrada = new Scanner(System.in);
+            System.out.println("1. Mostrar información de un torneo | 2. Saber ganador de un torneo | 3. Los 2 entrenadores que mas ganaron | 4. Listar entrenadores con sus puntos" +
+                    "| 5. Saber puntos de un entrenador | 6. Saber los torneos de una region | 7. Salir");
+            try {
+                int opcionUsuario = entrada.nextInt();
+                while (opcionUsuario < 8) {
+                    switch (opcionUsuario) {
+                        case 1: {}
+                        case 2: {}
+                        case 3: {}
+                        case 4: {listarEntrenadoresConPuntos(); break;}
+                        case 5: {saberPuntosDeUnEntrenador(); break;}
+                        case 6: {}
+                        case 7: {menus.menuAdministrador((Admin) usuario); break;}
+                    }
+                    System.out.println("1. Mostrar informacion de un torneo | 2. Saber ganador de un torneo | 3. Los 2 entrenadores que mas ganaron | 4. Listar entrenadores con sus puntos" +
+                            " | 5. Saber puntos de un entrenador | 6. Saber los torneos de una region | 7. Salir");
+                    opcionUsuario = entrada.nextInt();
+                }
+
+            } catch (Exception e) {
+                System.out.println("Entrada no reconocida. Volviendo al menu");
+                menus.menuAdministrador((Admin) usuario);
+            }
+        }
+    }
+
+    public void listarEntrenadoresConPuntos() {
+        List<Entrenador> entrenadores = entrenadorServiciosImplementacion.obtenerTodosLosEntrenadores();
+        if (!entrenadores.isEmpty()) {
+            for (int i = 0; i < entrenadores.size(); i++) {
+                System.out.println("Entrenador: " + entrenadores.get(i).getNombreEntrenador() +  " | Puntos: " + entrenadores.get(i).getCarnetEntrenador().getPuntosCarnet());
+            }
+        } else {
+            System.out.println("No hay entrenadores");
+        }
+    }
+
+    public void saberPuntosDeUnEntrenador() {
+        List<Entrenador> entrenadores = entrenadorServiciosImplementacion.obtenerTodosLosEntrenadores();
+        Scanner entrada = new Scanner(System.in);
+        if (!entrenadores.isEmpty()) {
+                for (int i = 0; i < entrenadores.size(); i++) {
+                System.out.println( i +" - Entrenador: " + entrenadores.get(i).getNombreEntrenador());
+            }
+            System.out.println("Elige un entrenador");
+                try {
+                    int opcionUsuario = entrada.nextInt();
+                    if (opcionUsuario >= entrenadores.size()) {
+                        System.out.println("Fuera de límites, volviendo a empezar...");
+                        saberPuntosDeUnEntrenador();
+                    } else {
+                        Entrenador entrenador = entrenadores.get(opcionUsuario);
+                        System.out.println(entrenador.getNombreEntrenador() + " tiene " + entrenador.getCarnetEntrenador().getPuntosCarnet());
+                    }
+
+                } catch (Exception e) {
+                    System.out.println("Entrada no reconocida");
+                    saberPuntosDeUnEntrenador();
+                }
+        } else {
+            System.out.println("No hay entrenadores");
+        }
 
     }
+
+
 
     public void gestionarUsuarios(Usuario usuario) {
         if (usuario.isUsuario()) {

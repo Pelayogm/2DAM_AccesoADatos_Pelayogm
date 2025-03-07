@@ -25,4 +25,7 @@ public class Tarea3AdtPelayogmApplication implements CommandLineRunner {
 //Arreglar los ids (COMPLETADO)
 //Listar usuarios (COMPLETADO)
 //Cambiar contraseña de un usuario (COMPLETADO)
+//Mongodb Dependencia (COMPLETADO)
+//Saber puntos de un entrenador(COMPLETADO)
+//Listar todos los entrenadores y sacar sus puntos (COMPLETADO)
 //Hacer el resto de la actividad
