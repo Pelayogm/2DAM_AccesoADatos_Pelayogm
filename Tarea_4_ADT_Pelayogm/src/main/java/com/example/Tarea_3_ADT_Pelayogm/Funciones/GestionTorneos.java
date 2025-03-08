@@ -3,10 +3,13 @@ package com.example.Tarea_3_ADT_Pelayogm.Funciones;
 import com.example.Tarea_3_ADT_Pelayogm.Administradores.AdminTorneos;
 import com.example.Tarea_3_ADT_Pelayogm.Entidades.*;
 import com.example.Tarea_3_ADT_Pelayogm.Menus.Menus;
+import com.example.Tarea_3_ADT_Pelayogm.MongoDB.MongoDBConectar;
+import com.example.Tarea_3_ADT_Pelayogm.MongoDB.TorneoMongoDAO;
 import com.example.Tarea_3_ADT_Pelayogm.Servicios.CarnetServiciosImplementacion;
 import com.example.Tarea_3_ADT_Pelayogm.Servicios.CombateEntrenadorServiciosImplementacion;
 import com.example.Tarea_3_ADT_Pelayogm.Servicios.EntrenadorServiciosImplementacion;
 import com.example.Tarea_3_ADT_Pelayogm.Servicios.TorneoServiciosImplementacion;
+import com.mongodb.client.MongoClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -357,6 +360,11 @@ public class GestionTorneos {
                                     carnetEntrenadorGanador.setNumeroVictorias(carnetEntrenadorGanador.getNumeroVictorias() + 1);
                                     //Insertamos de nuevo el carnet actualizado
                                     carnetServiciosImplementacion.insertarCarnet(carnetEntrenadorGanador);
+
+                                    try (MongoClient client = MongoDBConectar.conectar()) {
+                                        TorneoMongoDAO torneoMongoDAO = new TorneoMongoDAO(client);
+                                        torneoMongoDAO.insertarTorneo(torneo);
+                                    }
                                 }
 
                             }

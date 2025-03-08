@@ -14,4 +14,6 @@ public class EntrenadorMongoDAO {
         MongoDatabase database = cliente.getDatabase(DB_NOMBRE);
         this.collection = database.getCollection(COLLECTION_NOMBRE);
     }
+
+
 }

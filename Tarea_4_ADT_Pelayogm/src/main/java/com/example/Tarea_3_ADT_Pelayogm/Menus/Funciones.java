@@ -6,10 +6,13 @@ import com.example.Tarea_3_ADT_Pelayogm.Administradores.Admin;
 import com.example.Tarea_3_ADT_Pelayogm.Credenciales.CredencialUsuario;
 import com.example.Tarea_3_ADT_Pelayogm.Credenciales.Credenciales;
 import com.example.Tarea_3_ADT_Pelayogm.Entidades.*;
+import com.example.Tarea_3_ADT_Pelayogm.MongoDB.MongoDBConectar;
+import com.example.Tarea_3_ADT_Pelayogm.MongoDB.TorneoMongoDAO;
 import com.example.Tarea_3_ADT_Pelayogm.Servicios.CombateEntrenadorServiciosImplementacion;
 import com.example.Tarea_3_ADT_Pelayogm.Servicios.CombateServiciosImplementacion;
 import com.example.Tarea_3_ADT_Pelayogm.Servicios.EntrenadorServiciosImplementacion;
 import com.example.Tarea_3_ADT_Pelayogm.Servicios.TorneoServiciosImplementacion;
+import com.mongodb.client.MongoClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -106,7 +109,7 @@ public class Funciones {
                                 Credenciales.escribirFichero(db, usuarioAdminTorneos, contrasenaAdminTorneos, rolUsuario, idAdminTorneos);
                             } else {
                                 for (int i = 0; i < listaCredenciales.size(); i++) {
-                                    if (listaCredenciales.get(i).equals(usuarioAdminTorneos) && listaCredenciales.get(i + 1).equals(contrasenaAdminTorneos) && listaCredenciales.get(i + 2).equals("AdministradorTorneos")) {
+                                    if (listaCredenciales.get(i).getUsuarioLogin().equals(usuarioAdminTorneos) && listaCredenciales.get(i).getContrasenaLogin().equals(contrasenaAdminTorneos) && listaCredenciales.get(i).getRolUsuario().equals("AdministradorTorneos")) {
                                         idAdminTorneos = listaCredenciales.get(i).getIdUsuario();
                                     }
                                 }
@@ -167,6 +170,15 @@ public class Funciones {
 
                             torneo.setCombates(listaCombatesTorneo);
                             torneoServiciosImplementacion.insertarTorneo(torneo);
+
+                            try (MongoClient client = MongoDBConectar.conectar()) {
+                                TorneoMongoDAO torneoMongoDAO = new TorneoMongoDAO(client);
+                                torneoMongoDAO.insertarTorneo(torneo);
+                            } catch (Exception e) {
+                                System.out.println("MongoDB ha fallado");
+                                //e.printStackTrace();
+                            }
+
                         System.out.println("Torneo insertado en la base de datos con éxito!");
 
                         } catch (Exception e) {
@@ -186,21 +198,21 @@ public class Funciones {
     public void consultarDatosDeUnTorneo(Usuario usuario) {
         if (usuario.isUsuario()) {
             Scanner entrada = new Scanner(System.in);
-            System.out.println("1. Mostrar información de un torneo | 2. Saber ganador de un torneo | 3. Los 2 entrenadores que mas ganaron | 4. Listar entrenadores con sus puntos" +
+            System.out.println("1. Mostrar información de un torneo | 2. Saber ganador de un torneo | 3. Los 2 entrenadores que más han ganado | 4. Listar entrenadores con sus puntos" +
                     "| 5. Saber puntos de un entrenador | 6. Saber los torneos de una region | 7. Salir");
             try {
                 int opcionUsuario = entrada.nextInt();
                 while (opcionUsuario < 8) {
                     switch (opcionUsuario) {
-                        case 1: {}
-                        case 2: {}
-                        case 3: {}
+                        case 1: {mostrarInformacionDeUnTorneo(usuario); break;}
+                        case 2: {mostrarGanadorDeUnTorneo(usuario); break;}
+                        case 3: {listarLosEntrenadoresConMasPuntos(usuario); break;}
                         case 4: {listarEntrenadoresConPuntos(); break;}
                         case 5: {saberPuntosDeUnEntrenador(); break;}
-                        case 6: {}
+                        case 6: {listarTorneosDeUnaRegion(usuario); break;}
                         case 7: {menus.menuAdministrador((Admin) usuario); break;}
                     }
-                    System.out.println("1. Mostrar informacion de un torneo | 2. Saber ganador de un torneo | 3. Los 2 entrenadores que mas ganaron | 4. Listar entrenadores con sus puntos" +
+                    System.out.println("1. Mostrar informacion de un torneo | 2. Saber ganador de un torneo | 3. Los 2 entrenadores que más han ganado | 4. Listar entrenadores con sus puntos" +
                             " | 5. Saber puntos de un entrenador | 6. Saber los torneos de una region | 7. Salir");
                     opcionUsuario = entrada.nextInt();
                 }
@@ -209,6 +221,133 @@ public class Funciones {
                 System.out.println("Entrada no reconocida. Volviendo al menu");
                 menus.menuAdministrador((Admin) usuario);
             }
+        } else {
+            menus.menuInicial();
+        }
+    }
+
+    public void mostrarInformacionDeUnTorneo(Usuario usuario) {
+        if (usuario.isUsuario()) {
+            Scanner entrada = new Scanner(System.in);
+
+            try (MongoClient client = MongoDBConectar.conectar()) {
+                TorneoMongoDAO torneoMongoDAO = new TorneoMongoDAO(client);
+                torneoMongoDAO.mostrarTodosLosTorneos();
+                try {
+                    int opcionUsuario = entrada.nextInt();
+                    try {
+                        torneoMongoDAO.mostrarTorneoPorId(opcionUsuario);
+                    } catch (Exception e) {
+                        System.out.println("Vuelve a intentarlo");
+                        mostrarInformacionDeUnTorneo(usuario);
+                    }
+
+                } catch (Exception e) {
+                    System.out.println("Opción fuera de límites");
+                    menus.menuAdministrador((Admin) usuario);
+                }
+
+
+            } catch (Exception e) {
+                System.out.println("MongoDB ha fallado");
+            }
+        } else {
+            menus.menuInicial();
+        }
+    }
+
+    public void mostrarGanadorDeUnTorneo(Usuario usuario) {
+        if (usuario.isUsuario()) {
+            Scanner entrada = new Scanner(System.in);
+
+            try (MongoClient client = MongoDBConectar.conectar()) {
+                TorneoMongoDAO torneoMongoDAO = new TorneoMongoDAO(client);
+                torneoMongoDAO.mostrarTodosLosTorneos();
+                try {
+                    int opcionUsuario = entrada.nextInt();
+                    try {
+                        int ganadorTorneo = torneoMongoDAO.mostrarGanadorTorneo(opcionUsuario);
+                        if (ganadorTorneo == 0 || ganadorTorneo == -1) {
+                            System.out.println("No hay ganador de este torneo");
+                        }
+
+                        Entrenador entrenador = entrenadorServiciosImplementacion.obtenerEntrenadorPorId(ganadorTorneo);
+                        System.out.println(entrenador.toString());
+
+                    } catch (Exception e) {
+                    }
+
+                } catch (Exception e) {
+                    System.out.println("Opción fuera de límites");
+                    menus.menuAdministrador((Admin) usuario);
+                }
+
+
+            } catch (Exception e) {
+                System.out.println("MongoDB ha fallado");
+            }
+        } else {
+            menus.menuInicial();
+        }
+    }
+
+    public void listarTorneosDeUnaRegion(Usuario usuario) {
+        if (usuario.isUsuario()) {
+            Scanner entrada = new Scanner(System.in);
+
+            try (MongoClient client = MongoDBConectar.conectar()) {
+                TorneoMongoDAO torneoMongoDAO = new TorneoMongoDAO(client);
+                torneoMongoDAO.mostrarTodosLosTorneos();
+                try {
+                    System.out.println("Escoge una región de los torneos");
+                    String opcionUsuario = entrada.nextLine();
+                    try {
+                        torneoMongoDAO.mostrarInformacionDeUnaRegion(opcionUsuario);
+                    } catch (Exception e) {
+                        System.out.println("Error con la región");
+                    }
+
+                } catch (Exception e) {
+                    System.out.println("Opción fuera de límites");
+                    menus.menuAdministrador((Admin) usuario);
+                }
+
+
+            } catch (Exception e) {
+                System.out.println("MongoDB ha fallado");
+            }
+        } else {
+            menus.menuInicial();
+        }
+    }
+
+    public void listarLosEntrenadoresConMasPuntos(Usuario usuario) {
+        List<Entrenador> entrenadores = entrenadorServiciosImplementacion.obtenerTodosLosEntrenadores();
+        long idPrimerGanador = 0;
+        int VictoriasPrimer = 0;
+        long idSegundoGanador = 0;
+        int VictoriasSegundo = 0;
+
+        if (!entrenadores.isEmpty()) {
+            for (int i = 0; i < entrenadores.size(); i++) {
+                if (entrenadores.get(i).getCarnetEntrenador().getNumeroVictorias() > VictoriasPrimer) {
+                    VictoriasPrimer = entrenadores.get(i).getCarnetEntrenador().getNumeroVictorias();
+                    idPrimerGanador = entrenadores.get(i).getIdEntrenador();
+                } else if (entrenadores.get(i).getCarnetEntrenador().getNumeroVictorias() > VictoriasSegundo) {
+                    VictoriasSegundo = entrenadores.get(i).getCarnetEntrenador().getNumeroVictorias();
+                    idSegundoGanador = entrenadores.get(i).getIdEntrenador();
+                }
+            }
+
+            Entrenador e1 = entrenadorServiciosImplementacion.obtenerEntrenadorPorId(idPrimerGanador);
+            Entrenador e2 = entrenadorServiciosImplementacion.obtenerEntrenadorPorId(idSegundoGanador);
+
+            System.out.println("Los 2 entrenadores con más victorias son:");
+            System.out.println(e1.getNombreEntrenador() + "Victorias: " + e1.getCarnetEntrenador().getNumeroVictorias());
+            System.out.println(e2.getNombreEntrenador() + "Victorias: " + e2.getCarnetEntrenador().getNumeroVictorias());
+
+        } else {
+            System.out.println("La lista esta vacía");
         }
     }
 
@@ -350,7 +489,7 @@ public class Funciones {
                 }
             } catch (Exception e) {
                 System.out.println("Opcion fuera de limites");
-                eliminarCredenciales(usuario);
+                menus.menuAdministrador((Admin) usuario);
             }
 
     }

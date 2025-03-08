@@ -65,4 +65,13 @@ public class Entrenador extends Usuario {
     public void setListaTorneos(List<Torneo> listaTorneos) {
         this.listaTorneos = listaTorneos;
     }
+
+    @Override
+    public String toString() {
+        return "Entrenador{" +
+                "nacionalidadEntrenador='" + nacionalidadEntrenador + '\'' +
+                ", idEntrenador=" + idEntrenador +
+                ", nombreEntrenador='" + nombreEntrenador + '\'' +
+                '}';
+    }
 }

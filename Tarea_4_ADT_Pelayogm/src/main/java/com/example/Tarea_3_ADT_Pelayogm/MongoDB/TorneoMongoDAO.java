@@ -7,6 +7,7 @@ import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Filters;
+import com.mongodb.client.model.Updates;
 import org.bson.Document;
 
 import java.util.ArrayList;
@@ -37,22 +38,45 @@ public class TorneoMongoDAO {
 
             Document combate = new Document("_id", combateCurrent.getIdCombate());
             combate.append("fechaCombate", combateCurrent.getFechaCombate());
-            combate.append("idTorneo", combateCurrent.getIdTorneo());
-                //Combate entrenador pasado a Document
+            combate.append("idTorneo", combateCurrent.getTorneo().getIdTorneo());
+            //Combate entrenador pasado a Document
                 Document combateEntrenador = new Document("_id", combateCurrent.getIdCombate());
                 combateEntrenador.append("idEntrenador1", combateEntrenadorCurrent.getIdEntrenador1());
                 combateEntrenador.append("idEntrenador2", combateEntrenadorCurrent.getIdEntrenador2());
                 combateEntrenador.append("idGanador", combateEntrenadorCurrent.getIdGanador());
             combate.append("combateEntrenador", combateEntrenador);
+            listaDeCombates.add(combate);
         }
 
         torneoMongo.append("combatesTorneo", listaDeCombates);
         collection.insertOne(torneoMongo);
     }
 
+    public void actualizarTorneo(Torneo torneo) {
+        List<Document> listaDeCombates = new ArrayList<>();
+        for (int i = 0; i < torneo.getCombates().size(); i++) {
+            Combate combateCurrent = torneo.getCombates().get(i);
+            CombateEntrenador combateEntrenadorCurrent = torneo.getCombates().get(i).getCombateEntrenador();
+
+            Document combate = new Document("_id", combateCurrent.getIdCombate());
+            combate.append("fechaCombate", combateCurrent.getFechaCombate());
+            combate.append("idTorneo", combateCurrent.getTorneo().getIdTorneo());
+            //Combate entrenador pasado a Document
+            Document combateEntrenador = new Document("_id", combateCurrent.getIdCombate());
+            combateEntrenador.append("idEntrenador1", combateEntrenadorCurrent.getIdEntrenador1());
+            combateEntrenador.append("idEntrenador2", combateEntrenadorCurrent.getIdEntrenador2());
+            combateEntrenador.append("idGanador", combateEntrenadorCurrent.getIdGanador());
+            combate.append("combateEntrenador", combateEntrenador);
+            listaDeCombates.add(combate);
+        }
+
+        collection.updateOne(Filters.eq("_id", torneo.getIdTorneo()), Updates.set("idGanadorTorneo", torneo.getIdGanador()));
+        collection.updateOne(Filters.eq("_id", torneo.getIdTorneo()), Updates.set("combatesTorneo", listaDeCombates));
+    }
+
     public void mostrarTodosLosTorneos() {
         for (Document torneos: collection.find()) {
-            System.out.println(torneos.get("_id") + " " + torneos.get("nombreTorneo") + " " + torneos.get("codigoTorneo"));
+            System.out.println(torneos.get("_id") + " - " + torneos.get("nombreTorneo") + " Region: " + torneos.get("codigoTorneo"));
         }
     }
 
@@ -67,7 +91,7 @@ public class TorneoMongoDAO {
             String idGanador = torneos.get("idGanadorTorneo").toString();
            return Integer.parseInt(idGanador);
         }
-        return -10;
+        return -1;
     }
 
     public void mostrarInformacionDeUnaRegion(String regionTorneo) {
