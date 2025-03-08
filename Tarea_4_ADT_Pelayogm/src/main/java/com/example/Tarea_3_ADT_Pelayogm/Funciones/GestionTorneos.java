@@ -363,7 +363,7 @@ public class GestionTorneos {
 
                                     try (MongoClient client = MongoDBConectar.conectar()) {
                                         TorneoMongoDAO torneoMongoDAO = new TorneoMongoDAO(client);
-                                        torneoMongoDAO.insertarTorneo(torneo);
+                                        torneoMongoDAO.actualizarTorneo(torneo);
                                     }
                                 }
 

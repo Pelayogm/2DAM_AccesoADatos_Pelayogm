@@ -30,7 +30,6 @@ public class Tarea3AdtPelayogmApplication implements CommandLineRunner {
 //Listar todos los entrenadores y sacar sus puntos (COMPLETADO)
 //Los datos ya se meten en mongoDB (COMPLETADO)
 //Mostrar informacion de un torneo (COMPLETADO)
-//Mostrar ganador (SEMI-COMPLETADO)
-//Mostrar torneos de una region (SEMI-COMPLETADO)
+//Mostrar ganador (COMPLETADO)
+//Mostrar torneos de una region (COMPLETADO)
 //Los 2 que más han ganado (COMPLETADO)
-//Hacer el resto de la actividad

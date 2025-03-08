@@ -87,7 +87,7 @@ public class TorneoMongoDAO {
     }
 
     public int mostrarGanadorTorneo(int idTorneo) {
-        for (Document torneos: collection.find(Filters.gt("_id", idTorneo))) {
+        for (Document torneos: collection.find(Filters.eq("_id", idTorneo))) {
             String idGanador = torneos.get("idGanadorTorneo").toString();
            return Integer.parseInt(idGanador);
         }
@@ -95,7 +95,7 @@ public class TorneoMongoDAO {
     }
 
     public void mostrarInformacionDeUnaRegion(String regionTorneo) {
-        for (Document torneos: collection.find(Filters.gt("codigoTorneo", regionTorneo))) {
+        for (Document torneos: collection.find(Filters.eq("codigoTorneo", regionTorneo))) {
             System.out.println(torneos.toJson());
         }
     }
