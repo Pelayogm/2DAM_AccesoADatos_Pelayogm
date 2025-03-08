@@ -1,0 +1,8 @@
+Nombre Torneo: Filamento
+Region Torneo: A
+Ganador Torneo: 5 | luis
+Combates del torneo
+Combate 0: 2025-03-08 | ID: 1 | Ganador: 3
+Combate 1: 2025-03-08 | ID: 2 | Ganador: 4
+Combate 2: 2025-03-08 | ID: 3 | Ganador: 5
+Puntos del torneo: 150.0
