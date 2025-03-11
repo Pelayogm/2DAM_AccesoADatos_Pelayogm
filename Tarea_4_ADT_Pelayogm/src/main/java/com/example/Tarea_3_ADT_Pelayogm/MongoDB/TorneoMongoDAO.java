@@ -81,7 +81,7 @@ public class TorneoMongoDAO {
     }
 
     public void mostrarTorneoPorId(int idTorneo) {
-        for (Document torneos: collection.find(Filters.gt("_id", idTorneo))) {
+        for (Document torneos: collection.find(Filters.eq("_id", idTorneo))) {
             System.out.println(torneos.toJson());
         }
     }
@@ -99,6 +99,4 @@ public class TorneoMongoDAO {
             System.out.println(torneos.toJson());
         }
     }
-
-
 }

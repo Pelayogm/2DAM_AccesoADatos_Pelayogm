@@ -1,0 +1,7 @@
+Nombre Torneo: Ribera
+Region Torneo: R
+Combates del torneo
+Combate 0: 2025-03-11 | ID: 1 | Ganador: 0
+Combate 1: 2025-03-11 | ID: 2 | Ganador: 0
+Combate 2: 2025-03-11 | ID: 3 | Ganador: 0
+Puntos del torneo: 150.0

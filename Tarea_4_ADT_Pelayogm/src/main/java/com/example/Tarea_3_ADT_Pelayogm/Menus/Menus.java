@@ -7,10 +7,14 @@ import com.example.Tarea_3_ADT_Pelayogm.Entidades.Entrenador;
 import com.example.Tarea_3_ADT_Pelayogm.Entidades.Torneo;
 import com.example.Tarea_3_ADT_Pelayogm.Funciones.Exportar;
 import com.example.Tarea_3_ADT_Pelayogm.Funciones.GestionTorneos;
+import com.example.Tarea_3_ADT_Pelayogm.MongoDB.EntrenadorMongoDAO;
+import com.example.Tarea_3_ADT_Pelayogm.MongoDB.MongoDBConectar;
+import com.example.Tarea_3_ADT_Pelayogm.MongoDB.TorneoMongoDAO;
 import com.example.Tarea_3_ADT_Pelayogm.Servicios.CarnetServiciosImplementacion;
 import com.example.Tarea_3_ADT_Pelayogm.Servicios.EntrenadorServiciosImplementacion;
 import com.example.Tarea_3_ADT_Pelayogm.Servicios.TorneoServiciosImplementacion;
 import com.example.Tarea_3_ADT_Pelayogm.XML.LectorXML;
+import com.mongodb.client.MongoClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -92,6 +96,13 @@ public class Menus {
                         if (gestionTorneos.inscribirEntrenador(entrenador)) {
                             carnetServiciosImplementacion.insertarCarnet(carnet);
                             entrenadorServiciosImplementacion.insertarEntrenador(entrenador);
+                            try (MongoClient client = MongoDBConectar.conectar()) {
+                                EntrenadorMongoDAO entrenadorMongoDAO = new EntrenadorMongoDAO(client);
+                                entrenadorMongoDAO.insertarEntrenador(entrenador);
+                            } catch (Exception e) {
+                                System.out.println("MongoDB ha fallado");
+                                //e.printStackTrace();
+                            }
                         } else {
                             System.out.println("No se ha podido inscribir al torneo. Volviendo al menú");
                             menuInicial();

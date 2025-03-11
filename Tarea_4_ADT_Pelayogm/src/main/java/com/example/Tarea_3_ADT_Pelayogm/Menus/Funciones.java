@@ -6,6 +6,7 @@ import com.example.Tarea_3_ADT_Pelayogm.Administradores.Admin;
 import com.example.Tarea_3_ADT_Pelayogm.Credenciales.CredencialUsuario;
 import com.example.Tarea_3_ADT_Pelayogm.Credenciales.Credenciales;
 import com.example.Tarea_3_ADT_Pelayogm.Entidades.*;
+import com.example.Tarea_3_ADT_Pelayogm.MongoDB.EntrenadorMongoDAO;
 import com.example.Tarea_3_ADT_Pelayogm.MongoDB.MongoDBConectar;
 import com.example.Tarea_3_ADT_Pelayogm.MongoDB.TorneoMongoDAO;
 import com.example.Tarea_3_ADT_Pelayogm.Servicios.CombateEntrenadorServiciosImplementacion;
@@ -322,70 +323,44 @@ public class Funciones {
     }
 
     public void listarLosEntrenadoresConMasPuntos(Usuario usuario) {
-        List<Entrenador> entrenadores = entrenadorServiciosImplementacion.obtenerTodosLosEntrenadores();
-        long idPrimerGanador = 0;
-        int VictoriasPrimer = 0;
-        long idSegundoGanador = 0;
-        int VictoriasSegundo = 0;
-
-        if (!entrenadores.isEmpty()) {
-            for (int i = 0; i < entrenadores.size(); i++) {
-                if (entrenadores.get(i).getCarnetEntrenador().getNumeroVictorias() > VictoriasPrimer) {
-                    VictoriasPrimer = entrenadores.get(i).getCarnetEntrenador().getNumeroVictorias();
-                    idPrimerGanador = entrenadores.get(i).getIdEntrenador();
-                } else if (entrenadores.get(i).getCarnetEntrenador().getNumeroVictorias() > VictoriasSegundo) {
-                    VictoriasSegundo = entrenadores.get(i).getCarnetEntrenador().getNumeroVictorias();
-                    idSegundoGanador = entrenadores.get(i).getIdEntrenador();
-                }
+        if (usuario.isUsuario()) {
+            try (MongoClient client = MongoDBConectar.conectar()) {
+                EntrenadorMongoDAO entrenadorMongoDAO = new EntrenadorMongoDAO(client);
+                entrenadorMongoDAO.mostrarTodosLosEntrenadoresConMasVictorias();
+            } catch (Exception e) {
+                System.out.println("MongoDB ha fallado");
+                //e.printStackTrace();
             }
-
-            Entrenador e1 = entrenadorServiciosImplementacion.obtenerEntrenadorPorId(idPrimerGanador);
-            Entrenador e2 = entrenadorServiciosImplementacion.obtenerEntrenadorPorId(idSegundoGanador);
-
-            System.out.println("Los 2 entrenadores con más victorias son:");
-            System.out.println(e1.getNombreEntrenador() + "Victorias: " + e1.getCarnetEntrenador().getNumeroVictorias());
-            System.out.println(e2.getNombreEntrenador() + "Victorias: " + e2.getCarnetEntrenador().getNumeroVictorias());
-
         } else {
-            System.out.println("La lista esta vacía");
+            System.out.println("No tienes permisos...");
         }
     }
 
     public void listarEntrenadoresConPuntos() {
-        List<Entrenador> entrenadores = entrenadorServiciosImplementacion.obtenerTodosLosEntrenadores();
-        if (!entrenadores.isEmpty()) {
-            for (int i = 0; i < entrenadores.size(); i++) {
-                System.out.println("Entrenador: " + entrenadores.get(i).getNombreEntrenador() +  " | Puntos: " + entrenadores.get(i).getCarnetEntrenador().getPuntosCarnet());
-            }
-        } else {
-            System.out.println("No hay entrenadores");
+        try (MongoClient client = MongoDBConectar.conectar()) {
+            EntrenadorMongoDAO entrenadorMongoDAO = new EntrenadorMongoDAO(client);
+            entrenadorMongoDAO.mostrarTodosLosEntrenadores();
+        } catch (Exception e) {
+            System.out.println("MongoDB ha fallado");
+            //e.printStackTrace();
         }
     }
 
     public void saberPuntosDeUnEntrenador() {
-        List<Entrenador> entrenadores = entrenadorServiciosImplementacion.obtenerTodosLosEntrenadores();
-        Scanner entrada = new Scanner(System.in);
-        if (!entrenadores.isEmpty()) {
-                for (int i = 0; i < entrenadores.size(); i++) {
-                System.out.println( i +" - Entrenador: " + entrenadores.get(i).getNombreEntrenador());
+        try (MongoClient client = MongoDBConectar.conectar()) {
+            EntrenadorMongoDAO entrenadorMongoDAO = new EntrenadorMongoDAO(client);
+            entrenadorMongoDAO.mostrarTodosLosEntrenadoresSinPuntos();
+            Scanner entrada = new Scanner(System.in);
+            try {
+                int opcionUsuario = entrada.nextInt();
+                entrenadorMongoDAO.mostrarEntrenadorPorId(opcionUsuario);
+            } catch (Exception e) {
+                System.out.println("No hay entrenadores disponibles");
             }
-            System.out.println("Elige un entrenador");
-                try {
-                    int opcionUsuario = entrada.nextInt();
-                    if (opcionUsuario >= entrenadores.size()) {
-                        System.out.println("Fuera de límites, volviendo a empezar...");
-                        saberPuntosDeUnEntrenador();
-                    } else {
-                        Entrenador entrenador = entrenadores.get(opcionUsuario);
-                        System.out.println(entrenador.getNombreEntrenador() + " tiene " + entrenador.getCarnetEntrenador().getPuntosCarnet());
-                    }
 
-                } catch (Exception e) {
-                    System.out.println("Entrada no reconocida");
-                    saberPuntosDeUnEntrenador();
-                }
-        } else {
-            System.out.println("No hay entrenadores");
+        } catch (Exception e) {
+            System.out.println("MongoDB ha fallado");
+            //e.printStackTrace();
         }
 
     }

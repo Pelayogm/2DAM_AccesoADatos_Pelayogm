@@ -9,6 +9,8 @@ import com.mongodb.client.model.Filters;
 import com.mongodb.client.model.Updates;
 import org.bson.Document;
 
+import java.util.ArrayList;
+
 public class EntrenadorMongoDAO {
     private static final String DB_NOMBRE = "tarea4_pelayogm";
     private static final String COLLECTION_NOMBRE = "entrenadores";
@@ -51,6 +53,12 @@ public class EntrenadorMongoDAO {
         }
     }
 
+    public void mostrarTodosLosEntrenadoresSinPuntos() {
+        for (Document entrenadores: collection.find()) {
+            System.out.println(entrenadores.get("_id") + " - " + entrenadores.get("nombreEntrenador"));
+        }
+    }
+
     public void mostrarEntrenadorPorId(int idEntrenador) {
         for (Document entrenadores: collection.find(Filters.eq("_id", idEntrenador))) {
             Document carnet = (Document) entrenadores.get("carnetEntrenador");
@@ -58,11 +66,43 @@ public class EntrenadorMongoDAO {
         }
     }
 
-    //public void mostrarTodosLosEntrenadoresConMasVictorias() {
-    //    for (Document entrenadores: collection.find()) {
-    //        Document carnet = (Document) entrenadores.get("carnetEntrenador");
-    //        System.out.println(entrenadores.get("_id") + " - " + entrenadores.get("nombreEntrenador") + " Puntos: " + carnet.get("puntosCarnet"));
-    //    }
-    //}
+    public void mostrarEntrenadorVictorias(int idEntrenador) {
+        for (Document entrenadores: collection.find(Filters.eq("_id", idEntrenador))) {
+            Document carnet = (Document) entrenadores.get("carnetEntrenador");
+            System.out.println(entrenadores.get("_id") + " - " + entrenadores.get("nombreEntrenador") + " Puntos: " + carnet.get("numeroVictorias"));
+        }
+    }
+
+    public void mostrarTodosLosEntrenadoresConMasVictorias() {
+        ArrayList<Integer> victorias = new ArrayList<>();
+        ArrayList<Integer> idsEntrenadores = new ArrayList<>();
+        for (Document entrenadores: collection.find()) {
+            Document carnet = (Document) entrenadores.get("carnetEntrenador");
+            victorias.add((Integer) carnet.get("numeroVictorias"));
+            idsEntrenadores.add(Integer.parseInt(entrenadores.get("_id").toString()));
+        }
+
+        if (!victorias.isEmpty()) {
+            int idPrimerGanador = 0;
+            int victoriasPrimer = 0;
+            int idSegundoGanador = 0;
+            int victoriasSegundo = 0;
+
+            for (int i = 0; i < victorias.size(); i++) {
+                if (victorias.get(i) > victoriasPrimer) {
+                    victoriasPrimer = victorias.get(i);
+                    idPrimerGanador = idsEntrenadores.get(i);
+                } else if (victorias.get(i) > victoriasSegundo) {
+                    victoriasSegundo = victorias.get(i);
+                    idSegundoGanador = idsEntrenadores.get(i);
+                }
+            }
+            System.out.println("Primer ganador:");
+            mostrarEntrenadorVictorias(idPrimerGanador);
+            System.out.println("Segundo ganador:");
+            mostrarEntrenadorVictorias(idSegundoGanador);
+
+        }
+    }
 
 }

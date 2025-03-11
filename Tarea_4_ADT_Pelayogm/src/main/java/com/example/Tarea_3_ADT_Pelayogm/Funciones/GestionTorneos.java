@@ -3,6 +3,7 @@ package com.example.Tarea_3_ADT_Pelayogm.Funciones;
 import com.example.Tarea_3_ADT_Pelayogm.Administradores.AdminTorneos;
 import com.example.Tarea_3_ADT_Pelayogm.Entidades.*;
 import com.example.Tarea_3_ADT_Pelayogm.Menus.Menus;
+import com.example.Tarea_3_ADT_Pelayogm.MongoDB.EntrenadorMongoDAO;
 import com.example.Tarea_3_ADT_Pelayogm.MongoDB.MongoDBConectar;
 import com.example.Tarea_3_ADT_Pelayogm.MongoDB.TorneoMongoDAO;
 import com.example.Tarea_3_ADT_Pelayogm.Servicios.CarnetServiciosImplementacion;
@@ -360,6 +361,15 @@ public class GestionTorneos {
                                     carnetEntrenadorGanador.setNumeroVictorias(carnetEntrenadorGanador.getNumeroVictorias() + 1);
                                     //Insertamos de nuevo el carnet actualizado
                                     carnetServiciosImplementacion.insertarCarnet(carnetEntrenadorGanador);
+
+                                    Entrenador entrenadorMongoDB = new Entrenador(entrenadorGanador.getIdEntrenador(), entrenadorGanador.getNombreEntrenador(), entrenadorGanador.getNacionalidadEntrenador(), carnetEntrenadorGanador);
+                                    try (MongoClient client = MongoDBConectar.conectar()) {
+                                        EntrenadorMongoDAO entrenadorMongoDAO = new EntrenadorMongoDAO(client);
+                                        entrenadorMongoDAO.actualizarEntrenador(entrenadorMongoDB);
+                                    } catch (Exception e) {
+                                        System.out.println("MongoDB ha fallado");
+                                        //e.printStackTrace();
+                                    }
 
                                     try (MongoClient client = MongoDBConectar.conectar()) {
                                         TorneoMongoDAO torneoMongoDAO = new TorneoMongoDAO(client);
