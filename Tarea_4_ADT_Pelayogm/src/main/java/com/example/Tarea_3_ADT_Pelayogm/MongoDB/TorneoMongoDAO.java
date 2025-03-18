@@ -99,4 +99,44 @@ public class TorneoMongoDAO {
             System.out.println(torneos.toJson());
         }
     }
+
+    public void mostrarLosTorneosDeMasPuntos() {
+        ArrayList<Float> puntos = new ArrayList<>();
+        ArrayList<Integer> idsTorneos = new ArrayList<>();
+        for (Document torneos: collection.find()) {
+            puntos.add(Float.parseFloat(torneos.get("puntosTorneo").toString()));
+            idsTorneos.add(Integer.parseInt(torneos.get("_id").toString()));
+        }
+
+        if (!puntos.isEmpty()) {
+            int idPrimerTorneo = 0;
+            float puntosPrimer = 0;
+            int idSegundoTorneo = 0;
+            float puntosSegundo = 0;
+
+            for (int i = 0; i < puntos.size(); i++) {
+                if (puntos.get(i) > puntosPrimer) {
+                    if (puntosPrimer > puntosSegundo) {
+                        puntosSegundo = puntosPrimer;
+                        idSegundoTorneo = idPrimerTorneo;
+                    }
+                    puntosPrimer = puntos.get(i);
+                    idPrimerTorneo = idsTorneos.get(i);
+                } else if (puntos.get(i) > puntosSegundo) {
+                    puntosSegundo = puntos.get(i);
+                    idSegundoTorneo = idsTorneos.get(i);
+                }
+            }
+            System.out.println("Primer torneo:");
+            mostrarTorneoYPuntos(idPrimerTorneo);
+            System.out.println("Segundo torneo:");
+            mostrarTorneoYPuntos(idSegundoTorneo);
+        }
+    }
+
+    public void mostrarTorneoYPuntos(int idTorneo) {
+        for (Document torneos: collection.find(Filters.eq("_id", idTorneo))) {
+            System.out.println("Nombre Torneo: " + torneos.get("nombreTorneo") + " | Puntos Torneo: " + torneos.get("puntosTorneo"));
+        }
+    }
 }

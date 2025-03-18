@@ -1,6 +1,5 @@
 package com.example.Tarea_3_ADT_Pelayogm.Menus;
 
-import com.db4o.Db4oEmbedded;
 import com.db4o.ObjectContainer;
 import com.example.Tarea_3_ADT_Pelayogm.Administradores.Admin;
 import com.example.Tarea_3_ADT_Pelayogm.Credenciales.CredencialUsuario;
@@ -200,10 +199,10 @@ public class Funciones {
         if (usuario.isUsuario()) {
             Scanner entrada = new Scanner(System.in);
             System.out.println("1. Mostrar información de un torneo | 2. Saber ganador de un torneo | 3. Los 2 entrenadores que más han ganado | 4. Listar entrenadores con sus puntos" +
-                    "| 5. Saber puntos de un entrenador | 6. Saber los torneos de una region | 7. Salir");
+                    "| 5. Saber puntos de un entrenador | 6. Saber los torneos de una region | 7. Los 2 torneos con más puntos | 8. Salir");
             try {
                 int opcionUsuario = entrada.nextInt();
-                while (opcionUsuario < 8) {
+                while (opcionUsuario < 9) {
                     switch (opcionUsuario) {
                         case 1: {mostrarInformacionDeUnTorneo(usuario); break;}
                         case 2: {mostrarGanadorDeUnTorneo(usuario); break;}
@@ -211,10 +210,11 @@ public class Funciones {
                         case 4: {listarEntrenadoresConPuntos(); break;}
                         case 5: {saberPuntosDeUnEntrenador(); break;}
                         case 6: {listarTorneosDeUnaRegion(usuario); break;}
-                        case 7: {menus.menuAdministrador((Admin) usuario); break;}
+                        case 7: {losDosTorneosConMasPuntos(); break;}
+                        case 8: {menus.menuAdministrador((Admin) usuario); break;}
                     }
-                    System.out.println("1. Mostrar informacion de un torneo | 2. Saber ganador de un torneo | 3. Los 2 entrenadores que más han ganado | 4. Listar entrenadores con sus puntos" +
-                            " | 5. Saber puntos de un entrenador | 6. Saber los torneos de una region | 7. Salir");
+                    System.out.println("1. Mostrar información de un torneo | 2. Saber ganador de un torneo | 3. Los 2 entrenadores que más han ganado | 4. Listar entrenadores con sus puntos" +
+                            "| 5. Saber puntos de un entrenador | 6. Saber los torneos de una region | 7. Los 2 torneos con más puntos | 8. Salir");
                     opcionUsuario = entrada.nextInt();
                 }
 
@@ -365,23 +365,34 @@ public class Funciones {
 
     }
 
+    public void losDosTorneosConMasPuntos() {
+        try (MongoClient client = MongoDBConectar.conectar()) {
+            TorneoMongoDAO torneoMongoDAO = new TorneoMongoDAO(client);
+            torneoMongoDAO.mostrarLosTorneosDeMasPuntos();
+        } catch (Exception e) {
+            System.out.println("MongoDB ha fallado");
+            //e.printStackTrace();
+        }
+    }
+
 
 
     public void gestionarUsuarios(Usuario usuario) {
         if (usuario.isUsuario()) {
             Scanner scanner = new Scanner(System.in);
 
-            System.out.println("1. Listar usuarios | 2. Eliminar credenciales de un usuario | 3. Modificar credenciales | 4. Salir");
+            System.out.println("1. Listar usuarios | 2. Eliminar credenciales de un usuario | 3. Modificar credenciales | 4. Consultar Credenciales | 5. Salir");
             try {
                 int entrada = scanner.nextInt();
-                while (entrada < 5) {
+                while (entrada < 6) {
                     switch (entrada) {
                         case 1: {listarUsuarios(); break;}
                         case 2: {eliminarCredenciales(usuario); break;}
                         case 3: {actualizarCredenciales(usuario); break;}
-                        case 4: {menus.menuAdministrador((Admin) usuario); break;}
+                        case 4: {consultarCrendenciales(usuario); break;}
+                        case 5: {menus.menuAdministrador((Admin) usuario); break;}
                     }
-                    System.out.println("1. Listar usuarios | 2. Eliminar credenciales de un usuario | 3. Modificar credenciales | 4. Salir");
+                    System.out.println("1. Listar usuarios | 2. Eliminar credenciales de un usuario | 3. Modificar credenciales | 4. Consultar Credenciales | 5. Salir");
                     entrada = scanner.nextInt();
                 }
 
@@ -417,8 +428,6 @@ public class Funciones {
                 System.out.println("-------------------------------");
             }
         }
-
-
     }
 
     public void eliminarCredenciales(Usuario usuario) {
@@ -527,6 +536,38 @@ public class Funciones {
 
             }
         }
+    }
+
+    public void consultarCrendenciales(Usuario usuario) {
+        //Cargamos la bd de usuarios
+        ObjectContainer db = Credenciales.getDb();
+        Credenciales.leerFichero(db);
+        //Al leer el fichero de la bd, creamos un arraylist con los datos actualizados
+        ArrayList<CredencialUsuario> listaCredenciales = Credenciales.getCredenciales();
+        //Creamos el scanner
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("¿De que usuario quieres saber la contraseña?");
+        try {
+            String usuarioABuscar = scanner.nextLine();
+            boolean usuarioEncontrado = false;
+            for (int i = 0; i < listaCredenciales.size(); i++) {
+                if (listaCredenciales.get(i).getUsuarioLogin().equalsIgnoreCase(usuarioABuscar)) {
+                    System.out.println("La contraseña de: " + listaCredenciales.get(i).getUsuarioLogin() + " es: " + listaCredenciales.get(i).getContrasenaLogin());
+                    usuarioEncontrado = true;
+                    break;
+                }
+            }
+
+            if (!usuarioEncontrado) {
+                System.out.println("Este usuario no esta registrado en el sistema");
+            }
+
+        } catch (Exception e) {
+            System.out.println("Entrada no reconocida");
+            menus.menuAdministrador((Admin) usuario);
+        }
+
     }
 
 }

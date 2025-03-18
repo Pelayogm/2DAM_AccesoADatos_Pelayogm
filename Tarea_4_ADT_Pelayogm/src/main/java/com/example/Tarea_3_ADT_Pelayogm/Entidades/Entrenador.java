@@ -28,6 +28,9 @@ public class Entrenador extends Usuario {
     )
     private List<Torneo> listaTorneos;
 
+    @OneToMany(mappedBy = "entrenador", fetch = FetchType.EAGER)
+    private List<Pokemon> equipoDelEntrenador;
+
     public Entrenador(long idEntrenador, String nombreEntrenador, String nacionalidadEntrenador, Carnet carnet) {
         super.setEstadoSesion(true);
         this.idEntrenador = idEntrenador;
@@ -36,6 +39,7 @@ public class Entrenador extends Usuario {
         this.carnetEntrenador = carnet;
         setIdUsuarioInterfaz((int) idEntrenador);
         listaTorneos = new ArrayList<>();
+        equipoDelEntrenador = new ArrayList<>();
     }
 
     public Entrenador() {
@@ -64,6 +68,14 @@ public class Entrenador extends Usuario {
 
     public void setListaTorneos(List<Torneo> listaTorneos) {
         this.listaTorneos = listaTorneos;
+    }
+
+    public List<Pokemon> getEquipoDelEntrenador() {
+        return equipoDelEntrenador;
+    }
+
+    public void setEquipoDelEntrenador(List<Pokemon> equipoDelEntrenador) {
+        this.equipoDelEntrenador = equipoDelEntrenador;
     }
 
     @Override

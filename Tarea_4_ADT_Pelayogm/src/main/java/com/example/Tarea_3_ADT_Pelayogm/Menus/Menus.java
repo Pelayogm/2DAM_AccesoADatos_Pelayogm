@@ -4,6 +4,7 @@ import com.example.Tarea_3_ADT_Pelayogm.Administradores.Admin;
 import com.example.Tarea_3_ADT_Pelayogm.Administradores.AdminTorneos;
 import com.example.Tarea_3_ADT_Pelayogm.Entidades.Carnet;
 import com.example.Tarea_3_ADT_Pelayogm.Entidades.Entrenador;
+import com.example.Tarea_3_ADT_Pelayogm.Entidades.Pokemon;
 import com.example.Tarea_3_ADT_Pelayogm.Entidades.Torneo;
 import com.example.Tarea_3_ADT_Pelayogm.Funciones.Exportar;
 import com.example.Tarea_3_ADT_Pelayogm.Funciones.GestionTorneos;
@@ -12,6 +13,7 @@ import com.example.Tarea_3_ADT_Pelayogm.MongoDB.MongoDBConectar;
 import com.example.Tarea_3_ADT_Pelayogm.MongoDB.TorneoMongoDAO;
 import com.example.Tarea_3_ADT_Pelayogm.Servicios.CarnetServiciosImplementacion;
 import com.example.Tarea_3_ADT_Pelayogm.Servicios.EntrenadorServiciosImplementacion;
+import com.example.Tarea_3_ADT_Pelayogm.Servicios.PokemonServicios;
 import com.example.Tarea_3_ADT_Pelayogm.Servicios.TorneoServiciosImplementacion;
 import com.example.Tarea_3_ADT_Pelayogm.XML.LectorXML;
 import com.mongodb.client.MongoClient;
@@ -39,6 +41,8 @@ public class Menus {
     public TorneoServiciosImplementacion torneoServiciosImplementacion;
     @Autowired
     public GestionTorneos gestionTorneos;
+    @Autowired
+    public PokemonServicios pokemonServicios;
 
     public void menuInicial() {
         Scanner scanner = new Scanner(System.in);
@@ -96,6 +100,7 @@ public class Menus {
                         if (gestionTorneos.inscribirEntrenador(entrenador)) {
                             carnetServiciosImplementacion.insertarCarnet(carnet);
                             entrenadorServiciosImplementacion.insertarEntrenador(entrenador);
+                            crearPokemon(entrenador);
                             try (MongoClient client = MongoDBConectar.conectar()) {
                                 EntrenadorMongoDAO entrenadorMongoDAO = new EntrenadorMongoDAO(client);
                                 entrenadorMongoDAO.insertarEntrenador(entrenador);
@@ -200,6 +205,55 @@ public class Menus {
             sesion.IniciarSesion();
         }
 
+    }
+
+    public void crearPokemon(Entrenador entrenador) {
+        Scanner entrada = new Scanner(System.in);
+
+        System.out.println("Ahora rellena los datos de tu pokemon");
+        System.out.println("¿Como se llama tu pokemon?");
+        try {
+            String nombrePokemon = entrada.nextLine();
+            System.out.println("¿De que tipo es " + nombrePokemon + "?");
+            try {
+                String tipoPokemon = entrada.nextLine();
+                System.out.println("¿Que nivel es?");
+                try {
+                    int nivelPokemon = entrada.nextInt();
+                    System.out.println("¿Los siguientes datos son correctos?");
+                    System.out.println("Nombre: " + nombrePokemon + " | " + "Tipo: " + tipoPokemon + " | " + " Nivel: " + nivelPokemon);
+                    System.out.println(" 1. Si | 2. No");
+                    try {
+                        int opcionUsuario = entrada.nextInt();
+                        if (opcionUsuario == 1) {
+                            List<Pokemon> listaDePokemon = pokemonServicios.obtenerTodosLosPokemon();
+                            int idPokemon = 0;
+                            if (listaDePokemon.isEmpty()) {
+                                idPokemon = 1;
+                            } else {
+                                idPokemon = listaDePokemon.size() + 1;
+                            }
+                            Pokemon pokemon = new Pokemon(idPokemon, entrenador, nombrePokemon, tipoPokemon, nivelPokemon);
+                            pokemonServicios.insertarPokemon(pokemon);
+                        } else {
+                            System.out.println("Volviendo a la creacion del pokemon");
+                            crearPokemon(entrenador);
+                        }
+                    } catch (Exception e) {
+                        System.out.println("Entrada no reconocida");
+                        System.out.println("Volviendo a la creacion del pokemon");
+                        crearPokemon(entrenador);
+                    }
+                } catch (Exception e) {
+                    System.out.println("No se ha podido reconocer el nivel de pokemon");
+                }
+            } catch (Exception e) {
+                System.out.println("No se ha podido reconocer el tipo del pokemon");
+            }
+
+        } catch (Exception e) {
+            System.out.println("No se ha podido reconocer el nombre del pokemon");
+        }
     }
 
 }
